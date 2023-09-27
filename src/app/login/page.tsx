@@ -1,7 +1,6 @@
-import React from "react";
 
-function page() {
-  return <div>PAGINA RE BUENA</div>;
+function Login() {
+  return <div>Login</div>;
 }
 
-export default page;
+export default Login;

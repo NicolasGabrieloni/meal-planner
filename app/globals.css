@@ -1,7 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-body {
-  @apply flex h-screen w-screen items-center justify-center bg-gradient-to-br from-[#80FF95] to-[#22859B];
-}

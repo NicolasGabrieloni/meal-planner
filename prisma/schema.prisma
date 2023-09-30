@@ -3,30 +3,33 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
-model despensa {
-  id        Int     @id @default(autoincrement())
-  vegetales String? @db.Text
-  frutas    String? @db.Text
-  alacena   String? @db.Text
-  carnes    String? @db.Text
-  lacteos   String? @db.Text
-  user_id   Int
-  users     users   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_la_ptqp")
-
-  @@index([user_id], map: "user_id_idx")
+model users {
+  id                Int                 @id @default(autoincrement())
+  first_name        String              @db.VarChar(45)
+  last_name         String              @db.VarChar(45)
+  email             String              @db.VarChar(45)
+  password          String              @db.VarChar(256)
+  description       String?             @db.Text
+  despensa          despensa[]
+  recetas_favoritas recetas_favoritas[]
+  shop_list         shop_list[]
 }
 
-model destacados {
-  id                    Int     @id @default(autoincrement())
-  id_recipes_destacados Int
-  recetas               recetas @relation(fields: [id_recipes_destacados], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_id_recipes_destacados")
+model despensa {
+  id              Int     @id @default(autoincrement())
+  nombre_alimento String? @db.Text
+  cantidad        Int?
+  unidad_medida   String
+  tipo_alimento   String? @db.Text
+  user_id         Int
+  users           users   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_la_ptqp")
 
-  @@index([id_recipes_destacados], map: "id_recipes_destacados_idx")
+  @@index([user_id], map: "user_id_idx")
 }
 
 model ingredientes {
@@ -34,7 +37,7 @@ model ingredientes {
   nombre               String                 @db.VarChar(45)
   categoria            String?                @db.VarChar(45)
   unidad_medida        String?                @db.VarChar(45)
-  recetas_ingredientes recetas_ingredientes[] @ignore
+  recetas_ingredientes recetas_ingredientes[]
 }
 
 model recetas {
@@ -43,34 +46,38 @@ model recetas {
   descripcion          String?                @db.Text
   ingredientes         String?                @db.Text
   instrucciones        String?                @db.Text
-  tiempo_preparacion   Int?
+  tiempo_preparacion   String?
   id_user              Int
-  recetas_id           Int
-  destacados           destacados[]
-  users                users                  @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_user")
-  recetas              recetas                @relation("recetasTorecetas", fields: [recetas_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "recetas_id")
-  other_recetas        recetas[]              @relation("recetasTorecetas")
-  recetas_favoritas    recetas_favoritas[]
-  recetas_ingredientes recetas_ingredientes[] @ignore
+  recetas_ingredientes recetas_ingredientes[]
   recomendados         recomendados[]
 
   @@index([id_user], map: "id_user_idx")
-  @@index([recetas_id], map: "recetas_id_idx")
+}
+
+model destacados {
+  id                 Int     @id @default(autoincrement())
+  nombre             String  @db.Text
+  descripcion        String? @db.Text
+  ingredientes       String? @db.Text
+  instrucciones      String? @db.Text
+  tiempo_preparacion String?
 }
 
 model recetas_favoritas {
-  id         Int     @id @default(autoincrement())
-  recipes_id Int
-  user_id    Int
-  recetas    recetas @relation(fields: [recipes_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_favourite_recipes_recipes_id")
-  users      users   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_rf")
+  id                 Int     @id @default(autoincrement())
+  nombre             String  @db.Text
+  descripcion        String? @db.Text
+  ingredientes       String? @db.Text
+  instrucciones      String? @db.Text
+  tiempo_preparacion String?
+  users              users?  @relation(fields: [usersId], references: [id])
+  usersId            Int?
 
-  @@index([recipes_id], map: "id_recipes_idx")
-  @@index([user_id], map: "user_id_idx")
+  @@index([usersId])
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model recetas_ingredientes {
+  id             Int           @id @default(autoincrement())
   receta_id      Int?
   ingrediente_id Int?
   cantidad       Int?
@@ -79,7 +86,6 @@ model recetas_ingredientes {
 
   @@index([ingrediente_id], map: "ingrediente_id_idx")
   @@index([receta_id], map: "receta_id_idx")
-  @@ignore
 }
 
 model recomendados {
@@ -91,27 +97,13 @@ model recomendados {
 }
 
 model shop_list {
-  id        Int     @id @default(autoincrement())
-  vegetales String? @db.Text
-  frutas    String? @db.Text
-  alacena   String? @db.Text
-  carnes    String? @db.Text
-  lacteos   String? @db.Text
-  user_id   Int
-  users     users   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id")
+  id              Int     @id @default(autoincrement())
+  nombre_alimento String? @db.Text
+  cantidad        Int?
+  unidad_medida   String
+  tipo_alimento   String? @db.Text
+  user_id         Int
+  users           users   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id")
 
   @@index([user_id], map: "user_id_idx")
-}
-
-model users {
-  id                Int                 @id @default(autoincrement())
-  first_name        String              @db.VarChar(45)
-  last_name         String              @db.VarChar(45)
-  email             String              @db.VarChar(45)
-  password          String              @db.VarChar(45)
-  description       String?             @db.Text
-  despensa          despensa[]
-  recetas           recetas[]
-  recetas_favoritas recetas_favoritas[]
-  shop_list         shop_list[]
 }

@@ -49,7 +49,6 @@ model recetas {
   tiempo_preparacion   String?
   id_user              Int
   recetas_ingredientes recetas_ingredientes[]
-  recomendados         recomendados[]
 
   @@index([id_user], map: "id_user_idx")
 }
@@ -89,11 +88,12 @@ model recetas_ingredientes {
 }
 
 model recomendados {
-  idrecomendados          Int     @id @default(autoincrement())
-  id_recomendados_recipes Int
-  recetas                 recetas @relation(fields: [id_recomendados_recipes], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_id_recomendados_recipes")
-
-  @@index([id_recomendados_recipes], map: "id_recomendados_recipes_idx")
+  id                 Int     @id @default(autoincrement())
+  nombre             String  @db.Text
+  descripcion        String? @db.Text
+  ingredientes       String? @db.Text
+  instrucciones      String? @db.Text
+  tiempo_preparacion String?
 }
 
 model shop_list {

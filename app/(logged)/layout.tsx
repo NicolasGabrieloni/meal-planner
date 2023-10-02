@@ -6,9 +6,9 @@ export default function LoggedLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="h-screen w-screen bg-white">
+    <div className="h-screen w-screen bg-[#FAFAFA] ">
       <NavMenu />
-      {children}
+      <div className="mt-[71px] h-max w-max lg:ml-[71px]">{children}</div>
     </div>
   );
 }

@@ -25,7 +25,7 @@ export function NavMenu() {
   };
 
   return (
-    <div className="fixed left-0 top-0 bg-[#80FF95] py-4">
+    <div className="custom-shadow-inner fixed left-0 top-0 bg-[#80FF95] py-4 ">
       <div className="flex w-screen items-center justify-center">
         <Image
           src={"/Logo.svg"}
@@ -42,8 +42,8 @@ export function NavMenu() {
           isMenuOpen ? "lg:block" : "hidden"
         }`}
       >
-        <div className="flex flex-col bg-gradient-to-b from-[#80FF95]/80 to-[#22859B]/80 ">
-          <ul className="flex h-screen flex-col space-y-12 px-3 pt-6 lg:hidden">
+        <div className="flex flex-col bg-gradient-to-b from-[#80FF95] to-[#22859B]">
+          <ul className="flex h-screen flex-col space-y-[54px] px-3 pt-6 lg:hidden">
             <li>
               <Link
                 href="/home"
@@ -131,8 +131,8 @@ export function NavMenu() {
           </ul>
         </div>
       </div>
-      <div className="fixed left-0 hidden h-screen bg-gradient-to-b from-[#80FF95] to-[#22859B] lg:inline">
-        <ul className="flex flex-col space-y-14 px-6 py-8">
+      <div className="custom-shadow-inner fixed left-0 top-0 mt-[70px] hidden h-screen bg-gradient-to-b from-[#80FF95] to-[#22859B]  lg:inline">
+        <ul className=" top-green-shadow flex min-h-[620px] flex-col justify-between px-6 py-8">
           <li>
             <Link href="/home">
               <IconHome size={24} stroke={1} className="hover:stroke-[1.5px]" />

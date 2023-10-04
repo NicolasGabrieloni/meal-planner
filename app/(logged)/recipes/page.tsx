@@ -5,5 +5,6 @@ export const metadata: Metadata = {
 };
 
 export default function Recipes() {
-  return <div>ACA VAN LAS RECETAS</div>;
-}
+    return <div>ACA VAN LAS RECETAS</div>;
+  }
+  

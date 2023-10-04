@@ -25,7 +25,7 @@ export function NavMenu() {
   };
 
   return (
-    <div className="custom-shadow-inner fixed left-0 top-0 bg-[#80FF95] py-4 ">
+    <div className="custom-shadow-inner fixed left-0 top-0 z-50 bg-[#80FF95] py-4 ">
       <div className="flex w-screen items-center justify-center">
         <Image
           src={"/Logo.svg"}

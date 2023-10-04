@@ -15,6 +15,8 @@ const buttonVariants = cva(
           "border border-[#343434] bg-[#72E5FF] drop-shadow-md text-xs hover:bg-blue-400 align-top min-w-[200px]",
         green_outlined:
           "border border-[#343434] bg-[#80FF95] drop-shadow-md text-xs hover:bg-green-400",
+        search:
+          "border border-[#343434] bg-[#FAFAFA] drop-shadow-md text-xs min-w-[200px] ",
       },
       size: {
         default: "h-[30px] w-[80px] px-4 py-2",

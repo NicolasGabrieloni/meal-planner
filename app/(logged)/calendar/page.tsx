@@ -1,4 +1,6 @@
-import { InputWithLabel } from "@/components/InputWithLabel";
+import { LabelForInput } from "@/components/LabelForInput";
+
+import FoodSearchRemove from "@/components/calendar/FoodSearchRemove";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -17,88 +19,7 @@ export default function Calendar() {
             </h2>
           </div>
           <div>
-            <InputWithLabel labelText="Almuerzo" />
-          </div>
-          <div>
-            <InputWithLabel labelText="Cena" />
-          </div>
-        </div>
-        <div>
-          <div>
-            <h2 className="border-b border-[#00785C] text-sm text-[#00785C]">
-              Martes
-            </h2>
-          </div>
-          <div>
-            <InputWithLabel labelText="Almuerzo" />
-          </div>
-          <div>
-            <InputWithLabel labelText="Cena" />
-          </div>
-        </div>
-        <div>
-          <div>
-            <h2 className="border-b border-[#00785C] text-sm text-[#00785C]">
-              Miércoles
-            </h2>
-          </div>
-          <div>
-            <InputWithLabel labelText="Almuerzo" />
-          </div>
-          <div>
-            <InputWithLabel labelText="Cena" />
-          </div>
-        </div>
-        <div>
-          <div>
-            <h2 className="border-b border-[#00785C] text-sm text-[#00785C]">
-              Jueves
-            </h2>
-          </div>
-          <div>
-            <InputWithLabel labelText="Almuerzo" />
-          </div>
-          <div>
-            <InputWithLabel labelText="Cena" />
-          </div>
-        </div>
-        <div>
-          <div>
-            <h2 className="border-b border-[#00785C] text-sm text-[#00785C]">
-              Viernes
-            </h2>
-          </div>
-          <div>
-            <InputWithLabel labelText="Almuerzo" />
-          </div>
-          <div>
-            <InputWithLabel labelText="Cena" />
-          </div>
-        </div>
-        <div>
-          <div>
-            <h2 className="border-b border-[#00785C] text-sm text-[#00785C]">
-              Sábado
-            </h2>
-          </div>
-          <div>
-            <InputWithLabel labelText="Almuerzo" />
-          </div>
-          <div>
-            <InputWithLabel labelText="Cena" />
-          </div>
-        </div>
-        <div>
-          <div>
-            <h2 className="border-b border-[#00785C] text-sm text-[#00785C]">
-              Domingo
-            </h2>
-          </div>
-          <div>
-            <InputWithLabel labelText="Almuerzo" />
-          </div>
-          <div>
-            <InputWithLabel labelText="Cena" />
+            <FoodSearchRemove />
           </div>
         </div>
       </div>

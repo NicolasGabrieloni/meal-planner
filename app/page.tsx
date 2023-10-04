@@ -1,4 +1,4 @@
-import { InputWithLabel } from "@/components/InputWithLabel";
+import { InputWithLabel } from "@/components/LabelForInput";
 import { Button } from "@/components/ui/button";
 import { IconBrandGoogle } from "@tabler/icons-react";
 

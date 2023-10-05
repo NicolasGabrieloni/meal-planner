@@ -12,9 +12,9 @@ const buttonVariants = cva(
         default:
           "bg-slate-900 text-slate-50 shadow hover:bg-slate-900/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90",
         blue_outlined:
-          "border border-[#343434] bg-[#72E5FF] drop-shadow-md hover:bg-blue-400 align-top min-w-[200px]",
+          "border border-[#343434] bg-[#72E5FF] drop-shadow-md text-xs hover:bg-blue-400 align-top min-w-[200px]",
         green_outlined:
-          "border border-[#343434] bg-[#80FF95] drop-shadow-md hover:bg-green-400",
+          "border border-[#343434] bg-[#80FF95] drop-shadow-md text-xs hover:bg-green-400",
       },
       size: {
         default: "h-[30px] w-[80px] px-4 py-2",

@@ -4,6 +4,7 @@ import { InputWithLabel } from "@/components/InputWithLabel";
 import { Button } from "@/components/ui/button";
 import { UserInfo } from "./components/UserInfo";
 import Calendar from "./(logged)/calendar/page";
+import { WeeklyCalendar } from "./components/WeeklyCalendar";
 
 export default function Home() {
   return (
@@ -12,7 +13,8 @@ export default function Home() {
       <Button variant="green_outlined">Hola</Button>
       <InputWithLabel labelText="Teletubi azul" />
       <UserInfo/>
-      <Calendar/>
+      <WeeklyCalendar/>
+      <Button variant="blue_outlined">Lista de compras</Button>
     </div>
   );
 }

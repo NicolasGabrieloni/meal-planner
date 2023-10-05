@@ -36,7 +36,9 @@ export default function FoodInput({ presets, ...props }: PresetSelectorProps) {
     <div>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="search">Agregar comida</Button>
+          <Button variant="search" className="w-[240px] ">
+            Agregar comida
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>

@@ -6,8 +6,10 @@ interface InputWithLabelProps {
 
 export function LabelForInput({ labelText }: InputWithLabelProps) {
   return (
-    <div className="grid w-full max-w-sm items-center gap-0.5">
-      <Label htmlFor="username">{labelText}</Label>
+    <div className="grid w-full max-w-sm items-center  ">
+      <Label className="text-xs" htmlFor="username">
+        {labelText}
+      </Label>
     </div>
   );
 }

@@ -5,113 +5,83 @@ generator client {
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
-  relationMode = "prisma"
-}
-
-model despensa {
-  id        Int     @id @default(autoincrement())
-  vegetales String? @db.Text
-  frutas    String? @db.Text
-  alacena   String? @db.Text
-  carnes    String? @db.Text
-  lacteos   String? @db.Text
-  user_id   Int
-  users     users   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_la_ptqp")
-
-  @@index([user_id], map: "user_id_idx")
-}
-
-model destacados {
-  id                    Int     @id @default(autoincrement())
-  id_recipes_destacados Int
-  recetas               recetas @relation(fields: [id_recipes_destacados], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_id_recipes_destacados")
-
-  @@index([id_recipes_destacados], map: "id_recipes_destacados_idx")
-}
-
-model ingredientes {
-  id                   Int                    @id @default(autoincrement())
-  nombre               String                 @db.VarChar(45)
-  categoria            String?                @db.VarChar(45)
-  unidad_medida        String?                @db.VarChar(45)
-  recetas_ingredientes recetas_ingredientes[] @ignore
-}
-
-model recetas {
-  id                   Int                    @id @default(autoincrement())
-  nombre               String                 @db.Text
-  descripcion          String?                @db.Text
-  ingredientes         String?                @db.Text
-  instrucciones        String?                @db.Text
-  tiempo_preparacion   Int?
-  id_user              Int
-  recetas_id           Int
-  destacados           destacados[]
-  users                users                  @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_user")
-  recetas              recetas                @relation("recetasTorecetas", fields: [recetas_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "recetas_id")
-  other_recetas        recetas[]              @relation("recetasTorecetas")
-  recetas_favoritas    recetas_favoritas[]
-  recetas_ingredientes recetas_ingredientes[] @ignore
-  recomendados         recomendados[]
-
-  @@index([id_user], map: "id_user_idx")
-  @@index([recetas_id], map: "recetas_id_idx")
-}
-
-model recetas_favoritas {
-  id         Int     @id @default(autoincrement())
-  recipes_id Int
-  user_id    Int
-  recetas    recetas @relation(fields: [recipes_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_favourite_recipes_recipes_id")
-  users      users   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_rf")
-
-  @@index([recipes_id], map: "id_recipes_idx")
-  @@index([user_id], map: "user_id_idx")
-}
-
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-model recetas_ingredientes {
-  receta_id      Int?
-  ingrediente_id Int?
-  cantidad       Int?
-  ingredientes   ingredientes? @relation(fields: [ingrediente_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "ingrediente_id")
-  recetas        recetas?      @relation(fields: [receta_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "receta_id")
-
-  @@index([ingrediente_id], map: "ingrediente_id_idx")
-  @@index([receta_id], map: "receta_id_idx")
-  @@ignore
-}
-
-model recomendados {
-  idrecomendados          Int     @id @default(autoincrement())
-  id_recomendados_recipes Int
-  recetas                 recetas @relation(fields: [id_recomendados_recipes], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_id_recomendados_recipes")
-
-  @@index([id_recomendados_recipes], map: "id_recomendados_recipes_idx")
-}
-
-model shop_list {
-  id        Int     @id @default(autoincrement())
-  vegetales String? @db.Text
-  frutas    String? @db.Text
-  alacena   String? @db.Text
-  carnes    String? @db.Text
-  lacteos   String? @db.Text
-  user_id   Int
-  users     users   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id")
-
-  @@index([user_id], map: "user_id_idx")
 }
 
 model users {
-  id                Int                 @id @default(autoincrement())
-  first_name        String              @db.VarChar(45)
-  last_name         String              @db.VarChar(45)
-  email             String              @db.VarChar(45)
-  password          String              @db.VarChar(45)
-  description       String?             @db.Text
-  despensa          despensa[]
-  recetas           recetas[]
-  recetas_favoritas recetas_favoritas[]
-  shop_list         shop_list[]
+  id          Int     @id @default(autoincrement())
+  first_name  String  @db.Text
+  last_name   String  @db.Text
+  email       String  @db.Text
+  password    String  @db.Text
+  description String? @db.Text
+}
+
+model despensa {
+  id              Int    @id @default(autoincrement())
+  nombre_alimento String @db.Text
+  cantidad        Int
+  unidad_medida   String @db.Text
+  tipo_alimento   String @db.Text
+  user_id         Int
+}
+
+model ingredientes {
+  id            Int    @id @default(autoincrement())
+  nombre        String @db.Text
+  categoria     String @db.Text
+  unidad_medida String @db.Text
+}
+
+model recetas {
+  id            Int    @id @default(autoincrement())
+  nombre        String @db.Text
+  descripcion   String @db.Text
+  ingredientes  String @db.Text
+  instrucciones String @db.Text
+}
+
+model destacados {
+  id                 Int    @id @default(autoincrement())
+  nombre             String @db.Text
+  descripcion        String @db.Text
+  ingredientes       String @db.Text
+  instrucciones      String @db.Text
+  tiempo_preparacion String @db.Text
+}
+
+model recetas_favoritas {
+  id                 Int    @id @default(autoincrement())
+  nombre             String @db.Text
+  descripcion        String @db.Text
+  ingredientes       String @db.Text
+  instrucciones      String @db.Text
+  tiempo_preparacion String @db.Text
+  userID             Int
+}
+
+model recetas_ingredientes {
+  id             Int    @id @default(autoincrement())
+  receta_id      Int
+  ingrediente_id Int
+  cantidad       Int
+  ingredientes   String @db.Text
+  recetas        String @db.Text
+}
+
+model recomendados {
+  id                 Int    @id @default(autoincrement())
+  nombre             String @db.Text
+  descripcion        String @db.Text
+  ingredientes       String @db.Text
+  instrucciones      String @db.Text
+  tiempo_preparacion String @db.Text
+}
+
+model shop_list {
+  id              Int    @id @default(autoincrement())
+  nombre_alimento String @db.Text
+  cantidad        String @db.Text
+  unidad_medida   String @db.Text
+  tipo_alimento   String @db.Text
+  user_id         Int
 }

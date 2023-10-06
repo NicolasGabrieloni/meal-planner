@@ -18,12 +18,10 @@ export async function GET() {
     }
   }
 }
-
 export async function POST(request: Request) {
   try {
     const { nombre, descripcion, ingredientes, instrucciones } =
       await request.json();
-
     const newUser = await prisma.recetas.create({
       data: {
         nombre,
@@ -32,7 +30,6 @@ export async function POST(request: Request) {
         instrucciones,
       },
     });
-
     return NextResponse.json(newUser);
   } catch (error) {
     if (error instanceof Error) {

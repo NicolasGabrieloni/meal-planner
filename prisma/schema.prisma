@@ -46,7 +46,6 @@ model destacados {
   descripcion        String @db.Text
   ingredientes       String @db.Text
   instrucciones      String @db.Text
-  tiempo_preparacion String @db.Text
 }
 
 model recetas_favoritas {
@@ -55,7 +54,6 @@ model recetas_favoritas {
   descripcion        String @db.Text
   ingredientes       String @db.Text
   instrucciones      String @db.Text
-  tiempo_preparacion String @db.Text
   userID             Int
 }
 
@@ -74,7 +72,6 @@ model recomendados {
   descripcion        String @db.Text
   ingredientes       String @db.Text
   instrucciones      String @db.Text
-  tiempo_preparacion String @db.Text
 }
 
 model shop_list {

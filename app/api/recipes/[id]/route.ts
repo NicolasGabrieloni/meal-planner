@@ -81,14 +81,8 @@ export async function DELETE(request: Request, { params }: Params) {
 // ACTUALIZAR RECETAS MEDIANTE ID
 export async function PUT(request: Request, { params }: Params) {
   try {
-    const {
-      nombre,
-      descripcion,
-      ingredientes,
-      instrucciones,
-      tiempo_preparacion,
-      id_user,
-    } = await request.json();
+    const { nombre, descripcion, ingredientes, instrucciones } =
+      await request.json();
 
     // busca la receta con el id que le pasemos para actualizar los datos
     const recipeUpdate = await prisma.recetas.update({
@@ -100,8 +94,6 @@ export async function PUT(request: Request, { params }: Params) {
         descripcion,
         ingredientes,
         instrucciones,
-        tiempo_preparacion,
-        id_user,
       },
     });
     // devuelve la receta actualizado

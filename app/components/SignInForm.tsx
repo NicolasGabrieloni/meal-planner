@@ -14,8 +14,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import GoogleButton from "@/components/ui/GoogleButton";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 const FormSchema = z.object({
   email: z
@@ -29,6 +30,8 @@ const FormSchema = z.object({
 });
 
 const SignInForm = () => {
+  const router = useRouter();
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -41,12 +44,17 @@ const SignInForm = () => {
     const signInData = await signIn("credentials", {
       email: values.email,
       password: values.password,
-      callbackUrl: "/home",
+
+      redirect: false,
     });
     if (signInData?.ok) {
-      console.log("Logged");
+      router.push("/home");
     } else {
-      console.log(signInData?.error);
+      toast({
+        title: "Error",
+        description: "Usuario o contraseña incorrectas",
+        variant: "destructive",
+      });
     }
   };
 

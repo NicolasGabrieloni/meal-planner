@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { Providers } from "./Providers";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
         className={`${inter.className} flex h-screen w-screen items-center justify-center bg-gradient-to-br from-[#80FF95] to-[#22859B]`}
       >
         <Providers>{children}</Providers>
+        <Toaster />
       </body>
     </html>
   );

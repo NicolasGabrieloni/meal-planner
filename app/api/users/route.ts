@@ -22,8 +22,7 @@ export async function GET() {
 }
 
 const UserSchema = z.object({
-  first_name: z.string().min(1, "Nombre requerido").max(100),
-  last_name: z.string().min(1, "Apellido requerido").max(100),
+  username: z.string().min(1, "Nombre requerido").max(100),
   email: z
     .string()
     .min(1, "Email requerido")

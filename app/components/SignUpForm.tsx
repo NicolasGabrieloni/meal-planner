@@ -14,13 +14,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import GoogleButton from "@/components/ui/GoogleButton";
 import { useRouter } from "next/navigation";
 
 const FormSchema = z
   .object({
-    first_name: z.string().min(1, "Nombre requerido").max(100),
-    last_name: z.string().min(1, "Apellido requerido").max(100),
+    username: z.string().min(1, "Nombre requerido").max(100),
     email: z
       .string()
       .min(1, "Email requerido")
@@ -43,8 +41,7 @@ const SignUpForm = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      first_name: "",
-      last_name: "",
+      username: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -58,8 +55,7 @@ const SignUpForm = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        first_name: values.first_name,
-        last_name: values.last_name,
+        username: values.username,
         email: values.email,
         password: values.password,
       }),
@@ -80,25 +76,12 @@ const SignUpForm = () => {
             <div className="space-y-3 py-4">
               <FormField
                 control={form.control}
-                name="first_name"
+                name="username"
                 render={({ field }) => (
                   <FormItem className="flex flex-col space-y-0">
-                    <FormLabel className="text-xs">Nombre</FormLabel>
+                    <FormLabel className="text-xs">Nombre de usuario</FormLabel>
                     <FormControl>
                       <Input placeholder="John" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="last_name"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col space-y-0">
-                    <FormLabel className="text-xs">Apellido</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Doe" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -156,14 +139,8 @@ const SignUpForm = () => {
             </div>
             <div className="flex flex-col items-center space-y-1 py-2">
               <Button variant={"green_outlined"}>Enviar</Button>
-              {/* <div className="flex items-center space-x-3">
-                <div className="w-20 border-t border-[#00785C]"></div>
-                <h2 className="text-lg font-semibold text-[#00785C]">O</h2>
-                <div className="w-20 border-t border-[#00785C]"></div>
-              </div> */}
             </div>
           </form>
-          {/* <GoogleButton label="Ingresar con Google" /> */}
         </Form>
       </div>
       <h3 className="pt-2 text-center text-xs text-[#343434]">

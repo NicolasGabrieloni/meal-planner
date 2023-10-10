@@ -81,7 +81,8 @@ export async function DELETE(request: Request, { params }: Params) {
 // ACTUALIZAR USUARIOS MEDIANTE ID
 export async function PUT(request: Request, { params }: Params) {
   try {
-    const { username, email, password, description } = await request.json();
+    const { username, email, password, description, photo } =
+      await request.json();
 
     // busca el usuario con el id que le pasemos para actualizar los datos
     const userUpdate = await prisma.users.update({
@@ -93,6 +94,7 @@ export async function PUT(request: Request, { params }: Params) {
         email,
         password,
         description,
+        photo,
       },
     });
     // devuelve el usuario actualizado

@@ -3,8 +3,8 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET() {
   try {
-    const recetas = await prisma.recetas.findMany();
-    return NextResponse.json(recetas);
+    const recipes = await prisma.recipes.findMany();
+    return NextResponse.json(recipes);
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json(
@@ -21,19 +21,20 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const { nombre, descripcion, ingredientes, instrucciones } =
+    const { name, description, ingredients, instructions, userId } =
       await request.json();
 
-    const newUser = await prisma.recetas.create({
+    const newRecipes = await prisma.recipes.create({
       data: {
-        nombre,
-        descripcion,
-        ingredientes,
-        instrucciones,
+        name,
+        description,
+        ingredients,
+        instructions,
+        userId,
       },
     });
 
-    return NextResponse.json(newUser);
+    return NextResponse.json(newRecipes);
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json(

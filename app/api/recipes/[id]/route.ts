@@ -10,7 +10,7 @@ interface Params {
 export async function GET(request: Request, { params }: Params) {
   try {
     // busca la primer receta con el id que le pasemos
-    const receta = await prisma.recetas.findFirst({
+    const receta = await prisma.recipes.findFirst({
       where: {
         id: Number(params.id),
       },
@@ -47,7 +47,7 @@ export async function GET(request: Request, { params }: Params) {
 export async function DELETE(request: Request, { params }: Params) {
   try {
     // busca la receta con el id que le pasemos, si existe lo elimina
-    const deletedRecipe = await prisma.recetas.delete({
+    const deletedRecipe = await prisma.recipes.delete({
       where: {
         id: Number(params.id),
       },
@@ -81,27 +81,20 @@ export async function DELETE(request: Request, { params }: Params) {
 // ACTUALIZAR RECETAS MEDIANTE ID
 export async function PUT(request: Request, { params }: Params) {
   try {
-    const {
-      nombre,
-      descripcion,
-      ingredientes,
-      instrucciones,
-      tiempo_preparacion,
-      id_user,
-    } = await request.json();
+    const { name, description, ingredients, instructions, userId } =
+      await request.json();
 
     // busca la receta con el id que le pasemos para actualizar los datos
-    const recipeUpdate = await prisma.recetas.update({
+    const recipeUpdate = await prisma.recipes.update({
       where: {
         id: Number(params.id),
       },
       data: {
-        nombre,
-        descripcion,
-        ingredientes,
-        instrucciones,
-        tiempo_preparacion,
-        id_user,
+        name,
+        description,
+        ingredients,
+        instructions,
+        userId,
       },
     });
     // devuelve la receta actualizado

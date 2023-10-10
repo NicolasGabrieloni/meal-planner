@@ -5,6 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Inicio",
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div className="m-8 pt-5">
-      <div className="shadow-xl w-80 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5">
+      <div className="w-80 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
         <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="item-1" className="flex flex-col sm:flex-row">
             <div className="flex items-center">
@@ -40,25 +41,34 @@ export default function Home() {
         </Accordion>
       </div>
       <div>
-      <div className=' mt-8 text-center'>
-        <h2>Caledario semanal</h2>
+        <div className=" mt-8 text-center">
+          <h2>Caledario semanal</h2>
+        </div>
+        <section className="mx-auto mt-5 w-80 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
+          <div>
+            <div className="flex justify-center">
+              <div className="h-[250px] "></div>
+             
+            </div>
+          </div>
+        </section>
       </div>
-      <section className="shadow-xl mt-5 w-80 mx-auto rounded-lg border border-[#000000] p-5 bg-[#E9FFEB]">
-  <div>
-    <div className="flex justify-center">
-      <div className="h-[250px] "></div>
-      <div className=""></div>
-      <div className=""></div>
-      <div className=""></div>
-      <div className=""></div>
-      <div className=""></div>
-      <div className=""></div>
-    </div>
-  </div>
-</section>
-
-    </div>
-
+      <div className="mt-8 text-center">
+        <Button variant="blue_outlined">Lista de compras ✔️</Button>
+      </div>
+      <div>
+        <div className="mt-8 text-center">
+          <h2>Mi Despensa</h2>
+        </div>
+        <section className="mx-auto mt-5 w-80 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
+          <div>
+            <div className="flex justify-center">
+              <div className="h-[350px] "></div>
+              
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

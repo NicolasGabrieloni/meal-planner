@@ -3,8 +3,8 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET() {
   try {
-    const shopList = await prisma.shop_list.findMany();
-    return NextResponse.json(shopList);
+    const stock = await prisma.stock.findMany();
+    return NextResponse.json(stock);
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json(
@@ -21,20 +21,20 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const { user_id, cantidad, unidad_medida, nombre_alimento, tipo_alimento } =
+    const { user_id, name_food, quantity, unit, type_food } =
       await request.json();
 
-    const newAlimento = await prisma.shop_list.create({
+    const newFood = await prisma.stock.create({
       data: {
         user_id,
-        cantidad,
-        unidad_medida,
-        nombre_alimento,
-        tipo_alimento
+        name_food,
+        quantity,
+        unit,
+        type_food,
       },
     });
 
-    return NextResponse.json(newAlimento);
+    return NextResponse.json(newFood);
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json(

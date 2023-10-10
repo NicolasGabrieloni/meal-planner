@@ -10,7 +10,7 @@ interface Params {
 export async function GET(request: Request, { params }: Params) {
   try {
     // busca el primer favorito con el id que le pasemos
-    const favorito = await prisma.recetas_favoritas.findFirst({
+    const favorito = await prisma.favourites.findFirst({
       where: {
         id: Number(params.id),
       },
@@ -47,7 +47,7 @@ export async function GET(request: Request, { params }: Params) {
 export async function DELETE(request: Request, { params }: Params) {
   try {
     // busca el favorito con el id que le pasemos, si existe lo elimina
-    const deletedFavourite = await prisma.recetas_favoritas.delete({
+    const deletedFavourite = await prisma.favourites.delete({
       where: {
         id: Number(params.id),
       },
@@ -81,27 +81,16 @@ export async function DELETE(request: Request, { params }: Params) {
 // ACTUALIZAR FAVORITOS MEDIANTE ID
 export async function PUT(request: Request, { params }: Params) {
   try {
-    const {
-      nombre,
-      descripcion,
-      ingredientes,
-      instrucciones,
-      tiempo_preparacion,
-      usersId,
-    } = await request.json();
+    const { recipes_id, user_id } = await request.json();
 
     // busca el favorito con el id que le pasemos para actualizar los datos
-    const userUpdate = await prisma.recetas_favoritas.update({
+    const userUpdate = await prisma.favourites.update({
       where: {
         id: Number(params.id),
       },
       data: {
-        nombre,
-        descripcion,
-        ingredientes,
-        instrucciones,
-        tiempo_preparacion,
-        usersId,
+        recipes_id,
+        user_id,
       },
     });
     // devuelve el favorito actualizado

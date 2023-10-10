@@ -9,17 +9,17 @@ interface Params {
 // OBTENER INGREDIENTES MEDIANTE ID
 export async function GET(request: Request, { params }: Params) {
   try {
-    // busca el primer usuario con el id que le pasemos
-    const destacado = await prisma.ingredientes.findFirst({
+    // busca el primer ingrediente con el id que le pasemos
+    const ingredients = await prisma.ingredients.findFirst({
       where: {
         id: Number(params.id),
       },
     });
     // si no existe, devuelve not found 404
-    if (!destacado) {
+    if (!ingredients) {
       return NextResponse.json(
         {
-          message: "ingrediente not found",
+          message: "ingredient not found",
         },
         {
           status: 404,
@@ -27,7 +27,7 @@ export async function GET(request: Request, { params }: Params) {
       );
     }
     //si existe, retorna el ingrediente encontrado
-    return NextResponse.json(destacado);
+    return NextResponse.json(ingredients);
   } catch (error) {
     // si el error es del servidor retorna el error y status 500
     if (error instanceof Error) {
@@ -43,24 +43,24 @@ export async function GET(request: Request, { params }: Params) {
   }
 }
 
-// ELIMINAR DESTACADOS MEDIANTE ID
+// ELIMINAR INGREDIENTES MEDIANTE ID
 export async function DELETE(request: Request, { params }: Params) {
   try {
     // busca el ingrediente con el id que le pasemos, si existe lo elimina
-    const deletedFeatured = await prisma.ingredientes.delete({
+    const deletedIngredient = await prisma.ingredients.delete({
       where: {
         id: Number(params.id),
       },
     });
     // retorna el ingrediente eliminado
-    return NextResponse.json(deletedFeatured);
+    return NextResponse.json(deletedIngredient);
   } catch (error) {
     // si el ingrediente no existe retorna not found 404
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2025") {
         return NextResponse.json(
           {
-            message: "ingrediente not found",
+            message: "ingredient not found",
           },
           { status: 404 },
         );
@@ -81,28 +81,28 @@ export async function DELETE(request: Request, { params }: Params) {
 // ACTUALIZAR INGREDIENTE MEDIANTE ID
 export async function PUT(request: Request, { params }: Params) {
   try {
-    const { nombre, categoria, unidad_medida } = await request.json();
+    const { name, unit, usersId } = await request.json();
 
     // busca el ingrediente con el id que le pasemos para actualizar los datos
-    const featuredUpdate = await prisma.ingredientes.update({
+    const ingredientUpdate = await prisma.ingredients.update({
       where: {
         id: Number(params.id),
       },
       data: {
-        nombre,
-        categoria,
-        unidad_medida,
+        name,
+        unit,
+        usersId,
       },
     });
     // devuelve el ingrediente actualizado
-    return NextResponse.json(featuredUpdate);
+    return NextResponse.json(ingredientUpdate);
   } catch (error) {
     // si el ingrediente no existe retorna not found 404
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2025") {
         return NextResponse.json(
           {
-            message: "featured not found",
+            message: "ingredient not found",
           },
           { status: 404 },
         );

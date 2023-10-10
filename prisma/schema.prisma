@@ -8,80 +8,59 @@ datasource db {
 }
 
 model users {
-  id          Int     @id @default(autoincrement())
-  first_name  String  @db.Text
-  last_name   String  @db.Text
-  email       String  @db.Text
-  password    String  @db.Text
-  description String? @db.Text
+  id          Int           @id @default(autoincrement())
+  username    String
+  email       String        @db.Text
+  password    String        @db.Text
+  description String?       @db.Text
+  photo       String?       @default("userIcon.jpg") @db.VarChar(255)
+  stock       stock[]
+  ingredients ingredients[]
+  recipes     recipes[]
 }
 
-model despensa {
-  id              Int    @id @default(autoincrement())
-  nombre_alimento String @db.Text
-  cantidad        Int
-  unidad_medida   String @db.Text
-  tipo_alimento   String @db.Text
-  user_id         Int
+model stock {
+  id        Int    @id @default(autoincrement())
+  name_food String @db.Text
+  quantity  Int
+  unit      String @db.Text
+  type_food String @db.Text
+  user_id   Int
+  user      users  @relation(fields: [user_id], references: [id])
 }
 
-model ingredientes {
-  id            Int    @id @default(autoincrement())
-  nombre        String @db.Text
-  categoria     String @db.Text
-  unidad_medida String @db.Text
+model ingredients {
+  id                  Int                   @id @default(autoincrement())
+  name                String                @db.Text
+  unit                String                @db.Text
+  users               users?                @relation(fields: [usersId], references: [id])
+  usersId             Int?
+  recipes_ingredients recipes_ingredients[]
 }
 
-model recetas {
-  id            Int    @id @default(autoincrement())
-  nombre        String @db.Text
-  descripcion   String @db.Text
-  ingredientes  String @db.Text
-  instrucciones String @db.Text
+model recipes {
+  id                   Int                   @id @default(autoincrement())
+  name                 String                @db.Text
+  description          String                @db.Text
+  ingredients          String                @db.Text
+  instructions         String                @db.Text
+  userId               Int?
+  user                 users?                @relation(fields: [userId], references: [id])
+  recipes_favourites   favourites[]
+  recetas_ingredientes recipes_ingredients[]
 }
 
-model destacados {
-  id                 Int    @id @default(autoincrement())
-  nombre             String @db.Text
-  descripcion        String @db.Text
-  ingredientes       String @db.Text
-  instrucciones      String @db.Text
-  tiempo_preparacion String @db.Text
+model favourites {
+  id         Int     @id @default(autoincrement())
+  recipes_id Int
+  user_id    Int
+  recipes    recipes @relation(fields: [recipes_id], references: [id])
 }
 
-model recetas_favoritas {
-  id                 Int    @id @default(autoincrement())
-  nombre             String @db.Text
-  descripcion        String @db.Text
-  ingredientes       String @db.Text
-  instrucciones      String @db.Text
-  tiempo_preparacion String @db.Text
-  userID             Int
-}
-
-model recetas_ingredientes {
-  id             Int    @id @default(autoincrement())
-  receta_id      Int
-  ingrediente_id Int
-  cantidad       Int
-  ingredientes   String @db.Text
-  recetas        String @db.Text
-}
-
-model recomendados {
-  id                 Int    @id @default(autoincrement())
-  nombre             String @db.Text
-  descripcion        String @db.Text
-  ingredientes       String @db.Text
-  instrucciones      String @db.Text
-  tiempo_preparacion String @db.Text
-}
-
-model shop_list {
-  id              Int    @id @default(autoincrement())
-  nombre_alimento String @db.Text
-  cantidad        String @db.Text
-  unidad_medida   String @db.Text
-  tipo_alimento   String @db.Text
-  user_id         Int
+model recipes_ingredients {
+  id             Int         @id @default(autoincrement())
+  recipes_id     Int
+  ingredients_id Int
+  recipe         recipes     @relation(fields: [recipes_id], references: [id])
+  ingredient     ingredients @relation(fields: [ingredients_id], references: [id])
 }

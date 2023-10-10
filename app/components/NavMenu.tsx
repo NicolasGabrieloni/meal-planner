@@ -12,8 +12,10 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { signOut, useSession } from "next-auth/react";
 
 export function NavMenu() {
+  const { data: session } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -33,9 +35,18 @@ export function NavMenu() {
           width={60}
           height={60}
         />
-        <button className="fixed right-4 lg:hidden" onClick={toggleMenu}>
+        <button className="fixed left-4 lg:hidden" onClick={toggleMenu}>
           <IconMenu2 />
         </button>
+        {session?.user?.image && (
+          <Image
+            src={session.user.image}
+            alt="User avatar"
+            width={35}
+            height={35}
+            className="fixed right-4 cursor-pointer rounded-full"
+          />
+        )}
       </div>
       <div
         className={`fixed right-0 top-[72px] ${
@@ -115,10 +126,13 @@ export function NavMenu() {
               </Link>
             </li>
             <li>
-              <Link
-                href="/"
+              <button
                 className="flex flex-row space-x-3 px-10"
-                onClick={closeMenu}
+                onClick={async () => {
+                  await signOut({
+                    callbackUrl: "/",
+                  });
+                }}
               >
                 <IconLogout2
                   size={24}
@@ -126,7 +140,7 @@ export function NavMenu() {
                   className="hover:stroke-[1.5px]"
                 />
                 <span>Cerrar sesión</span>
-              </Link>
+              </button>
             </li>
           </ul>
         </div>
@@ -171,13 +185,19 @@ export function NavMenu() {
             </Link>
           </li>
           <li>
-            <Link href="/">
+            <button
+              onClick={async () => {
+                await signOut({
+                  callbackUrl: "/",
+                });
+              }}
+            >
               <IconLogout2
                 size={24}
                 stroke={1}
                 className="hover:stroke-[1.5px]"
               />
-            </Link>
+            </button>
           </li>
         </ul>
       </div>

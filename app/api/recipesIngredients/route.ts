@@ -3,8 +3,8 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET() {
   try {
-    const despensa = await prisma.despensa.findMany();
-    return NextResponse.json(despensa);
+    const recipesIngredients = await prisma.recipes_ingredients.findMany();
+    return NextResponse.json(recipesIngredients);
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json(
@@ -21,20 +21,16 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const { user_id, cantidad, unidad_medida, nombre_alimento, tipo_alimento } =
-      await request.json();
+    const { recipes_id, ingredients_id } = await request.json();
 
-    const newAlimentoDesp = await prisma.despensa.create({
+    const newRI = await prisma.recipes_ingredients.create({
       data: {
-        user_id,
-        cantidad,
-        unidad_medida,
-        nombre_alimento,
-        tipo_alimento
+        recipes_id,
+        ingredients_id,
       },
     });
 
-    return NextResponse.json(newAlimentoDesp);
+    return NextResponse.json(newRI);
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json(

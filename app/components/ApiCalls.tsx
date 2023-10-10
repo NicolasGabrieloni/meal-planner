@@ -8,8 +8,8 @@ export async function Recetas() {
   const data = await res.json();
   return data;
 }
-export async function Despensa() {
-  const res = await fetch("http://localhost:3000/api/despensa");
+export async function Stock() {
+  const res = await fetch("http://localhost:3000/api/stock");
   const data = await res.json();
   return data;
 }
@@ -19,22 +19,12 @@ export async function Favourites() {
   return data;
 }
 export async function Featured() {
-  const res = await fetch("http://localhost:3000/api/featured");
+  const res = await fetch("http://localhost:3000/api/recipesIngredients");
   const data = await res.json();
   return data;
 }
 export async function Ingredients() {
   const res = await fetch("http://localhost:3000/api/ingredients");
-  const data = await res.json();
-  return data;
-}
-export async function Recomended() {
-  const res = await fetch("http://localhost:3000/api/recomended");
-  const data = await res.json();
-  return data;
-}
-export async function ShopList() {
-  const res = await fetch("http://localhost:3000/api/shop-list");
   const data = await res.json();
   return data;
 }

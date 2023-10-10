@@ -30,8 +30,8 @@ export function SearchRecipes() {
 
     const filterRecipes = recetas.filter((receta: receta) => {
       const searchIn = changeSearch
-        ? removeAccents(receta.nombre)
-        : removeAccents(receta.ingredientes);
+        ? removeAccents(receta.name)
+        : removeAccents(receta.ingredients);
       return searchIn.toLowerCase().includes(query);
     });
     setSearchResults(filterRecipes);
@@ -57,14 +57,7 @@ export function SearchRecipes() {
           >
             Name
           </label>
-          <input
-            type="range"
-            min="1"
-            max="2"
-            value={changeSearch ? "1" : "2"}
-            onChange={handleChangeSearch}
-            className="w-10 appearance-none"
-          />
+
           <label
             htmlFor="range"
             onClick={handleChangeSearch}
@@ -91,18 +84,18 @@ export function SearchRecipes() {
         {inputValue.length === 0 ? (
           recetas.map((receta: receta) => (
             <div key={receta.id} className="mt-10 w-96 text-center">
-              <h2 className="m-5 font-bold">{receta.nombre}</h2>
+              <h2 className="m-5 font-bold">{receta.name}</h2>
               <p>
                 <b>Descripcion: </b>
-                {receta.descripcion}
+                {receta.description}
               </p>
               <p>
                 <b>ingredientes: </b>
-                {receta.ingredientes}
+                {receta.ingredients}
               </p>
               <p>
                 <b>instrucciones: </b>
-                {receta.instrucciones}
+                {receta.instructions}
               </p>
               <button className="m-5 w-32 rounded-md border border-black">
                 EDIT
@@ -115,18 +108,18 @@ export function SearchRecipes() {
         ) : searchResults.length > 0 ? (
           searchResults.map((receta: receta) => (
             <div key={receta.id} className="mt-10 w-96 text-center">
-              <h2 className="m-5 font-bold">{receta.nombre}</h2>
+              <h2 className="m-5 font-bold">{receta.name}</h2>
               <p>
                 <b>Descripcion: </b>
-                {receta.descripcion}
+                {receta.description}
               </p>
               <p>
                 <b>ingredientes: </b>
-                {receta.ingredientes}
+                {receta.ingredients}
               </p>
               <p>
                 <b>instrucciones: </b>
-                {receta.instrucciones}
+                {receta.instructions}
               </p>
               <button className="m-5 w-32 rounded-md border border-black">
                 EDIT

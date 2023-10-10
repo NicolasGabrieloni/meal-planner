@@ -6,11 +6,11 @@ interface Params {
   params: { id: string };
 }
 
-// OBTENER ALIMENTOS MEDIANTE ID
+// OBTENER ALIMENTOS DE DESPENSA MEDIANTE ID
 export async function GET(request: Request, { params }: Params) {
   try {
     // busca el primer alimento con el id que le pasemos
-    const food = await prisma.shop_list.findFirst({
+    const food = await prisma.stock.findFirst({
       where: {
         id: Number(params.id),
       },
@@ -47,7 +47,7 @@ export async function GET(request: Request, { params }: Params) {
 export async function DELETE(request: Request, { params }: Params) {
   try {
     // busca el alimento con el id que le pasemos, si existe lo elimina
-    const deletedFood = await prisma.shop_list.delete({
+    const deletedFood = await prisma.stock.delete({
       where: {
         id: Number(params.id),
       },
@@ -81,26 +81,26 @@ export async function DELETE(request: Request, { params }: Params) {
 // ACTUALIZAR ALIMENTOS MEDIANTE ID
 export async function PUT(request: Request, { params }: Params) {
   try {
-    const { user_id, cantidad, unidad_medida, nombre_alimento, tipo_alimento } =
+    const { user_id, name_food, quantity, unit, type_food } =
       await request.json();
 
-    // busca el usuario con el id que le pasemos para actualizar los datos
-    const foodUpdate = await prisma.shop_list.update({
+    // busca el alimento con el id que le pasemos para actualizar los datos
+    const foodUpdate = await prisma.stock.update({
       where: {
         id: Number(params.id),
       },
       data: {
         user_id,
-        cantidad,
-        unidad_medida,
-        nombre_alimento,
-        tipo_alimento,
+        name_food,
+        quantity,
+        unit,
+        type_food,
       },
     });
-    // devuelve el usuario actualizado
+    // devuelve el alimento actualizado
     return NextResponse.json(foodUpdate);
   } catch (error) {
-    // si el usuario no existe retorna not found 404
+    // si el alimento no existe retorna not found 404
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2025") {
         return NextResponse.json(

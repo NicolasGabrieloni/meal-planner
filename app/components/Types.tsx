@@ -1,9 +1,9 @@
-type receta = {
-    id: number;
-    nombre: string;
-    descripcion: string;
-    ingredientes: string;
-    instrucciones: string;
-  };
+type recipe = {
+  id: number;
+  name: string;
+  description: string;
+  ingredients: string;
+  instructions: string;
+};
 
-  export default receta;
+export default recipe;

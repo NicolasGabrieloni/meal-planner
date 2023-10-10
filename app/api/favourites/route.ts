@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET() {
   try {
-    const recFavourites = await prisma.recetas_favoritas.findMany();
+    const recFavourites = await prisma.favourites.findMany();
     return NextResponse.json(recFavourites);
   } catch (error) {
     if (error instanceof Error) {
@@ -21,23 +21,12 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const {
-      nombre,
-      descripcion,
-      ingredientes,
-      instrucciones,
-      tiempo_preparacion,
-      usersId,
-    } = await request.json();
+    const { recipes_id, user_id } = await request.json();
 
-    const newReceta = await prisma.recetas_favoritas.create({
+    const newReceta = await prisma.favourites.create({
       data: {
-        nombre,
-        descripcion,
-        ingredientes,
-        instrucciones,
-        tiempo_preparacion,
-        usersId,
+        recipes_id,
+        user_id,
       },
     });
 

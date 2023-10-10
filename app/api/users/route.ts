@@ -37,7 +37,7 @@ const UserSchema = z.object({
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { first_name, last_name, email, password } = UserSchema.parse(body);
+    const { username, email, password } = UserSchema.parse(body);
 
     //chequear si el mail ya existe
     const existingEmail = await prisma.users.findFirst({
@@ -55,8 +55,7 @@ export async function POST(request: Request) {
     const hashedPass = await hash(password, 10);
     const newUser = await prisma.users.create({
       data: {
-        first_name,
-        last_name,
+        username,
         email,
         password: hashedPass,
       },

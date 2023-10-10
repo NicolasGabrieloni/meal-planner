@@ -6,30 +6,25 @@ interface Params {
   params: { id: string };
 }
 
-// OBTENER RECOMENDADOS MEDIANTE ID
 export async function GET(request: Request, { params }: Params) {
   try {
-    // busca el primer recomendado con el id que le pasemos
-    const recomendado = await prisma.recomendados.findFirst({
+    const recipeIngredient = await prisma.recipes_ingredients.findFirst({
       where: {
         id: Number(params.id),
       },
     });
-    // si no existe, devuelve not found 404
-    if (!recomendado) {
+    if (!recipeIngredient) {
       return NextResponse.json(
         {
-          message: "recomended not found",
+          message: "not found",
         },
         {
           status: 404,
         },
       );
     }
-    //si existe, retorna el recomendado encontrado
-    return NextResponse.json(recomendado);
+    return NextResponse.json(recipeIngredient);
   } catch (error) {
-    // si el error es del servidor retorna el error y status 500
     if (error instanceof Error) {
       return NextResponse.json(
         {
@@ -43,29 +38,24 @@ export async function GET(request: Request, { params }: Params) {
   }
 }
 
-// ELIMINAR RECOMENDADOS MEDIANTE ID
 export async function DELETE(request: Request, { params }: Params) {
   try {
-    // busca el recomendado con el id que le pasemos, si existe lo elimina
-    const deletedRecomended = await prisma.recomendados.delete({
+    const deletedRI = await prisma.recipes_ingredients.delete({
       where: {
         id: Number(params.id),
       },
     });
-    // retorna el recomendado eliminado
-    return NextResponse.json(deletedRecomended);
+    return NextResponse.json(deletedRI);
   } catch (error) {
-    // si el recomendado no existe retorna not found 404
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2025") {
         return NextResponse.json(
           {
-            message: "recomendado not found",
+            message: "not found",
           },
           { status: 404 },
         );
       }
-      // si el error es del servidor retorna el error y status 500
       return NextResponse.json(
         {
           message: error.message,
@@ -78,44 +68,31 @@ export async function DELETE(request: Request, { params }: Params) {
   }
 }
 
-// ACTUALIZAR RECOMENDADOS MEDIANTE ID
+// ACTUALIZAR DESTACADOS MEDIANTE ID
 export async function PUT(request: Request, { params }: Params) {
   try {
-    const {
-      nombre,
-      descripcion,
-      ingredientes,
-      instrucciones,
-      tiempo_preparacion,
-    } = await request.json();
+    const { recipes_id, ingredients_id } = await request.json();
 
-    // busca el recomendado con el id que le pasemos para actualizar los datos
-    const recomendedUpdate = await prisma.recomendados.update({
+    const RIUpdate = await prisma.recipes_ingredients.update({
       where: {
         id: Number(params.id),
       },
       data: {
-        nombre,
-        descripcion,
-        ingredientes,
-        instrucciones,
-        tiempo_preparacion,
+        recipes_id,
+        ingredients_id,
       },
     });
-    // devuelve el recomendado actualizado
-    return NextResponse.json(recomendedUpdate);
+    return NextResponse.json(RIUpdate);
   } catch (error) {
-    // si el recomendado no existe retorna not found 404
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2025") {
         return NextResponse.json(
           {
-            message: "recomendado not found",
+            message: "not found",
           },
           { status: 404 },
         );
       }
-      // si el error es del servidor retorna el error y status 500
       return NextResponse.json(
         {
           message: error.message,

@@ -23,7 +23,7 @@ export async function GET(request: Request, { params }: Params) {
         },
         {
           status: 404,
-        }
+        },
       );
     }
     //si existe, retorna el usuario encontrado
@@ -37,7 +37,7 @@ export async function GET(request: Request, { params }: Params) {
         },
         {
           status: 500,
-        }
+        },
       );
     }
   }
@@ -62,7 +62,7 @@ export async function DELETE(request: Request, { params }: Params) {
           {
             message: "user not found",
           },
-          { status: 404 }
+          { status: 404 },
         );
       }
       // si el error es del servidor retorna el error y status 500
@@ -72,7 +72,7 @@ export async function DELETE(request: Request, { params }: Params) {
         },
         {
           status: 500,
-        }
+        },
       );
     }
   }
@@ -81,8 +81,7 @@ export async function DELETE(request: Request, { params }: Params) {
 // ACTUALIZAR USUARIOS MEDIANTE ID
 export async function PUT(request: Request, { params }: Params) {
   try {
-    const { first_name, last_name, email, password, description } =
-      await request.json();
+    const { username, email, password, description } = await request.json();
 
     // busca el usuario con el id que le pasemos para actualizar los datos
     const userUpdate = await prisma.users.update({
@@ -90,8 +89,7 @@ export async function PUT(request: Request, { params }: Params) {
         id: Number(params.id),
       },
       data: {
-        first_name,
-        last_name,
+        username,
         email,
         password,
         description,
@@ -107,7 +105,7 @@ export async function PUT(request: Request, { params }: Params) {
           {
             message: "user not found",
           },
-          { status: 404 }
+          { status: 404 },
         );
       }
       // si el error es del servidor retorna el error y status 500
@@ -117,7 +115,7 @@ export async function PUT(request: Request, { params }: Params) {
         },
         {
           status: 500,
-        }
+        },
       );
     }
   }

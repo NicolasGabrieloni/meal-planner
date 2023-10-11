@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { useSession } from "next-auth/react";
+
+import { getServerSession } from "next-auth";
+import { options } from "@/api/auth/[...nextauth]/options";
 
 export async function GET() {
-  const { data: session } = useSession();
+  const session = await getServerSession(options);
   try {
     const verdura = await prisma.stock.findMany({
       where: {

@@ -1,6 +1,5 @@
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import { compare } from "bcrypt";
@@ -12,14 +11,18 @@ export const options: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
+  callbacks: {
+    session({ session, user }) {
+      if (session.user) {
+        session.user.id = user.id;
+      }
+      return session;
+    },
+  },
   pages: {
     signIn: "/sign-in",
   },
   providers: [
-    // GoogleProvider({
-    //   clientId: process.env.GOOGLE_CLIENT_ID as string,
-    //   clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-    // }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -55,7 +58,7 @@ export const options: NextAuthOptions = {
         }
         return {
           id: `${existingUser.id}`,
-          name: existingUser.first_name,
+          name: existingUser.username,
           email: existingUser.email,
         };
       },

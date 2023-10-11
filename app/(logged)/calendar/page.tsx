@@ -1,4 +1,5 @@
 import FoodSearchRemove from "@/components/calendar/FoodSearchRemove";
+import ListButton from "@/components/ui/ListButton";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -11,7 +12,7 @@ export default function Calendar() {
       <h1 className="pb-2 text-xl font-medium text-[#00785C]">
         Calendario semanal
       </h1>
-      <div className="space-y-6">
+      <div className="flex flex-col items-center space-y-6">
         <div className="">
           <h2 className="text-md min-w-[280px] border-b border-[#00785C] text-[#00785C]">
             Lunes
@@ -89,6 +90,7 @@ export default function Calendar() {
             <FoodSearchRemove labelText="Cena" />
           </div>
         </div>
+        <ListButton label="Generar lista de compras" />
       </div>
     </div>
   );

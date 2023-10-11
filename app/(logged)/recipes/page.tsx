@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { SearchRecipes } from "@/components/Search";
+import { SearchRecipes } from "@/components/recipes/Search";
 
 export const metadata: Metadata = {
   title: "Recetas",

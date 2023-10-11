@@ -1,3 +1,7 @@
+import Alacena from "@/components/stock/Alacena";
+import Carnes from "@/components/stock/Carnes";
+import Lacteos from "@/components/stock/Lacteos";
+import VerdurasFrutas from "@/components/stock/Verduras";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -14,7 +18,9 @@ export default function Depot() {
       <section className="mx-auto mt-5 w-80 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
         <div>
           <div className="flex justify-center">
-            <div className="h-[200px] "></div>
+            <div className="h-[200px] ">
+              <VerdurasFrutas />
+            </div>
           </div>
         </div>
       </section>
@@ -22,7 +28,9 @@ export default function Depot() {
       <section className="mx-auto mt-5 w-80 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
         <div>
           <div className="flex justify-center">
-            <div className="h-[200px] "></div>
+            <div className="h-[200px] ">
+              <Alacena />
+            </div>
           </div>
         </div>
       </section>
@@ -30,7 +38,9 @@ export default function Depot() {
       <section className="mx-auto mt-5 w-80 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
         <div>
           <div className="flex justify-center">
-            <div className="h-[200px] "></div>
+            <div className="h-[200px] ">
+              <Carnes />
+            </div>
           </div>
         </div>
       </section>
@@ -38,7 +48,9 @@ export default function Depot() {
       <section className="mx-auto mt-5 w-80 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
         <div>
           <div className="flex justify-center">
-            <div className="h-[200px] "></div>
+            <div className="h-[200px] ">
+              <Lacteos />
+            </div>
           </div>
         </div>
       </section>

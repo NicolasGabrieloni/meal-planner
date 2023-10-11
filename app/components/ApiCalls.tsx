@@ -8,11 +8,38 @@ export async function Recetas() {
   const data = await res.json();
   return data;
 }
+
+/// STOCK ///
+
 export async function Stock() {
   const res = await fetch("http://localhost:3000/api/stock");
   const data = await res.json();
   return data;
 }
+
+export async function typeCarnes() {
+  const res = await fetch("http://localhost:3000/api/stock/carnes");
+  const data = await res.json();
+  return data;
+}
+export async function frutasVerduras() {
+  const res = await fetch("http://localhost:3000/api/stock/verduras");
+  const data = await res.json();
+  return data;
+}
+export async function AlacenaCall() {
+  const res = await fetch("http://localhost:3000/api/stock/alacena");
+  const data = await res.json();
+  return data;
+}
+export async function LacteosCall() {
+  const res = await fetch("http://localhost:3000/api/stock/lacteos");
+  const data = await res.json();
+  return data;
+}
+
+///////////
+
 export async function Favourites() {
   const res = await fetch("http://localhost:3000/api/favourites");
   const data = await res.json();

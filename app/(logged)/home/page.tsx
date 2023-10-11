@@ -6,6 +6,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import ListButton from "@/components/ui/ListButton";
 
 export const metadata: Metadata = {
   title: "Inicio",
@@ -48,13 +49,12 @@ export default function Home() {
           <div>
             <div className="flex justify-center">
               <div className="h-[250px] "></div>
-             
             </div>
           </div>
         </section>
       </div>
-      <div className="mt-8 text-center">
-        <Button variant="blue_outlined">Lista de compras ✔️</Button>
+      <div className="mt-8">
+        <ListButton label="Ver lista de compras" />
       </div>
       <div>
         <div className="mt-8 text-center">
@@ -64,7 +64,6 @@ export default function Home() {
           <div>
             <div className="flex justify-center">
               <div className="h-[350px] "></div>
-              
             </div>
           </div>
         </section>

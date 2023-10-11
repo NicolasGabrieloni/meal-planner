@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Recetas } from "./ApiCalls";
-import receta from "@/components/Types";
+import { Recetas } from "../ApiCalls";
+import { recipe } from "@/components/Types";
 
 export function SearchRecipes() {
   const [inputValue, setInputValue] = useState("");
@@ -28,7 +28,7 @@ export function SearchRecipes() {
     const query = removeAccents(e.target.value).toLowerCase();
     setInputValue(query);
 
-    const filterRecipes = recetas.filter((receta: receta) => {
+    const filterRecipes = recetas.filter((receta: recipe) => {
       const searchIn = changeSearch
         ? removeAccents(receta.name)
         : removeAccents(receta.ingredients);
@@ -82,7 +82,7 @@ export function SearchRecipes() {
 
       <div className="BUSCADOr">
         {inputValue.length === 0 ? (
-          recetas.map((receta: receta) => (
+          recetas.map((receta: recipe) => (
             <div key={receta.id} className="mt-10 w-96 text-center">
               <h2 className="m-5 font-bold">{receta.name}</h2>
               <p>
@@ -106,7 +106,7 @@ export function SearchRecipes() {
             </div>
           ))
         ) : searchResults.length > 0 ? (
-          searchResults.map((receta: receta) => (
+          searchResults.map((receta: recipe) => (
             <div key={receta.id} className="mt-10 w-96 text-center">
               <h2 className="m-5 font-bold">{receta.name}</h2>
               <p>

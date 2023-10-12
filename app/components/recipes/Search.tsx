@@ -42,7 +42,7 @@ export function SearchRecipes() {
   };
 
   return (
-    <div className="mx-32 w-full text-center">
+    <div className="w-screen ">
       <div>
         <div>
           <h2>search by </h2>
@@ -83,7 +83,7 @@ export function SearchRecipes() {
       <div className="BUSCADOr">
         {inputValue.length === 0 ? (
           recetas.map((receta: recipe) => (
-            <div key={receta.id} className="mt-10 w-96 text-center">
+            <div key={receta.id} className="mt-10 text-center">
               <h2 className="m-5 font-bold">{receta.name}</h2>
               <p>
                 <b>Descripcion: </b>
@@ -97,12 +97,6 @@ export function SearchRecipes() {
                 <b>instrucciones: </b>
                 {receta.instructions}
               </p>
-              <button className="m-5 w-32 rounded-md border border-black">
-                EDIT
-              </button>
-              <button className="m-5 w-32 rounded-md border border-black">
-                DELETE
-              </button>
             </div>
           ))
         ) : searchResults.length > 0 ? (
@@ -121,12 +115,6 @@ export function SearchRecipes() {
                 <b>instrucciones: </b>
                 {receta.instructions}
               </p>
-              <button className="m-5 w-32 rounded-md border border-black">
-                EDIT
-              </button>
-              <button className="m-5 w-32 rounded-md border border-black">
-                DELETE
-              </button>
             </div>
           ))
         ) : (

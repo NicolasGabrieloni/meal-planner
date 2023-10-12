@@ -11,14 +11,14 @@ export const options: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
-  callbacks: {
-    session({ session, user }) {
-      if (session.user) {
-        session.user.id = user.id;
-      }
-      return session;
-    },
-  },
+  // callbacks: {
+  //   session({ session, user }) {
+  //     if (session.user) {
+  //       session.user.id = user.id;
+  //     }
+  //     return session;
+  //   },
+  // },
   pages: {
     signIn: "/sign-in",
   },

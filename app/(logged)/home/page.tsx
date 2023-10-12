@@ -5,8 +5,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
 import ListButton from "@/components/ui/ListButton";
+import { Buttton } from "@/components/ui/buttton";
 
 export const metadata: Metadata = {
   title: "Inicio",
@@ -22,7 +22,7 @@ export default function Home() {
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-300"></div>
               <AccordionTrigger className="ml-4">
                 <div>
-                  <h2 className="text-base font-bold">Jonny Tecuento</h2>
+                  <h2 className="text-base font-bold">aaaa</h2>
                   <p className="ml-3">Una breve descripción</p>
                 </div>
               </AccordionTrigger>
@@ -41,6 +41,7 @@ export default function Home() {
           </AccordionItem>
         </Accordion>
       </div>
+      <Buttton />
       <div>
         <div className=" mt-8 text-center">
           <h2>Caledario semanal</h2>

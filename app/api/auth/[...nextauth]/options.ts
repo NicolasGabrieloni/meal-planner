@@ -12,11 +12,19 @@ export const options: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    session({ session, user }) {
-      if (session.user) {
-        session.user.id = user.id;
+    session: async ({ session, token }) => {
+      if (token) {
+        session.user = { ...session.user, id: token.id };
       }
+
       return session;
+    },
+    jwt: ({ token, user }) => {
+      if (user) {
+        token.id = user.id;
+      }
+
+      return token;
     },
   },
   pages: {

@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { PopoverProps } from "@radix-ui/react-popover";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import {
   Command,
@@ -22,7 +22,11 @@ import {
   CommandItem,
 } from "cmdk";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+// @ts-ignore
 import { Preset } from "@/data/presets";
+import { Recetas } from "../ApiCalls";
+import { recipe } from "@/components/Types";
+import { RecipesAvailable } from "./RecipesAvailable";
 interface PresetSelectorProps extends PopoverProps {
   presets: Preset[];
 }
@@ -31,13 +35,25 @@ export default function FoodInput({ presets, ...props }: PresetSelectorProps) {
   const [openRecipePopover, setOpenRecipePopover] = useState(false);
   const [openInstantPopover, setOpenInstantPopover] = useState(false);
   const [selectedPreset, setSelectedPreset] = useState<Preset>();
+  const [recetas, setRecetas] = useState([]);
+
+  useEffect(() => {
+    Recetas().then((resultados) => {
+      const resultadosSinMapear = resultados;
+      setRecetas(resultadosSinMapear);
+    });
+  }, []);
+  const handleRecipeClick = (receta: recipe) => {
+    setSelectedPreset(receta);
+    setOpenRecipePopover(false);
+  };
 
   return (
     <div>
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="search" className="w-fit min-w-[200px] ">
-            Agregar comida
+            {selectedPreset ? selectedPreset.name : "Agregar Comida"}
           </Button>
         </DialogTrigger>
         <DialogContent className="w-screen rounded-xl border border-[#343434] md:max-w-[425px]">
@@ -79,7 +95,7 @@ export default function FoodInput({ presets, ...props }: PresetSelectorProps) {
                     <CommandInput placeholder="Buscar:" />
                     <CommandEmpty>Nada por aquí</CommandEmpty>
                     <CommandGroup>
-                      {/* ACÁ VA EL MAP DE LAS RECETAS DISPONIBLES AL INSTANTE */}
+                      <RecipesAvailable />
                     </CommandGroup>
                   </Command>
                 </PopoverContent>
@@ -107,25 +123,13 @@ export default function FoodInput({ presets, ...props }: PresetSelectorProps) {
                     <CommandInput placeholder="Buscar:" />
                     <CommandEmpty>Nada por aquí</CommandEmpty>
                     <CommandGroup>
-                      {/* {presets.map((preset) => (
-                    <CommandItem
-                      key={preset.id}
-                      onSelect={() => {
-                        setSelectedPreset(preset);
-                        setOpen(false);
-                      }}
-                    >
-                      {preset.name}                 // ACÁ IRÍA EL MAP DE LAS RECETAS DISPONIBLES AL INSTANTE
-                      <CheckIcon
-                        className={cn(
-                          "ml-auto h-4 w-4",
-                          selectedPreset?.id === preset.id
-                            ? "opacity-100"
-                            : "opacity-0",
-                        )}
-                      />
-                    </CommandItem>
-                  ))} */}
+                      {recetas.map((receta: recipe) => (
+                        <div key={receta.id} className="cursor-pointer">
+                          <h3 onClick={() => handleRecipeClick(receta)}>
+                            {receta.name}
+                          </h3>
+                        </div>
+                      ))}
                     </CommandGroup>
                   </Command>
                 </PopoverContent>

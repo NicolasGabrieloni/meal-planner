@@ -6,7 +6,7 @@ type recipe = {
   instructions: string;
 };
 
-type Stock = {
+type stock = {
   id: number;
   name_food: string;
   quantity: string;
@@ -15,4 +15,4 @@ type Stock = {
   user_id: number;
 };
 
-export type { recipe, Stock };
+export type { recipe, stock };

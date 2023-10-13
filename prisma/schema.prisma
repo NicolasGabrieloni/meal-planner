@@ -13,20 +13,28 @@ model users {
   email       String        @db.Text
   password    String        @db.Text
   description String?       @db.Text
-  photo       String?       @default("userIcon.jpg") @db.VarChar(255)
+  photo       String?       @default("https://imgs.search.brave.com/kd4KROFST0d43nIu-FClOgdp2VbaSwTiukIPY-RZn8U/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudGhlbm91bnBy/b2plY3QuY29tL3Bu/Zy80MTU0OTA1LTIw/MC5wbmc") @db.VarChar(255)
   stock       stock[]
   ingredients ingredients[]
   recipes     recipes[]
 }
 
+enum TypeFood {
+  verdura
+  fruta
+  carne
+  lacteo
+  secos
+}
+
 model stock {
-  id        Int    @id @default(autoincrement())
-  name_food String @db.Text
+  id        Int      @id @default(autoincrement())
+  name_food String   @db.Text
   quantity  Int
-  unit      String @db.Text
-  type_food String @db.Text
+  unit      String   @db.Text
+  type_food TypeFood
   user_id   Int
-  user      users  @relation(fields: [user_id], references: [id])
+  user      users    @relation(fields: [user_id], references: [id])
 }
 
 model ingredients {
@@ -50,17 +58,17 @@ model recipes {
   recetas_ingredientes recipes_ingredients[]
 }
 
-model favourites {
-  id         Int     @id @default(autoincrement())
-  recipes_id Int
-  user_id    Int
-  recipes    recipes @relation(fields: [recipes_id], references: [id])
-}
-
 model recipes_ingredients {
   id             Int         @id @default(autoincrement())
   recipes_id     Int
   ingredients_id Int
   recipe         recipes     @relation(fields: [recipes_id], references: [id])
   ingredient     ingredients @relation(fields: [ingredients_id], references: [id])
+}
+
+model favourites {
+  id         Int     @id @default(autoincrement())
+  recipes_id Int
+  user_id    Int
+  recipes    recipes @relation(fields: [recipes_id], references: [id])
 }

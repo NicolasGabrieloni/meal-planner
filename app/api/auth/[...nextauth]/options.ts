@@ -16,7 +16,6 @@ export const options: NextAuthOptions = {
       if (token) {
         session.user = { ...session.user, id: token.id };
       }
-
       return session;
     },
     jwt: ({ token, user }) => {
@@ -68,6 +67,8 @@ export const options: NextAuthOptions = {
           id: `${existingUser.id}`,
           name: existingUser.username,
           email: existingUser.email,
+          image: existingUser.image,
+          description: existingUser.description,
         };
       },
     }),

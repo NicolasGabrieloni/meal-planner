@@ -8,13 +8,16 @@ import {
 import ListButton from "@/components/ui/ListButton";
 import { Buttton } from "@/components/ui/buttton";
 
+import Profile from "@/components/home/Profile";
+
 export const metadata: Metadata = {
   title: "Inicio",
 };
 
 export default function Home() {
   return (
-    <div className="m-8 pt-5">
+    <div className="p-4">
+      {/* <Profile /> */}
       <div className="w-80 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
         <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="item-1" className="flex flex-col sm:flex-row">

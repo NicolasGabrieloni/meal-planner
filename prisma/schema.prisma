@@ -13,7 +13,7 @@ model users {
   email       String        @db.Text
   password    String        @db.Text
   description String?       @db.Text
-  photo       String?       @default("userIcon.jpg") @db.VarChar(255)
+  image       String?       @default("https://static.thenounproject.com/png/5034901-200.png") @db.VarChar(255)
   stock       stock[]
   ingredients ingredients[]
   recipes     recipes[]

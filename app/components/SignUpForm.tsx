@@ -69,7 +69,7 @@ const SignUpForm = () => {
 
   return (
     <div>
-      <div className="flex h-[500px] w-[250px] flex-col items-center rounded-[5px] border border-[#343434] bg-[#FAFAFA] p-6 drop-shadow-md">
+      <div className="flex h-[400px] w-[250px] flex-col items-center rounded-[5px] border border-[#343434] bg-[#FAFAFA] p-6 drop-shadow-md">
         <h2 className="text-lg font-medium text-[#00785C] ">Registrarse</h2>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">

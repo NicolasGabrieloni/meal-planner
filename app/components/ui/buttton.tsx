@@ -2,11 +2,11 @@
 import { useSession } from "next-auth/react";
 
 export function Buttton() {
-  const { data, status } = useSession();
+  const { data: session } = useSession();
 
   return (
     <>
-      <button onClick={() => console.log(data, status)}>hola bb</button>
+      <button onClick={() => console.log(session?.user)}>hola bb</button>
     </>
   );
 }

@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -12,36 +11,98 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { IconUserEdit } from "@tabler/icons-react";
+import { IconDots } from "@tabler/icons-react";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import { ChangeEventHandler, SetStateAction, useState } from "react";
 
 export function ProfileEdit() {
+  const { data: session } = useSession();
+  const [description, setDescription] = useState(session?.user?.description);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleDescriptionChange = (event: { target: { value: string } }) => {
+    setDescription(event.target.value);
+  };
+
+  // const handleImageChange = (event: {
+  //   target: { files: ChangeEventHandler<HTMLInputElement> };
+  // }) => {
+  //   setSelectedImage(event.target.files[0]);
+  // };
+
+  const handleSaveChanges = async () => {
+    const formData = new FormData();
+    formData.append("description", description);
+    // if (selectedImage) {
+    //   formData.append("image", selectedImage);
+    // }
+    try {
+      const response = await fetch(`/api/users/${session?.user?.id}`, {
+        method: "PUT",
+        body: formData,
+      });
+
+      if (response.ok) {
+        console.log("bien rey");
+      } else {
+        console.log("mmm no");
+      }
+    } catch (error) {
+      console.error("Error al actualizar el perfil", error);
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="flex h-[30px] w-[30px] justify-center rounded-md border border-black bg-[#80FF95] pt-[5px] ">
-          <IconUserEdit stroke={1} height={18} />
+        <button className="flex h-[16px] w-[25px] items-center rounded-md border border-black bg-[#80FF95]  ">
+          <IconDots stroke={1} height={18} />
         </button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="w-screen rounded-xl border border-[#343434] md:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Editar perfil</DialogTitle>
+          <DialogTitle className="text-xl font-medium text-[#00785C]">
+            Editar perfil
+          </DialogTitle>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input id="name" value="Pedro Duarte" className="col-span-3" />
+        <div className="flex flex-col justify-between space-y-5">
+          <div className="flex flex-row items-center space-x-5">
+            <Image
+              src={session?.user?.image as string}
+              alt="User profile image"
+              width={70}
+              height={70}
+              className="max-h-[70px] max-w-[70px] rounded-full "
+            />
+            <Input
+              type="file"
+              id="image"
+              //onChange={handleImageChange}
+              className="flex w-[160px] bg-[#E9FFEB]"
+            />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
+          <div>
+            <Label htmlFor="description" className="text-right">
+              Descripción
             </Label>
-            <Input id="username" value="@peduarte" className="col-span-3" />
+            <textarea
+              id="description"
+              value={description}
+              onChange={handleDescriptionChange}
+              rows={3}
+              className=" w-[270px] rounded-md border border-[#343434] p-1 text-sm shadow-md"
+            />
           </div>
         </div>
-        <DialogFooter>
-          <Button type="submit">Save changes</Button>
+        <DialogFooter className="items-end">
+          <Button
+            variant={"green_outlined"}
+            className="w-fit"
+            onClick={handleSaveChanges}
+          >
+            Guardar cambios
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

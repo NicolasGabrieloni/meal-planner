@@ -13,7 +13,7 @@ model users {
   email       String        @db.Text
   password    String        @db.Text
   description String?       @db.Text
-  photo       String?       @default("https://imgs.search.brave.com/kd4KROFST0d43nIu-FClOgdp2VbaSwTiukIPY-RZn8U/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudGhlbm91bnBy/b2plY3QuY29tL3Bu/Zy80MTU0OTA1LTIw/MC5wbmc") @db.VarChar(255)
+  image       String?       @default("https://static.thenounproject.com/png/5034901-200.png") @db.VarChar(255)
   stock       stock[]
   ingredients ingredients[]
   recipes     recipes[]

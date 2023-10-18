@@ -3,9 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import { compare } from "bcrypt";
-
 const prisma = new PrismaClient();
-
 export const options: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   session: {
@@ -22,7 +20,6 @@ export const options: NextAuthOptions = {
       if (user) {
         token.id = user.id;
       }
-
       return token;
     },
   },
@@ -54,12 +51,10 @@ export const options: NextAuthOptions = {
         if (!existingUser) {
           return null;
         }
-
         const passwordMatch = await compare(
           credentials.password,
           existingUser.password,
         );
-
         if (!passwordMatch) {
           return null;
         }

@@ -3,7 +3,9 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import { compare } from "bcrypt";
+
 const prisma = new PrismaClient();
+
 export const options: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   session: {
@@ -12,13 +14,14 @@ export const options: NextAuthOptions = {
   callbacks: {
     session: async ({ session, token }) => {
       if (token) {
-        session.user = { ...session.user, id: token.id };
+        session.user = { ...session.user, id: token.id, description: token.description };
       }
       return session;
     },
     jwt: ({ token, user }) => {
       if (user) {
         token.id = user.id;
+        token.description = user.description
       }
       return token;
     },

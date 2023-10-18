@@ -15,4 +15,10 @@ type stock = {
   user_id: number;
 };
 
-export type { recipe, stock };
+type favourites = {
+  id: number;
+  recipes_id: number;
+  user_id: number;
+};
+
+export type { recipe, stock, favourites };

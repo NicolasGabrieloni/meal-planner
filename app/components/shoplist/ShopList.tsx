@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { stock } from "@prisma/client";
+import React, { useEffect, useState } from "react";
 import { Recetas, Stock } from "../ApiCalls";
-import { stock, recipe } from "@/components/Types";
-import { useMyContext } from "./Context";
+import { recipe } from "../Types";
 
 function normalizeText(text: string) {
   return text
@@ -12,10 +12,9 @@ function normalizeText(text: string) {
     .replace(/[\u0300-\u036f]/g, "");
 }
 
-export function RecipesAvailable() {
+function Shop() {
   const [inStock, setInStock] = useState<stock[]>([]);
   const [recetas, setRecetas] = useState<recipe[]>([]);
-  const { data, setData } = useMyContext();
   const recipesAvailable: string[] = [];
 
   useEffect(() => {
@@ -51,18 +50,10 @@ export function RecipesAvailable() {
   }
 
   return (
-    <>
-      <div>
-        {recipesAvailable.map((recipeAv) => (
-          <h2
-            key={recipeAv}
-            onClick={() => setData(recipeAv)}
-            className="cursor-pointer"
-          >
-            {recipeAv}
-          </h2>
-        ))}
-      </div>
-    </>
+    <div className="w-full text-center">
+      <h2 className="font-bold">ShopList</h2>
+    </div>
   );
 }
+
+export default Shop;

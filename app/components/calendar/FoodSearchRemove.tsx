@@ -2,7 +2,6 @@
 
 import { LabelForInput } from "../LabelForInput";
 import { MyContextProvider } from "./Context";
-import EditButton from "./EditButton";
 import FoodInput from "./FoodInput";
 import RemoveButton from "./RemoveButton";
 
@@ -19,7 +18,6 @@ export default function FoodSearchRemove({ labelText }: InputWithLabelProps) {
           <FoodInput presets={[]} />
         </div>
         <div className="flex place-items-end space-x-2">
-          <EditButton />
           <RemoveButton />
         </div>
       </div>

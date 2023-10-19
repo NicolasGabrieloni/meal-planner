@@ -1,7 +1,5 @@
 import { Metadata } from "next";
-import { SearchRecipes } from "@/components/recipes/Search";
-import LabelAndImages from "@/components/recipes/LabelAndImages";
-import { AddRecipes } from "@/components/recipes/AddRecipes";
+import RecipesComponents from "@/components/recipes/RecipesComponents";
 
 export const metadata: Metadata = {
   title: "Recetas",
@@ -10,10 +8,7 @@ export const metadata: Metadata = {
 async function Recipes() {
   return (
     <>
-      <AddRecipes />
-      <LabelAndImages label="Recetas favoritas" />
-      <LabelAndImages label="Destacadas de la semana" />
-      <SearchRecipes />
+      <RecipesComponents />
     </>
   );
 }

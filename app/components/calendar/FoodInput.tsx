@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { PopoverProps } from "@radix-ui/react-popover";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import {
   Command,
@@ -36,6 +36,7 @@ export default function FoodInput({ presets, ...props }: PresetSelectorProps) {
   const [openRecipePopover, setOpenRecipePopover] = useState(false);
   const [openInstantPopover, setOpenInstantPopover] = useState(false);
   const [selectedPreset, setSelectedPreset] = useState<Preset | null>(null);
+
   const { data } = useMyContext();
 
   useEffect(() => {

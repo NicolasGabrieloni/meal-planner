@@ -68,28 +68,6 @@ export default function Calendar() {
             <FoodSearchRemove labelText="Cena" />
           </div>
         </div>
-        <div className="">
-          <h2 className="text-md min-w-[280px] border-b border-[#00785C] text-[#00785C]">
-            Sábado
-          </h2>
-          <div className="py-1">
-            <FoodSearchRemove labelText="Almuerzo" />
-          </div>
-          <div className="py-1">
-            <FoodSearchRemove labelText="Cena" />
-          </div>
-        </div>
-        <div className="">
-          <h2 className="text-md min-w-[280px] border-b border-[#00785C] text-[#00785C]">
-            Domingo
-          </h2>
-          <div className="py-1">
-            <FoodSearchRemove labelText="Almuerzo" />
-          </div>
-          <div className="py-1">
-            <FoodSearchRemove labelText="Cena" />
-          </div>
-        </div>
         <ListButton label="Generar lista de compras" />
       </div>
     </div>

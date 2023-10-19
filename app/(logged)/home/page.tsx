@@ -7,6 +7,8 @@ import {
 } from "@/components/ui/accordion";
 import ListButton from "@/components/ui/ListButton";
 import { Buttton } from "@/components/ui/buttton";
+import { MiniDespensa } from "@/components/MiniDespensa";
+import { MiniCalendario } from "@/components/MiniCalendario";
 
 export const metadata: Metadata = {
   title: "Inicio",
@@ -14,8 +16,8 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <div className="m-8 pt-5">
-      <div className="w-80 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
+    <div style={{ minWidth: "320px" }}>
+      <div className="m-8 pt-5" style={{ maxWidth: "100%" }}>
         <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="item-1" className="flex flex-col sm:flex-row">
             <div className="flex items-center">
@@ -42,33 +44,14 @@ export default function Home() {
         </Accordion>
       </div>
       <Buttton />
-      <div>
-        <div className=" mt-8 text-center">
-          <h2>Caledario semanal</h2>
-        </div>
-        <section className="mx-auto mt-5 w-80 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
-          <div>
-            <div className="flex justify-center">
-              <div className="h-[250px] "></div>
-            </div>
-          </div>
-        </section>
-      </div>
+      <div></div>
       <div className="mt-8">
-        <ListButton label="Ver lista de compras" />
-      </div>
-      <div>
-        <div className="mt-8 text-center">
-          <h2>Mi Despensa</h2>
+        <MiniCalendario />
+        <div className="mt-8">
+          <ListButton label="Ver lista de compras" />
         </div>
-        <section className="mx-auto mt-5 w-80 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
-          <div>
-            <div className="flex justify-center">
-              <div className="h-[350px] "></div>
-            </div>
-          </div>
-        </section>
       </div>
+      <MiniDespensa />
     </div>
   );
 }

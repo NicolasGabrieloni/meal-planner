@@ -56,6 +56,7 @@ model recipes {
   user                 users?                @relation(fields: [userId], references: [id])
   recipes_favourites   favourites[]
   recetas_ingredientes recipes_ingredients[]
+  recipes_user         recipes_user[]
 }
 
 model recipes_ingredients {
@@ -71,4 +72,20 @@ model favourites {
   recipes_id Int
   user_id    Int
   recipes    recipes @relation(fields: [recipes_id], references: [id])
+}
+
+enum Dates {
+  lunes
+  martes
+  miercoles
+  jueves
+  viernes
+}
+
+model recipes_user {
+  id        Int     @id @default(autoincrement())
+  recipe_id Int
+  user_id   Int
+  Date      Dates
+  recipe    recipes @relation(fields: [recipe_id], references: [id])
 }

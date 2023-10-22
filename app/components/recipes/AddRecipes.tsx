@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -6,8 +8,42 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useState } from "react";
 
 export function AddRecipes() {
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+    ingredients: "",
+    instructions: "",
+    img: "",
+  });
+
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch("URL_DE_TU_API", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        console.log("Receta enviada exitosamente");
+      } else {
+        console.error("Error al enviar la receta");
+      }
+    } catch (error) {
+      console.error("Error de red al enviar la receta", error);
+    }
+  };
+
   return (
     <div className="flex justify-center p-4">
       <Popover>
@@ -31,6 +67,8 @@ export function AddRecipes() {
                 <Label htmlFor="name">Nombre</Label>
                 <Input
                   id="name"
+                  value={formData.name}
+                  onChange={handleChange}
                   placeholder="Fideos con crema"
                   className="col-span-2 h-8 w-[180px] "
                 />
@@ -39,6 +77,8 @@ export function AddRecipes() {
                 <Label htmlFor="description">Descripción</Label>
                 <Input
                   id="description"
+                  value={formData.description}
+                  onChange={handleChange}
                   placeholder="Altos fideos bestia"
                   className="col-span-2 h-8 w-[180px]"
                 />
@@ -47,6 +87,8 @@ export function AddRecipes() {
                 <Label htmlFor="ingredients">Ingredientes</Label>
                 <Input
                   id="ingredients"
+                  value={formData.ingredients}
+                  onChange={handleChange}
                   placeholder="Fideos, crema"
                   className="col-span-2 h-8 w-[180px]"
                 />
@@ -55,6 +97,8 @@ export function AddRecipes() {
                 <Label htmlFor="instructions">Instrucciones</Label>
                 <Input
                   id="instructions"
+                  value={formData.instructions}
+                  onChange={handleChange}
                   placeholder="..."
                   className="col-span-2 h-8 w-[180px]"
                 />
@@ -70,7 +114,11 @@ export function AddRecipes() {
               </div>
             </div>
             <div className="flex justify-end">
-              <Button className="w-[100px] " variant="green_outlined">
+              <Button
+                className="w-[100px] "
+                variant="green_outlined"
+                onClick={handleSubmit}
+              >
                 Enviar
               </Button>
             </div>

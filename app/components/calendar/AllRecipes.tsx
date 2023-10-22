@@ -17,7 +17,6 @@ function AllRecipes() {
       setRecetas(resultadosSinMapear);
     });
   }, []);
-
   const handleRecipeClick = (receta: recipe) => {
     setData(receta.name);
   };

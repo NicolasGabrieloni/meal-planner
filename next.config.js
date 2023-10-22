@@ -1,12 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {};
 
-module.exports = {
+module.exports = { 
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "lh3.googleusercontent.com",
+        hostname: "static.thenounproject.com",
       },
     ],
   },

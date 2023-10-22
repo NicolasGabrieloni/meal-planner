@@ -61,6 +61,7 @@ export function AddRecipes() {
               </div>
               <div className="grid grid-cols-3 items-center gap-4">
                 <Label htmlFor="img">Imágen</Label>
+                {/* CHEQUEAR LO QUE MANDÓ GIULS AL MD */}
                 <Input
                   id="img"
                   placeholder="URL de la imagen"

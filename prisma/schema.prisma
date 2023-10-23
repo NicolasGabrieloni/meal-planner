@@ -19,14 +19,22 @@ model users {
   recipes     recipes[]
 }
 
+enum TypeFood {
+  verdura
+  fruta
+  carne
+  lacteo
+  secos
+}
+
 model stock {
-  id        Int    @id @default(autoincrement())
-  name_food String @db.Text
+  id        Int      @id @default(autoincrement())
+  name_food String   @db.Text
   quantity  Int
-  unit      String @db.Text
-  type_food String @db.Text
+  unit      String   @db.Text
+  type_food TypeFood
   user_id   Int
-  user      users  @relation(fields: [user_id], references: [id])
+  user      users    @relation(fields: [user_id], references: [id])
 }
 
 model ingredients {
@@ -48,6 +56,15 @@ model recipes {
   user                 users?                @relation(fields: [userId], references: [id])
   recipes_favourites   favourites[]
   recetas_ingredientes recipes_ingredients[]
+  recipes_user         recipes_user[]
+}
+
+model recipes_ingredients {
+  id             Int         @id @default(autoincrement())
+  recipes_id     Int
+  ingredients_id Int
+  recipe         recipes     @relation(fields: [recipes_id], references: [id])
+  ingredient     ingredients @relation(fields: [ingredients_id], references: [id])
 }
 
 model favourites {
@@ -57,10 +74,18 @@ model favourites {
   recipes    recipes @relation(fields: [recipes_id], references: [id])
 }
 
-model recipes_ingredients {
-  id             Int         @id @default(autoincrement())
-  recipes_id     Int
-  ingredients_id Int
-  recipe         recipes     @relation(fields: [recipes_id], references: [id])
-  ingredient     ingredients @relation(fields: [ingredients_id], references: [id])
+enum Dates {
+  lunes
+  martes
+  miercoles
+  jueves
+  viernes
+}
+
+model recipes_user {
+  id        Int     @id @default(autoincrement())
+  recipe_id Int
+  user_id   Int
+  Date      Dates
+  recipe    recipes @relation(fields: [recipe_id], references: [id])
 }

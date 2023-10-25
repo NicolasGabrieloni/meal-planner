@@ -45,13 +45,21 @@ export default function Home() {
     </div>
     <Buttton/>
     <div></div>
+
+    <div className="md:grid grid-cols-2 gap-4 ">
+
     <div className="pt-8">
       <MiniCalendario />
-      <div className="pt-8">
+      <div className="pt-8 md:items-center">
         <ListButton label="Ver lista de compras" />
       </div>
     </div>
+    <div className="pt-8">
     <MiniDespensa />
+
+    </div>
+
+    </div>
   </div>
   );
 }

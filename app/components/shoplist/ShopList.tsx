@@ -1,9 +1,8 @@
 "use client";
 
-import { stock } from "@prisma/client";
 import React, { useEffect, useState } from "react";
 import { Recetas, Stock } from "../ApiCalls";
-import { recipe } from "../Types";
+import { recipe, stock } from "../Types";
 
 function normalizeText(text: string) {
   return text
@@ -13,45 +12,80 @@ function normalizeText(text: string) {
 }
 
 function Shop() {
-  const [inStock, setInStock] = useState<stock[]>([]);
+  const [stock, setStock] = useState<stock[]>([]);
   const [recetas, setRecetas] = useState<recipe[]>([]);
-  const recipesAvailable: string[] = [];
+  const [ingredientesFaltantes, setIngredientesFaltantes] = useState<string[]>(
+    [],
+  );
+
+  const selectedRecipes: string[] = [
+    "Milanesa a la Napolitana",
+    "Asado",
+    "Matambre a la Pizza",
+    "Choripán",
+  ];
 
   useEffect(() => {
     Promise.all([Recetas(), Stock()]).then(([recipes, stockData]) => {
       setRecetas(recipes);
-      setInStock(stockData);
+      setStock(stockData);
     });
   }, []);
+  const stockNormalized = stock.map((food) => normalizeText(food.name_food));
 
-  const foodNames = inStock.map((food: stock) => normalizeText(food.name_food));
+  const recetasSeleccionadas = recetas.filter((receta) =>
+    selectedRecipes.includes(receta.name),
+  );
 
-  for (const receta of recetas) {
-    let isRecipeAvailable = true;
+  function obtenerIngredientesFaltantes(
+    recetasSeleccionadas: recipe[],
+    stockNormalized: string[],
+  ) {
+    const ingredientesFaltantes: string[] = [];
 
-    const recipeIngredients = receta.ingredients
+    const ingredientesRecetas = recetasSeleccionadas
+      .map((receta) => normalizeText(receta.ingredients))
+      .join(",");
+
+    const ingredientesRecetasArray = ingredientesRecetas
       .split(",")
-      .map((ingredient) => normalizeText(ingredient.trim()));
+      .map((ingrediente) => normalizeText(ingrediente.trim()));
 
-    for (const ingredient of recipeIngredients) {
-      const ingredientFound = foodNames.some((foodName) =>
-        foodName.includes(ingredient),
-      );
+    const uniqueIngredientesRecetasArray = Array.from(
+      new Set(ingredientesRecetasArray),
+    );
 
-      if (!ingredientFound) {
-        isRecipeAvailable = false;
-        break;
+    for (const ingrediente of uniqueIngredientesRecetasArray) {
+      if (
+        !stockNormalized.includes(ingrediente) &&
+        !ingredientesFaltantes.includes(ingrediente)
+      ) {
+        ingredientesFaltantes.push(ingrediente);
       }
     }
 
-    if (isRecipeAvailable) {
-      recipesAvailable.push(receta.name);
-    }
+    setIngredientesFaltantes(ingredientesFaltantes);
   }
 
   return (
-    <div className="w-full text-center">
+    <div className="ml-52 w-full text-center">
       <h2 className="font-bold">ShopList</h2>
+      <button
+        onClick={() =>
+          obtenerIngredientesFaltantes(recetasSeleccionadas, stockNormalized)
+        }
+        className="mt-12 font-bold"
+      >
+        generar lista de compras
+      </button>
+      <div>
+        <h3>Ingredientes Faltantes:</h3>
+        <ul>
+          {ingredientesFaltantes.map((ingrediente, index) => (
+            <li key={index}>{ingrediente}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

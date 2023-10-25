@@ -1,14 +1,15 @@
 import { Label } from "@/components/ui/label";
+import { DayMeals } from "./calendar/Context";
 
 interface InputWithLabelProps {
-  labelText: string;
+  mealType: keyof DayMeals;
 }
 
-export function LabelForInput({ labelText }: InputWithLabelProps) {
+export function LabelForInput({ mealType }: InputWithLabelProps) {
   return (
     <div className="grid w-full max-w-sm items-center  ">
       <Label className="text-xs" htmlFor="username">
-        {labelText}
+        {mealType}
       </Label>
     </div>
   );

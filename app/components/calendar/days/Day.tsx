@@ -1,8 +1,8 @@
-import FoodInput from "../FoodInput";
 import FoodSearchRemove from "../FoodSearchRemove";
+import { WeekMeals } from "../Context";
 
-interface DayTypes {
-  dayName: string;
+export interface DayTypes {
+  dayName: keyof WeekMeals;
 }
 
 function Day({ dayName }: DayTypes) {
@@ -12,10 +12,10 @@ function Day({ dayName }: DayTypes) {
         {dayName}
       </h2>
       <div className="py-1">
-        <FoodSearchRemove labelText="Almuerzo" />
+        <FoodSearchRemove mealType="Almuerzo" dayName={dayName} />
       </div>
       <div className="py-1">
-        <FoodSearchRemove labelText="Cena" />
+        <FoodSearchRemove mealType="Cena" dayName={dayName} />
       </div>
     </div>
   );

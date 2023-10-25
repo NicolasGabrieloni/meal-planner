@@ -23,19 +23,14 @@ import {
 } from "cmdk";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 //@ts-ignore
-import { Preset } from "@/data/presets";
 import { RecipesAvailable } from "./RecipesAvailable";
 import { useMyContext } from "./Context";
 import AllRecipes from "./AllRecipes";
 
-interface PresetSelectorProps extends PopoverProps {
-  presets: Preset[];
-}
-
-export default function FoodInput({ presets, ...props }: PresetSelectorProps) {
+export default function FoodInput() {
   const [openRecipePopover, setOpenRecipePopover] = useState(false);
   const [openInstantPopover, setOpenInstantPopover] = useState(false);
-  const [selectedPreset, setSelectedPreset] = useState<Preset | null>(null);
+  const [selectedPreset, setSelectedPreset] = useState<string>("");
 
   const { data } = useMyContext();
 

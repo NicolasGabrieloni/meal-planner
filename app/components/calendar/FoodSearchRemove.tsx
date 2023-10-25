@@ -15,7 +15,7 @@ export default function FoodSearchRemove({ labelText }: InputWithLabelProps) {
       <div className="mx-auto flex flex-row justify-between">
         <div className="">
           <LabelForInput labelText={labelText} />
-          <FoodInput presets={[]} />
+          <FoodInput />
         </div>
         <div className="flex place-items-end space-x-2">
           <RemoveButton />

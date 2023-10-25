@@ -21,10 +21,7 @@ export default function Profile() {
           {" "}
           {session?.user?.name}{" "}
         </h1>
-        <h4 className="max-w-[150px] text-xs">
-          {" "}
-          jefe de los jefes asdf asdf afds fdsa fsadf dsaf{" "}
-        </h4>
+        <h4 className="max-w-[150px] text-xs">{session?.user?.description}</h4>
       </div>
       <ProfileEdit />
     </div>

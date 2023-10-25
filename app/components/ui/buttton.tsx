@@ -4,7 +4,7 @@ export function Buttton() {
   const { data, status } = useSession();
   return (
     <>
-      <button onClick={() => console.log(session?.user)}>hola bb</button>
+      <button onClick={() => console.log(data, status)}>hola bb</button>
     </>
   );
 }

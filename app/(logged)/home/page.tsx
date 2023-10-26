@@ -7,6 +7,8 @@ import {
 } from "@/components/ui/accordion";
 import ListButton from "@/components/ui/ListButton";
 import { Buttton } from "@/components/ui/buttton";
+import { MiniDespensa } from "@/components/MiniDespensa";
+import { MiniCalendario } from "@/components/MiniCalendario";
 
 import Profile from "@/components/home/Profile";
 
@@ -55,23 +57,34 @@ export default function Home() {
               <div className="h-[250px] "></div>
             </div>
           </div>
-        </section>
-      </div>
-      <div className="mt-8">
+          <AccordionContent className="pt-2 text-center">
+            <>
+              <h3 className="text-xl font-semibold text-gray-800">Jonathan Tecuento</h3>
+              <p className="text-gray-600">
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Modi, omnis?
+              </p>
+            </>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    </div>
+    <Buttton/>
+    <div></div>
+
+    <div className="md:grid grid-cols-2 gap-4 ">
+
+    <div className="pt-8">
+      <MiniCalendario />
+      <div className="pt-8 md:items-center">
         <ListButton label="Ver lista de compras" />
       </div>
-      <div>
-        <div className="mt-8 text-center">
-          <h2>Mi Despensa</h2>
-        </div>
-        <section className="mx-auto mt-5 w-80 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
-          <div>
-            <div className="flex justify-center">
-              <div className="h-[350px] "></div>
-            </div>
-          </div>
-        </section>
-      </div>
     </div>
+    <div className="pt-8">
+    <MiniDespensa />
+
+    </div>
+
+    </div>
+  </div>
   );
 }

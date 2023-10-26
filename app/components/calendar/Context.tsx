@@ -53,7 +53,7 @@ export function WeeklyFoodProvider({ children }: WeeklyFoodProviderProps) {
     }));
   };
 
-  console.log(weekMeals);
+
 
   // const removeData = () => {
   //   setData(null);

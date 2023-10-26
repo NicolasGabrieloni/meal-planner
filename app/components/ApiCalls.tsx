@@ -1,8 +1,12 @@
+/// USERS ///
 export async function Users() {
   const res = await fetch("http://localhost:3000/api/users");
   const data = await res.json();
   return data;
 }
+
+/// RECIPES ///
+
 export async function Recetas() {
   const res = await fetch("http://localhost:3000/api/recipes");
   const data = await res.json();
@@ -45,11 +49,20 @@ export async function Ingredients() {
   return data;
 }
 
+/// FAVOURITES ///
 export async function Favourites() {
   const res = await fetch("http://localhost:3000/api/favourites");
   const data = await res.json();
   return data;
 }
+
+/// WEEKMEALS ///
+export async function WeekMeals() {
+  const res = await fetch("http://localhost:3000/api/WeekMeal");
+  const data = await res.json();
+  return data;
+}
+
 export async function Featured() {
   const res = await fetch("http://localhost:3000/api/recipesIngredients");
   const data = await res.json();

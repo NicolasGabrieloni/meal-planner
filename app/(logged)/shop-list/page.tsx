@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Shop from "@/components/shoplist/ShopList";
+import { WeeklyFoodProvider } from "@/components/calendar/Context";
 
 export const metadata: Metadata = {
   title: "Lista de compras",
@@ -8,7 +9,9 @@ export const metadata: Metadata = {
 export default function ShopList() {
   return (
     <>
-      <Shop />
+      <WeeklyFoodProvider>
+        <Shop />
+      </WeeklyFoodProvider>
     </>
   );
 }

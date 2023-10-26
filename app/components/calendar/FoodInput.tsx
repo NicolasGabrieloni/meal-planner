@@ -23,29 +23,21 @@ import {
 } from "cmdk";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 //@ts-ignore
-import { Preset } from "@/data/presets";
 import { RecipesAvailable } from "./RecipesAvailable";
-import { useMyContext } from "./Context";
+import { useMyContext, WeekMeals, DayMeals } from "./Context";
 import AllRecipes from "./AllRecipes";
 
-interface PresetSelectorProps extends PopoverProps {
-  presets: Preset[];
-}
-
-export default function FoodInput({ presets, ...props }: PresetSelectorProps) {
+export default function FoodInput({
+  dayName,
+  mealType,
+}: {
+  dayName: keyof WeekMeals;
+  mealType: keyof DayMeals;
+}) {
   const [openRecipePopover, setOpenRecipePopover] = useState(false);
   const [openInstantPopover, setOpenInstantPopover] = useState(false);
-  const [selectedPreset, setSelectedPreset] = useState<Preset | null>(null);
 
-  const { data } = useMyContext();
-
-  useEffect(() => {
-    if (data !== selectedPreset) {
-      setSelectedPreset(data);
-      setOpenInstantPopover(false);
-      setOpenRecipePopover(false);
-    }
-  }, [data]);
+  const { weekMeals } = useMyContext();
 
   return (
     <>
@@ -53,7 +45,9 @@ export default function FoodInput({ presets, ...props }: PresetSelectorProps) {
         <Dialog>
           <DialogTrigger asChild>
             <Button variant="search" className="w-fit min-w-[240px] ">
-              {selectedPreset ? selectedPreset : "Agregar Comida"}
+              {weekMeals[dayName][mealType]
+                ? weekMeals[dayName][mealType]
+                : "Agregar Comida"}
             </Button>
           </DialogTrigger>
           <DialogContent className="w-screen rounded-xl border border-[#343434] md:max-w-[425px]">
@@ -84,8 +78,8 @@ export default function FoodInput({ presets, ...props }: PresetSelectorProps) {
                       aria-expanded={openInstantPopover}
                       className="mt-2 flex-1 justify-between md:max-w-[200px] lg:max-w-[300px]"
                     >
-                      {selectedPreset
-                        ? selectedPreset
+                      {weekMeals[dayName][mealType]
+                        ? weekMeals[dayName][mealType]
                         : "Disponibles al instante"}
                       <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
@@ -95,7 +89,10 @@ export default function FoodInput({ presets, ...props }: PresetSelectorProps) {
                       <CommandInput placeholder="Buscar:" />
                       <CommandEmpty></CommandEmpty>
                       <CommandGroup>
-                        <RecipesAvailable />
+                        <RecipesAvailable
+                          dayName={dayName}
+                          mealType={mealType}
+                        />
                       </CommandGroup>
                     </Command>
                   </PopoverContent>
@@ -114,7 +111,9 @@ export default function FoodInput({ presets, ...props }: PresetSelectorProps) {
                       aria-expanded={openRecipePopover}
                       className="mb-2 flex-1 justify-between md:max-w-[200px] lg:max-w-[300px]"
                     >
-                      {selectedPreset ? selectedPreset : "Todas las recetas"}
+                      {weekMeals[dayName][mealType]
+                        ? weekMeals[dayName][mealType]
+                        : "Todas las recetas"}
                       <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </PopoverTrigger>
@@ -123,7 +122,7 @@ export default function FoodInput({ presets, ...props }: PresetSelectorProps) {
                       <CommandInput placeholder="Buscar:" />
                       <CommandEmpty></CommandEmpty>
                       <CommandGroup>
-                        <AllRecipes />
+                        <AllRecipes dayName={dayName} mealType={mealType} />
                       </CommandGroup>
                     </Command>
                   </PopoverContent>

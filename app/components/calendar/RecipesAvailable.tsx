@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Recetas, Stock } from "../ApiCalls";
 import { stock, recipe } from "@/components/Types";
-import { useMyContext } from "./Context";
+import { useMyContext, WeekMeals, DayMeals } from "./Context";
 
 function normalizeText(text: string) {
   return text
@@ -12,10 +12,16 @@ function normalizeText(text: string) {
     .replace(/[\u0300-\u036f]/g, "");
 }
 
-export function RecipesAvailable() {
+export function RecipesAvailable({
+  dayName,
+  mealType,
+}: {
+  dayName: keyof WeekMeals;
+  mealType: keyof DayMeals;
+}) {
   const [inStock, setInStock] = useState<stock[]>([]);
   const [recetas, setRecetas] = useState<recipe[]>([]);
-  const { data, setData } = useMyContext();
+  const { addMeal } = useMyContext();
   const recipesAvailable: string[] = [];
 
   useEffect(() => {
@@ -54,13 +60,12 @@ export function RecipesAvailable() {
     <>
       <div>
         {recipesAvailable.map((recipeAv) => (
-          <h2
+          <button
             key={recipeAv}
-            onClick={() => setData(recipeAv)}
-            className="cursor-pointer"
+            onClick={() => addMeal(dayName, mealType, recipeAv)}
           >
-            {recipeAv}
-          </h2>
+            <h2 className="cursor-pointer">{recipeAv}</h2>
+          </button>
         ))}
       </div>
     </>

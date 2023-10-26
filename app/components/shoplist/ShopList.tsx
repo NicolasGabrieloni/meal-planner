@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Recetas, Stock } from "../ApiCalls";
 import { recipe, stock } from "../Types";
+import { useMyContext } from "../calendar/Context";
 
 function normalizeText(text: string) {
   return text
@@ -24,6 +25,12 @@ function Shop() {
     "Matambre a la Pizza",
     "Choripán",
   ];
+  const { weekMeals } = useMyContext();
+
+  // const recipeNames = Object.values(weekMeals).flatMap((meals) =>
+  //   Object.values(meals),
+  // );
+  // console.log(recipeNames);
 
   useEffect(() => {
     Promise.all([Recetas(), Stock()]).then(([recipes, stockData]) => {

@@ -3,8 +3,8 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET() {
   try {
-    const shopList = await prisma.shop_list.findMany();
-    return NextResponse.json(shopList);
+    const weekMeals = await prisma.weekMeal.findMany();
+    return NextResponse.json(weekMeals);
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json(
@@ -21,20 +21,18 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const { user_id, cantidad, unidad_medida, nombre_alimento, tipo_alimento } =
-      await request.json();
+    const { dayName, mealType, recipe_id, user_id } = await request.json();
 
-    const newAlimento = await prisma.shop_list.create({
+    const newWeekMeal = await prisma.weekMeal.create({
       data: {
+        dayName,
+        mealType,
+        recipe_id,
         user_id,
-        cantidad,
-        unidad_medida,
-        nombre_alimento,
-        tipo_alimento
       },
     });
 
-    return NextResponse.json(newAlimento);
+    return NextResponse.json(newWeekMeal);
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json(

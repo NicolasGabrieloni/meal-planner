@@ -48,7 +48,7 @@ export function AddRecipes() {
     <div className="flex justify-center p-4">
       <Popover>
         <PopoverTrigger asChild>
-          <Button className="w-[200px]" variant="blue_outlined">
+          <Button className="min-w-[220px]" variant="blue_outlined">
             Añadir nueva receta
           </Button>
         </PopoverTrigger>

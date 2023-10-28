@@ -52,7 +52,7 @@ export default function Depot() {
         </section>
       </div>
       <div>
-        <h3 className="mt-9">Lacteos</h3>
+        <h3 className="mt-9">Frescos/Lacteos</h3>
         <section className="mx-auto mt-5  rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
           <div>
             <div className="flex justify-center">

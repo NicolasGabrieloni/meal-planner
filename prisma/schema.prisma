@@ -14,17 +14,22 @@ model users {
   password    String        @db.Text
   description String?       @default("cambiame loko") @db.VarChar(255)
   image       String?       @default("https://static.thenounproject.com/png/5034901-200.png") @db.VarChar(255)
+  age         Int?
+  sex         String?
+  location    String?
   stock       stock[]
   ingredients ingredients[]
   recipes     recipes[]
+  WeekMeal    WeekMeal[]
 }
 
 enum TypeFood {
-  verdura
-  fruta
-  carne
-  lacteo
+  verduras
+  frutas
+  carnes
+  lacteos
   secos
+  frescos
 }
 
 model stock {
@@ -56,7 +61,6 @@ model recipes {
   user                 users?                @relation(fields: [userId], references: [id])
   recipes_favourites   favourites[]
   recetas_ingredientes recipes_ingredients[]
-  WeekMeal             WeekMeal[]
 }
 
 model recipes_ingredients {
@@ -88,10 +92,10 @@ enum mealType {
 }
 
 model WeekMeal {
-  id        Int      @id @default(autoincrement())
-  dayName   Days
-  mealType  mealType
-  recipe_id Int
-  user_id   Int
-  recipe    recipes  @relation(fields: [recipe_id], references: [id])
+  id       Int      @id @default(autoincrement())
+  dayName  Days
+  mealType mealType
+  mealName String
+  user_id  Int
+  user     users?   @relation(fields: [user_id], references: [id])
 }

@@ -1,8 +1,12 @@
 import Day from "@/components/calendar/days/Day";
 import ListButton from "@/components/ui/ListButton";
 import { Metadata } from "next";
-import { WeeklyFoodProvider } from "@/components/calendar/Context";
+import {
+  WeeklyFoodProvider,
+  useMyContext,
+} from "@/components/calendar/Context";
 import { WeekMeals } from "@/components/calendar/Context";
+import SaveData from "@/components/calendar/saveData";
 
 export const metadata: Metadata = {
   title: "Calendario",
@@ -28,6 +32,7 @@ export default function Calendar() {
           <div className="flex flex-col items-center pt-2 sm:pt-10">
             <ListButton label="Generar lista de compras" />
           </div>
+          <SaveData />
         </div>
       </WeeklyFoodProvider>
     </div>

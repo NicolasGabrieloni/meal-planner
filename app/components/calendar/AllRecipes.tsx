@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Recetas, Stock } from "../ApiCalls";
+import { Recetas } from "../ApiCalls";
 import { recipe } from "@/components/Types";
 import { DayMeals, WeekMeals, useMyContext } from "./Context";
 

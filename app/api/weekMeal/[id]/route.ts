@@ -81,7 +81,7 @@ export async function DELETE(request: Request, { params }: Params) {
 // ACTUALIZAR WEEKMEALS MEDIANTE ID
 export async function PUT(request: Request, { params }: Params) {
   try {
-    const { dayName, mealType, recipe_id, user_id } = await request.json();
+    const { dayName, mealType, mealName, user_id } = await request.json();
 
     // busca el weekmeal con el id que le pasemos para actualizar los datos
     const userUpdate = await prisma.weekMeal.update({
@@ -91,7 +91,7 @@ export async function PUT(request: Request, { params }: Params) {
       data: {
         dayName,
         mealType,
-        recipe_id,
+        mealName,
         user_id,
       },
     });

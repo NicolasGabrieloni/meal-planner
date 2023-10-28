@@ -3,69 +3,78 @@ import { WeekMeals, DayMeals } from "./Context";
 
 const prisma = new PrismaClient();
 
-// Función para guardar datos en la base de datos
-async function guardarWeekMealsEnBaseDeDatos(
+const saveWeekMeals = async (
+  dayName: keyof WeekMeals,
+  mealType: keyof DayMeals,
+  mealName: string,
   userId: number,
-  weekMeals: WeekMeals
-): Promise<void> {
-  try {
-    for (const day in weekMeals) {
-      const meals = weekMeals[day];
-      for (const mealType in meals) {
-        const recipeName = meals[mealType];
-
-        // Obtén el ID de la receta asociada al nombre
-        const recipe = await prisma.recipes.findUnique({
-          where: {
-            name: recipeName,
-          },
-        });
-
-        if (recipe) {
-          // Guarda el registro en la tabla WeekMeal
-          await prisma.weekMeal.create({
-            data: {
-              dayName: day as keyof WeekMeals,
-              mealType: mealType as keyof DayMeals,
-              recipe_id: recipe.id,
-              user_id: userId, // Asocia el usuario actual
-            },
-          });
-        }
-      }
-    }
-  } catch (error) {
-    console.error("Error al guardar en la base de datos:", error);
+) => {
+  const res = await fetch("/api/weekMeal", {
+    method: "POST",
+    body: JSON.stringify({
+      dayName,
+      mealType,
+      mealName,
+      user_id: userId,
+    }),
+  });
+  if (res.ok) {
+    console.log("todo ok");
+  } else {
+    console.error("todo mal");
   }
-}
+};
 
-// Función para recuperar datos de la base de datos
-async function obtenerWeekMealsDesdeBaseDeDatos(
-  userId: number
-): Promise<WeekMeals | null> {
-  try {
-    const weekMeals: WeekMeals = [];
+// // Función para guardar datos en la base de datos
+// async function (userId: number, weekMeals: WeekMeals) {
+//   for (const day in weekMeals) {
+//     // `day` contiene el nombre del día (Lunes, Martes, etc.)
+//     const dayMeals: DayMeals = weekMeals[day]; // Obtenemos las comidas para el día actual
 
-    const weekMealsFromDB = await prisma.weekMeal.findMany({
-      where: {
-        user_id: userId, // Filtra por el usuario actual
-      },
-    });
+//     for (const mealType in dayMeals) {
+//       // `mealType` contiene el tipo de comida (Almuerzo o Cena)
+//       const mealName: string = dayMeals[mealType];
 
-    // Procesa los datos y organízalos en weekMeals
-    weekMealsFromDB.forEach((meal) => {
-      const { dayName, mealType, recipe_id } = meal;
-      if (!weekMeals[dayName]) {
-        weekMeals[dayName] = {};
-      }
-      weekMeals[dayName][mealType] = recipe.name;
-    });
+//       // Guarda el registro en la tabla WeekMeal
+//       await prisma.weekMeal.create({
+//         data: {
+//           dayName: day as keyof WeekMeals,
+//           mealType: mealType,
+//           mealName: mealName,
+//           user_id: userId, // Asocia el usuario actual
+//         },
+//       });
 
-    return weekMeals;
-  } catch (error) {
-    console.error("Error al recuperar datos de la base de datos:", error);
-    return null;
-  }
-}
+//       console.log(`${day},${mealType}, Nombre: ${mealName}`);
+//     }
+//   }
+// }
 
-export { guardarWeekMealsEnBaseDeDatos, obtenerWeekMealsDesdeBaseDeDatos };
+// // Función para recuperar datos de la base de datos
+// async function callWeekMealsDB(userId: number) {
+//   try {
+//     const weekMeals: WeekMeals = [];
+
+//     const weekMealsFromDB = await prisma.weekMeal.findMany({
+//       where: {
+//         user_id: userId, // Filtra por el usuario actual
+//       },
+//     });
+
+//     // Procesa los datos y organízalos en weekMeals
+//     weekMealsFromDB.forEach((meal) => {
+//       const { dayName, mealType, mealName } = meal;
+//       if (!weekMeals[dayName]) {
+//         weekMeals[dayName] = { Almuerzo: "", Cena: "" };
+//       }
+//       weekMeals[dayName][mealType] = mealName;
+//     });
+
+//     return weekMeals;
+//   } catch (error) {
+//     console.error("Error al recuperar datos de la base de datos:", error);
+//     return null;
+//   }
+// }
+
+export { saveWeekMeals};

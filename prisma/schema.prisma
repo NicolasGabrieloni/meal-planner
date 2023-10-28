@@ -57,6 +57,7 @@ model recipes {
   description          String                @db.Text
   ingredients          String                @db.Text
   instructions         String                @db.Text
+  image                String                @default("https://prnt.sc/FIsEvguBhGbI") @db.VarChar(255)
   userId               Int?
   user                 users?                @relation(fields: [userId], references: [id])
   recipes_favourites   favourites[]

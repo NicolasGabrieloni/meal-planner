@@ -5,7 +5,7 @@ export async function GET() {
   try {
     const carnes = await prisma.stock.findMany({
       where: {
-        type_food: "carne",
+        type_food: "carnes",
       },
     });
     return NextResponse.json(carnes);

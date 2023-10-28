@@ -5,7 +5,7 @@ export async function GET() {
   try {
     const verdura = await prisma.stock.findMany({
       where: {
-        OR: [{ type_food: "verdura" }, { type_food: "fruta" }],
+        OR: [{ type_food: "verduras" }, { type_food: "frutas" }],
       },
     });
     return NextResponse.json(verdura);

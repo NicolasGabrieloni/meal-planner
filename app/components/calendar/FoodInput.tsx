@@ -36,7 +36,6 @@ export default function FoodInput({
 }) {
   const [openRecipePopover, setOpenRecipePopover] = useState(false);
   const [openInstantPopover, setOpenInstantPopover] = useState(false);
-
   const { weekMeals } = useMyContext();
 
   return (

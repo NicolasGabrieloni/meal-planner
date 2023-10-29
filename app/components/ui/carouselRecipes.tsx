@@ -27,18 +27,18 @@ export function CarouselRecipes({ label }: LabelTypes) {
 
   return (
     <div className="p-4">
-      <h1 className="w-[300px] border-b border-[#00785C] pb-1 text-xl font-medium text-[#00785C]">
+      <h1 className=" border-b border-[#00785C] pb-2 text-xl font-medium text-[#00785C] lg:font-semibold">
         {label}
       </h1>
       <Carousel
-        className="h-[200px] w-[280px] rounded-xl"
+        className="z-20 my-4 h-[400px] overflow-hidden rounded-xl border border-[#343434] bg-[#E9FFEB] drop-shadow-md md:mx-auto md:w-[740px]"
         navigation={({ setActiveIndex, activeIndex, length }) => (
-          <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2">
+          <div className="absolute bottom-4 left-2/4 z-40 flex -translate-x-2/4 gap-2">
             {new Array(length).fill("").map((_, i) => (
               <span
                 key={i}
                 className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
-                  activeIndex === i ? "w-8 bg-white" : "w-4 bg-white/50"
+                  activeIndex === i ? "w-8 bg-[#343434]" : "w-4 bg-gray-700/50"
                 }`}
                 onClick={() => setActiveIndex(i)}
               />
@@ -47,21 +47,23 @@ export function CarouselRecipes({ label }: LabelTypes) {
         )}
       >
         {randomRecipes.map((recetasFavs: recipe) => (
-          <div
-            key={recetasFavs.id}
-            className="relative z-30 mr-[-5px] w-[300px] transform-gpu rounded-md bg-slate-300 ring-4 ring-[#FAFAFA] transition-transform hover:z-40 hover:scale-110"
-          >
-            <Image
-              src={recetasFavs.image}
-              alt={recetasFavs.name}
-              width={1200}
-              height={600}
-              className="h-[200px] w-[300px]"
-            />
-            <div className="absolute inset-0 grid h-full w-full place-items-center bg-black/50">
-              <div className="w-3/4 text-center md:w-2/4">
-                <h1 className="text-2xl text-white"> {recetasFavs.name} </h1>
-              </div>
+          <div key={recetasFavs.id} className="flex flex-col sm:flex-row">
+            <div className="relative z-30 mr-[-5px] transform-gpu rounded-md transition-transform hover:z-40 hover:scale-110">
+              <Image
+                src={recetasFavs.image}
+                alt={recetasFavs.name}
+                width={1200}
+                height={600}
+                className="h-[220px] w-screen object-cover sm:h-[400px] sm:w-full"
+              />
+            </div>
+            <div className="space-y-2 px-4 pt-4 sm:w-2/5 sm:space-y-4">
+              <h1 className="text-2xl font-medium"> {recetasFavs.name} </h1>
+              <h4 className="text-sm"> {recetasFavs.description} </h4>
+              <h6 className="text-xs sm:w-1/2">
+                {" "}
+                Ingredientes: {recetasFavs.ingredients}{" "}
+              </h6>
             </div>
           </div>
         ))}

@@ -4,6 +4,7 @@ type recipe = {
   description: string;
   ingredients: string;
   instructions: string;
+  image: string;
 };
 
 type stock = {

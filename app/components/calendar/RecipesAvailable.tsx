@@ -31,7 +31,9 @@ export function RecipesAvailable({
     });
   }, []);
 
-  const foodNames = inStock.map((food: stock) => normalizeText(food.name_food));
+  const foodNames = inStock?.map((food: stock) =>
+    normalizeText(food.name_food),
+  );
 
   for (const receta of recetas) {
     let isRecipeAvailable = true;

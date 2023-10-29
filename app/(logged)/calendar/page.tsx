@@ -19,17 +19,19 @@ interface Day {
 export default function Calendar() {
   return (
     <div className="p-4">
-      <h1 className="pb-2 text-xl font-medium text-[#00785C]">
+      <h1 className="pb-2 text-xl font-medium text-[#00785C] lg:font-semibold">
         Calendario semanal
       </h1>
       <WeeklyFoodProvider>
-        <div className="flex flex-col items-center space-y-6">
+        <div className="flex flex-col items-center space-y-6 pb-20">
           <Day dayName="Lunes" />
           <Day dayName="Martes" />
           <Day dayName="Miercoles" />
           <Day dayName="Jueves" />
           <Day dayName="Viernes" />
-          <ListButton label="Generar lista de compras" />
+          <div className="flex flex-col items-center pt-2 sm:pt-10">
+            <ListButton label="Generar lista de compras" />
+          </div>
           <SaveData />
         </div>
       </WeeklyFoodProvider>

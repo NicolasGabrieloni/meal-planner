@@ -1,8 +1,7 @@
 "use client";
-import { useSession } from "next-auth/react";
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import { WeekMealsById } from "../ApiCalls";
-
+type LoadWeekMeals = (userId: number) => Promise<void>;
 export interface DayMeals {
   Almuerzo: string;
   Cena: string;
@@ -18,7 +17,7 @@ export interface WeekMeals {
 
 interface MyContextType {
   // removeData: () => void;
-  loadWeekMeals: WeekMeals;
+  loadWeekMeals: LoadWeekMeals;
   weekMeals: WeekMeals;
   addMeal: (
     dayName: keyof WeekMeals,
@@ -56,29 +55,31 @@ export function WeeklyFoodProvider({ children }: WeeklyFoodProviderProps) {
     }));
   };
 
-  const { data: session } = useSession();
-  const idUser = session?.user.id;
-  const userId = parseInt(idUser as string);
-
-  const loadWeekMeals = async (userId: number) => {
+  const loadWeekMeals: LoadWeekMeals = async (userId: number) => {
     try {
       const res = await WeekMealsById(userId);
-      const resultados = res;
+      const results = res;
 
       const updatedWeekMeals = { ...weekMeals };
 
-      resultados.forEach((item) => {
-        const { dayName, mealType, mealName } = item;
-        if (
-          dayName in updatedWeekMeals &&
-          mealType in updatedWeekMeals[dayName]
-        ) {
-          updatedWeekMeals[dayName][mealType] = mealName;
-        }
-      });
+      results.forEach(
+        (item: {
+          dayName: keyof WeekMeals;
+          mealType: keyof DayMeals;
+          mealName: string;
+        }) => {
+          const { dayName, mealType, mealName } = item;
+          if (
+            dayName in updatedWeekMeals &&
+            mealType in updatedWeekMeals[dayName]
+          ) {
+            updatedWeekMeals[dayName][mealType] = mealName;
+          }
+        },
+      );
       setWeekMeals(updatedWeekMeals);
     } catch (error) {
-      console.error("Error al cargar los datos de la semana", error);
+      console.error("hay algo mal que no esta bien:", error);
     }
   };
 

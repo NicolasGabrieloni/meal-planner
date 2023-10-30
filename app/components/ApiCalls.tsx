@@ -62,8 +62,8 @@ export async function WeekMeals() {
   const data = await res.json();
   return data;
 }
-export async function WeekMealsById(userId: number) {
-  const res = await fetch(`http://localhost:3000/api/weekMeal/${userId}`);
+export async function WeekMealsById(user_id: number) {
+  const res = await fetch(`http://localhost:3000/api/weekMeal/${user_id}`);
   const data = await res.json();
   return data;
 }

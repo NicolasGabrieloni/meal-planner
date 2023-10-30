@@ -1,73 +1,28 @@
 import { Metadata } from "next";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import ListButton from "@/components/ui/ListButton";
 import { Buttton } from "@/components/ui/buttton";
 import Profile from "@/components/home/Profile";
+import { MiniCalendario } from "@/components/MiniCalendario";
+import { MiniDespensa } from "@/components/MiniDespensa";
+
 export const metadata: Metadata = {
   title: "Inicio",
 };
 export default function Home() {
   return (
-    <div className="p-4">
+    <div className="flex flex-col items-center p-4">
       <Profile />
-      {/* <div className="w-80 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
-        <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value="item-1" className="flex flex-col sm:flex-row">
-            <div className="flex items-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-300"></div>
-              <AccordionTrigger className="ml-4">
-                <div>
-                  <h2 className="text-base font-bold">aaaa</h2>
-                  <p className="ml-3">Una breve descripción</p>
-                </div>
-              </AccordionTrigger>
-            </div>
-            <AccordionContent className="mt-2 text-center">
-              <>
-                <h3 className="text-xl font-semibold text-gray-800">
-                  Jonathan Tecuento
-                </h3>
-                <p className="text-gray-600">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Modi, omnis?
-                </p>
-              </>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-      </div> */}
       <Buttton />
-      <div>
-        <div className=" mt-8 text-center">
-          <h2>Caledario semanal</h2>
-        </div>
-        <section className="mx-auto mt-5 w-80 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
-          <div>
-            <div className="flex justify-center">
-              <div className="h-[250px] "></div>
-            </div>
+      <div className="grid-cols-2 gap-4 md:grid ">
+        <div className="pt-8">
+          <MiniCalendario />
+          <div className="pt-8 md:items-center">
+            <ListButton label="Ver lista de compras" />
           </div>
-        </section>
-      </div>
-      <div className="mt-8">
-        <ListButton label="Ver lista de compras" />
-      </div>
-      <div>
-        <div className="mt-8 text-center">
-          <h2>Mi Despensa</h2>
         </div>
-        <section className="mx-auto mt-5 w-80 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
-          <div>
-            <div className="flex justify-center">
-              <div className="h-[350px] "></div>
-            </div>
-          </div>
-        </section>
+        <div className="pt-8">
+          <MiniDespensa />
+        </div>
       </div>
     </div>
   );

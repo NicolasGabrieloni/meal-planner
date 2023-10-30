@@ -46,7 +46,10 @@ export default function FoodInput({
       <div>
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant="search" className="w-fit min-w-[240px] ">
+            <Button
+              variant="search"
+              className="w-full min-w-[240px] sm:h-10 sm:text-sm md:min-w-[300px]"
+            >
               {weekMeals[dayName][mealType]
                 ? weekMeals[dayName][mealType]
                 : "Agregar Comida"}

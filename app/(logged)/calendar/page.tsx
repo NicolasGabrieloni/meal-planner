@@ -16,7 +16,7 @@ interface Day {
 export default function Calendar() {
   return (
     <div className="p-4">
-      <h1 className="pb-2 text-xl font-medium text-[#00785C]">
+      <h1 className="pb-2 text-xl font-medium text-[#00785C] lg:font-semibold">
         Calendario semanal
       </h1>
       <WeeklyFoodProvider>

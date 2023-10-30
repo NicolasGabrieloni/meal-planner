@@ -1,6 +1,7 @@
 "use client";
 import React, { createContext, useContext, useState, ReactNode } from "react";
-
+import { WeekMealsById } from "../ApiCalls";
+type LoadWeekMeals = (userId: number) => Promise<void>;
 export interface DayMeals {
   Almuerzo: string;
   Cena: string;
@@ -16,6 +17,7 @@ export interface WeekMeals {
 
 interface MyContextType {
   // removeData: () => void;
+  loadWeekMeals: LoadWeekMeals;
   weekMeals: WeekMeals;
   addMeal: (
     dayName: keyof WeekMeals,
@@ -53,7 +55,33 @@ export function WeeklyFoodProvider({ children }: WeeklyFoodProviderProps) {
     }));
   };
 
+  const loadWeekMeals: LoadWeekMeals = async (userId: number) => {
+    try {
+      const res = await WeekMealsById(userId);
+      const results = res;
 
+      const updatedWeekMeals = { ...weekMeals };
+
+      results.forEach(
+        (item: {
+          dayName: keyof WeekMeals;
+          mealType: keyof DayMeals;
+          mealName: string;
+        }) => {
+          const { dayName, mealType, mealName } = item;
+          if (
+            dayName in updatedWeekMeals &&
+            mealType in updatedWeekMeals[dayName]
+          ) {
+            updatedWeekMeals[dayName][mealType] = mealName;
+          }
+        },
+      );
+      setWeekMeals(updatedWeekMeals);
+    } catch (error) {
+      console.error("hay algo mal que no esta bien:", error);
+    }
+  };
 
   // const removeData = () => {
   //   setData(null);
@@ -65,6 +93,7 @@ export function WeeklyFoodProvider({ children }: WeeklyFoodProviderProps) {
         // removeData,
         weekMeals,
         addMeal,
+        loadWeekMeals,
       }}
     >
       {children}

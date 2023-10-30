@@ -3,19 +3,20 @@ import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
 interface Params {
-  params: { id: string };
+  params: {
+    id: number;
+    user_id: number;
+  };
 }
 
-// OBTENER WEEKMEALS MEDIANTE ID
 export async function GET(request: Request, { params }: Params) {
+  console.log(params.user_id)
   try {
-    // busca el primer WEEKMEAL con el id que le pasemos
-    const weekmeal = await prisma.weekMeal.findFirst({
+    const weekmeal = await prisma.weekMeal.findMany({
       where: {
-        id: Number(params.id),
+        user_id: params.user_id,
       },
     });
-    // si no existe, devuelve not found 404
     if (!weekmeal) {
       return NextResponse.json(
         {
@@ -26,10 +27,8 @@ export async function GET(request: Request, { params }: Params) {
         },
       );
     }
-    //si existe, retorna el weekmeal encontrado
     return NextResponse.json(weekmeal);
   } catch (error) {
-    // si el error es del servidor retorna el error y status 500
     if (error instanceof Error) {
       return NextResponse.json(
         {

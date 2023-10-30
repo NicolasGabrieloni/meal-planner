@@ -26,6 +26,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RecipesAvailable } from "./RecipesAvailable";
 import { useMyContext, WeekMeals, DayMeals } from "./Context";
 import AllRecipes from "./AllRecipes";
+import { useSession } from "next-auth/react";
 
 export default function FoodInput({
   dayName,
@@ -37,6 +38,8 @@ export default function FoodInput({
   const [openRecipePopover, setOpenRecipePopover] = useState(false);
   const [openInstantPopover, setOpenInstantPopover] = useState(false);
   const { weekMeals } = useMyContext();
+
+
 
   return (
     <>

@@ -1,10 +1,7 @@
 import Day from "@/components/calendar/days/Day";
 import ListButton from "@/components/ui/ListButton";
 import { Metadata } from "next";
-import {
-  WeeklyFoodProvider,
-  useMyContext,
-} from "@/components/calendar/Context";
+import { WeeklyFoodProvider } from "@/components/calendar/Context";
 import { WeekMeals } from "@/components/calendar/Context";
 import SaveData from "@/components/calendar/saveData";
 
@@ -23,16 +20,14 @@ export default function Calendar() {
         Calendario semanal
       </h1>
       <WeeklyFoodProvider>
-        <div className="flex flex-col items-center space-y-6 pb-20">
+        <div className="flex flex-col items-center space-y-6">
+          <SaveData />
           <Day dayName="Lunes" />
           <Day dayName="Martes" />
           <Day dayName="Miercoles" />
           <Day dayName="Jueves" />
           <Day dayName="Viernes" />
-          <div className="flex flex-col items-center pt-2 sm:pt-10">
-            <ListButton label="Generar lista de compras" />
-          </div>
-          <SaveData />
+          <ListButton label="Generar lista de compras" />
         </div>
       </WeeklyFoodProvider>
     </div>

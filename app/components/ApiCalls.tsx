@@ -58,7 +58,12 @@ export async function Favourites() {
 
 /// WEEKMEALS ///
 export async function WeekMeals() {
-  const res = await fetch("http://localhost:3000/api/WeekMeal");
+  const res = await fetch("http://localhost:3000/api/weekMeal");
+  const data = await res.json();
+  return data;
+}
+export async function WeekMealsById(userId: number) {
+  const res = await fetch(`http://localhost:3000/api/weekMeal/${userId}`);
   const data = await res.json();
   return data;
 }

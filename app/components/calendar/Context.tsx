@@ -1,5 +1,7 @@
 "use client";
+import { useSession } from "next-auth/react";
 import React, { createContext, useContext, useState, ReactNode } from "react";
+import { WeekMealsById } from "../ApiCalls";
 
 export interface DayMeals {
   Almuerzo: string;
@@ -16,6 +18,7 @@ export interface WeekMeals {
 
 interface MyContextType {
   // removeData: () => void;
+  loadWeekMeals: WeekMeals;
   weekMeals: WeekMeals;
   addMeal: (
     dayName: keyof WeekMeals,
@@ -53,7 +56,31 @@ export function WeeklyFoodProvider({ children }: WeeklyFoodProviderProps) {
     }));
   };
 
+  const { data: session } = useSession();
+  const idUser = session?.user.id;
+  const userId = parseInt(idUser as string);
 
+  const loadWeekMeals = async (userId: number) => {
+    try {
+      const res = await WeekMealsById(userId);
+      const resultados = res;
+
+      const updatedWeekMeals = { ...weekMeals };
+
+      resultados.forEach((item) => {
+        const { dayName, mealType, mealName } = item;
+        if (
+          dayName in updatedWeekMeals &&
+          mealType in updatedWeekMeals[dayName]
+        ) {
+          updatedWeekMeals[dayName][mealType] = mealName;
+        }
+      });
+      setWeekMeals(updatedWeekMeals);
+    } catch (error) {
+      console.error("Error al cargar los datos de la semana", error);
+    }
+  };
 
   // const removeData = () => {
   //   setData(null);
@@ -65,6 +92,7 @@ export function WeeklyFoodProvider({ children }: WeeklyFoodProviderProps) {
         // removeData,
         weekMeals,
         addMeal,
+        loadWeekMeals,
       }}
     >
       {children}

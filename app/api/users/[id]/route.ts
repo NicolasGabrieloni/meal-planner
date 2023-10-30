@@ -81,7 +81,7 @@ export async function DELETE(request: Request, { params }: Params) {
 // ACTUALIZAR USUARIOS MEDIANTE ID
 export async function PUT(request: Request, { params }: Params) {
   try {
-    const { username, email, password, description, photo } =
+    const { username, email, password, description, image } =
       await request.json();
 
     // busca el usuario con el id que le pasemos para actualizar los datos
@@ -94,7 +94,7 @@ export async function PUT(request: Request, { params }: Params) {
         email,
         password,
         description,
-        photo,
+        image,
       },
     });
     // devuelve el usuario actualizado

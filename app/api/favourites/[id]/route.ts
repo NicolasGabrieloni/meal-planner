@@ -60,7 +60,7 @@ export async function DELETE(request: Request, { params }: Params) {
       if (error.code === "P2025") {
         return NextResponse.json(
           {
-            message: "user not found",
+            message: "favourite not found",
           },
           { status: 404 },
         );

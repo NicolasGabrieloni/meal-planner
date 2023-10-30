@@ -1,17 +1,11 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { useSession } from "next-auth/react";
-
-import { getServerSession } from "next-auth";
-import { options } from "@/api/auth/[...nextauth]/options";
 
 export async function GET() {
-  const session = await getServerSession(options);
   try {
     const verdura = await prisma.stock.findMany({
       where: {
-        //id: session?.user?.id,
-        OR: [{ type_food: "verdura" }, { type_food: "fruta" }],
+        OR: [{ type_food: "verduras" }, { type_food: "frutas" }],
       },
     });
     return NextResponse.json(verdura);

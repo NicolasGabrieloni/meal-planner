@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Stock } from "../Types";
+import { stock } from "../Types";
 import { frutasVerduras } from "../ApiCalls";
 
 export default function VerdurasFrutas() {
@@ -26,7 +26,7 @@ export default function VerdurasFrutas() {
             </tr>
           </thead>
           <tbody>
-            {verduras.map((verdura: Stock) => (
+            {verduras.map((verdura: stock) => (
               <tr key={verdura.id}>
                 <td>{verdura.name_food}</td>
                 <td>{verdura.quantity}</td>

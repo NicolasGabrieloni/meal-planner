@@ -1,15 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Recetas, Stock } from "../ApiCalls";
+import { Recetas } from "../ApiCalls";
 import { recipe } from "@/components/Types";
-import { useMyContext } from "./Context";
+import { DayMeals, WeekMeals, useMyContext } from "./Context";
 
 import React from "react";
 
-function AllRecipes() {
+function AllRecipes({
+  dayName,
+  mealType,
+}: {
+  dayName: keyof WeekMeals;
+  mealType: keyof DayMeals;
+}) {
   const [recetas, setRecetas] = useState<recipe[]>([]);
-  const { data, setData } = useMyContext();
+  const { addMeal } = useMyContext();
 
   useEffect(() => {
     Recetas().then((resultados) => {
@@ -18,7 +24,7 @@ function AllRecipes() {
     });
   }, []);
   const handleRecipeClick = (receta: recipe) => {
-    setData(receta.name);
+    addMeal(dayName, mealType, receta.name);
   };
 
   return (

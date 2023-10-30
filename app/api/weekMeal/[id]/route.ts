@@ -3,33 +3,32 @@ import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
 interface Params {
-  params: { id: string };
+  params: {
+    id: number;
+    user_id: number;
+  };
 }
 
-// OBTENER ALIMENTOS MEDIANTE ID
 export async function GET(request: Request, { params }: Params) {
+  console.log(params.user_id)
   try {
-    // busca el primer alimento con el id que le pasemos
-    const food = await prisma.shop_list.findFirst({
+    const weekmeal = await prisma.weekMeal.findMany({
       where: {
-        id: Number(params.id),
+        user_id: params.user_id,
       },
     });
-    // si no existe, devuelve not found 404
-    if (!food) {
+    if (!weekmeal) {
       return NextResponse.json(
         {
-          message: "food not found",
+          message: "weekmeal not found",
         },
         {
           status: 404,
         },
       );
     }
-    //si existe, retorna el usuario encontrado
-    return NextResponse.json(food);
+    return NextResponse.json(weekmeal);
   } catch (error) {
-    // si el error es del servidor retorna el error y status 500
     if (error instanceof Error) {
       return NextResponse.json(
         {
@@ -43,24 +42,24 @@ export async function GET(request: Request, { params }: Params) {
   }
 }
 
-// ELIMINAR ALIMENTOS MEDIANTE ID
+// ELIMINAR WEEKMEALS MEDIANTE ID
 export async function DELETE(request: Request, { params }: Params) {
   try {
-    // busca el alimento con el id que le pasemos, si existe lo elimina
-    const deletedFood = await prisma.shop_list.delete({
+    // busca el weekmeal con el id que le pasemos, si existe lo elimina
+    const deletedWeekMeal = await prisma.weekMeal.delete({
       where: {
         id: Number(params.id),
       },
     });
-    // retorna el alimento eliminado
-    return NextResponse.json(deletedFood);
+    // retorna el weekmeal eliminado
+    return NextResponse.json(deletedWeekMeal);
   } catch (error) {
-    // si el alimento no existe retorna not found 404
+    // si el weekmeal no existe retorna not found 404
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2025") {
         return NextResponse.json(
           {
-            message: "food not found",
+            message: "weekmeal not found",
           },
           { status: 404 },
         );
@@ -78,34 +77,32 @@ export async function DELETE(request: Request, { params }: Params) {
   }
 }
 
-// ACTUALIZAR ALIMENTOS MEDIANTE ID
+// ACTUALIZAR WEEKMEALS MEDIANTE ID
 export async function PUT(request: Request, { params }: Params) {
   try {
-    const { user_id, cantidad, unidad_medida, nombre_alimento, tipo_alimento } =
-      await request.json();
+    const { dayName, mealType, mealName, user_id } = await request.json();
 
-    // busca el usuario con el id que le pasemos para actualizar los datos
-    const foodUpdate = await prisma.shop_list.update({
+    // busca el weekmeal con el id que le pasemos para actualizar los datos
+    const userUpdate = await prisma.weekMeal.update({
       where: {
         id: Number(params.id),
       },
       data: {
+        dayName,
+        mealType,
+        mealName,
         user_id,
-        cantidad,
-        unidad_medida,
-        nombre_alimento,
-        tipo_alimento,
       },
     });
-    // devuelve el usuario actualizado
-    return NextResponse.json(foodUpdate);
+    // devuelve el weekmeal actualizado
+    return NextResponse.json(userUpdate);
   } catch (error) {
-    // si el usuario no existe retorna not found 404
+    // si el weekmeal no existe retorna not found 404
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2025") {
         return NextResponse.json(
           {
-            message: "food not found",
+            message: "weekmeal not found",
           },
           { status: 404 },
         );

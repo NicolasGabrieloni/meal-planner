@@ -1,71 +1,99 @@
+"use client";
 import React, { createContext, useContext, useState, ReactNode } from "react";
-
-interface DayMeals {
-  almuerzo: string;
-  cena: string;
+import { WeekMealsById } from "../ApiCalls";
+type LoadWeekMeals = (userId: number) => Promise<void>;
+export interface DayMeals {
+  Almuerzo: string;
+  Cena: string;
 }
 
-interface WeekMeals {
-  lunes: DayMeals;
-  martes: DayMeals;
-  miercoles: DayMeals;
-  jueves: DayMeals;
-  viernes: DayMeals;
+export interface WeekMeals {
+  Lunes: DayMeals;
+  Martes: DayMeals;
+  Miercoles: DayMeals;
+  Jueves: DayMeals;
+  Viernes: DayMeals;
 }
 
 interface MyContextType {
-  data: string;
-  setData: (data: string) => void;
-  removeData: () => void;
+  // removeData: () => void;
+  loadWeekMeals: LoadWeekMeals;
   weekMeals: WeekMeals;
   addMeal: (
-    day: string,
-    mealType: "almuerzo" | "cena",
+    dayName: keyof WeekMeals,
+    mealType: keyof DayMeals,
     mealName: string,
   ) => void;
 }
 
 export const MyContext = createContext<MyContextType | undefined>(undefined);
 
-interface MyContextProviderProps {
+interface WeeklyFoodProviderProps {
   children: ReactNode;
 }
 
-export function MyContextProvider({ children }: MyContextProviderProps) {
-  const [data, setData] = useState<any>(null);
+export function WeeklyFoodProvider({ children }: WeeklyFoodProviderProps) {
   const [weekMeals, setWeekMeals] = useState<WeekMeals>({
-    lunes: { almuerzo: "", cena: "" },
-    martes: { almuerzo: "", cena: "" },
-    miercoles: { almuerzo: "", cena: "" },
-    jueves: { almuerzo: "", cena: "" },
-    viernes: { almuerzo: "", cena: "" },
+    Lunes: { Almuerzo: "", Cena: "" },
+    Martes: { Almuerzo: "", Cena: "" },
+    Miercoles: { Almuerzo: "", Cena: "" },
+    Jueves: { Almuerzo: "", Cena: "" },
+    Viernes: { Almuerzo: "", Cena: "" },
   });
+
   const addMeal = (
-    day: string,
-    mealType: "almuerzo" | "cena",
+    dayName: keyof WeekMeals,
+    mealType: keyof DayMeals,
     mealName: string,
   ) => {
     setWeekMeals((prevWeekMeals) => ({
       ...prevWeekMeals,
-      [day]: {
-        ...prevWeekMeals[day],
+      [dayName]: {
+        ...prevWeekMeals[dayName],
         [mealType]: mealName,
       },
     }));
   };
 
-  const removeData = () => {
-    setData(null);
+  const loadWeekMeals: LoadWeekMeals = async (userId: number) => {
+    try {
+      const res = await WeekMealsById(userId);
+      const results = res;
+
+      const updatedWeekMeals = { ...weekMeals };
+
+      results.forEach(
+        (item: {
+          dayName: keyof WeekMeals;
+          mealType: keyof DayMeals;
+          mealName: string;
+        }) => {
+          const { dayName, mealType, mealName } = item;
+          if (
+            dayName in updatedWeekMeals &&
+            mealType in updatedWeekMeals[dayName]
+          ) {
+            updatedWeekMeals[dayName][mealType] = mealName;
+          }
+        },
+      );
+      setWeekMeals(updatedWeekMeals);
+    } catch (error) {
+      console.error("hay algo mal que no esta bien:", error);
+    }
   };
+
+  // const removeData = () => {
+  //   setData(null);
+  // };
 
   return (
     <MyContext.Provider
       value={{
-        data,
-        setData,
-        removeData,
+        // removeData,
         weekMeals,
         addMeal,
+        loadWeekMeals,
       }}
     >
       {children}

@@ -19,8 +19,6 @@ export async function GET() {
   }
 }
 
-
-
 export async function POST(request: Request) {
   try {
     const { user_id, name_food, quantity, unit, type_food } =

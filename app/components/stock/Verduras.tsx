@@ -3,16 +3,26 @@
 import React, { useEffect, useState } from "react";
 import { stock } from "../Types";
 import { frutasVerduras } from "../ApiCalls";
+import { useSession } from "next-auth/react";
 
 export default function VerdurasFrutas() {
   const [verduras, setVerduras] = useState([]);
+  const { data: session } = useSession();
+  const idUser = session?.user.id;
+  const userId = parseInt(idUser as string);
 
   useEffect(() => {
-    frutasVerduras().then((res) => {
-      const result = res;
-      setVerduras(result);
-    });
-  }, []);
+    if (userId) {
+      frutasVerduras(userId).then((res) => {
+        const result = res;
+        setVerduras(result);
+      });
+    }
+  }, [userId]);
+
+  if (!userId) {
+    return <></>;
+  }
 
   return (
     <>

@@ -10,7 +10,6 @@ interface Params {
 }
 
 export async function GET(request: Request, { params }: Params) {
-  console.log(params.user_id);
   try {
     const weekmeal = await prisma.weekMeal.findMany({
       where: {

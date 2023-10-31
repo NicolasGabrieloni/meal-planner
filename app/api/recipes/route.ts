@@ -21,7 +21,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const { name, description, ingredients, instructions, userId } =
+    const { name, description, ingredients, instructions, user_id } =
       await request.json();
 
     const newRecipes = await prisma.recipes.create({
@@ -30,7 +30,7 @@ export async function POST(request: Request) {
         description,
         ingredients,
         instructions,
-        userId,
+        user_id,
       },
     });
 

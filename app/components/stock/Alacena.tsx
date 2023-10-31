@@ -1,18 +1,28 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Stock } from "../Types";
+import { stock } from "../Types";
 import { AlacenaCall } from "../ApiCalls";
+import { useSession } from "next-auth/react";
 
 export default function Alacena() {
   const [alacena, setAlacena] = useState([]);
+  const { data: session } = useSession();
+  const idUser = session?.user.id;
+  const userId = parseInt(idUser as string);
 
   useEffect(() => {
-    AlacenaCall().then((res) => {
-      const result = res;
-      setAlacena(result);
-    });
-  }, []);
+    if (userId) {
+      AlacenaCall(userId).then((res) => {
+        const result = res;
+        setAlacena(result);
+      });
+    }
+  }, [userId]);
+
+  if (!userId) {
+    return <></>;
+  }
 
   return (
     <>
@@ -26,7 +36,7 @@ export default function Alacena() {
             </tr>
           </thead>
           <tbody>
-            {alacena.map((food: Stock) => (
+            {alacena.map((food: stock) => (
               <tr key={food.id}>
                 <td>{food.name_food}</td>
                 <td>{food.quantity}</td>

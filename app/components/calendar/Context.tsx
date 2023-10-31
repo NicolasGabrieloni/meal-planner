@@ -59,10 +59,11 @@ export function WeeklyFoodProvider({ children }: WeeklyFoodProviderProps) {
     try {
       const res = await WeekMealsById(userId);
       const results = res;
+      console.log(res);
 
       const updatedWeekMeals = { ...weekMeals };
 
-      results.forEach(
+      results?.forEach(
         (item: {
           dayName: keyof WeekMeals;
           mealType: keyof DayMeals;

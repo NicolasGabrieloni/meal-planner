@@ -2,6 +2,7 @@ import Alacena from "@/components/stock/Alacena";
 import Carnes from "@/components/stock/Carnes";
 import Lacteos from "@/components/stock/Lacteos";
 import VerdurasFrutas from "@/components/stock/Verduras";
+import { AddFood } from "@/components/stock/AddFood";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,60 +11,62 @@ export const metadata: Metadata = {
 
 export default function Depot() {
   return (
-    
-    <div className="m-8 pt-5 md:grid grid-cols-2 gap-4 lg:gap-10">
-      <div>
-        <div className="mt-6 text-center md:hidden">
-          <h1 className="text-xl">Mi Despensa</h1>
+    <>
+      <AddFood />
+      <div className="m-8 grid-cols-2 gap-4 pt-5 md:grid lg:gap-10">
+        <div>
+          <div className="mt-6 text-center md:hidden">
+            <h1 className="text-xl">Mi Despensa</h1>
+          </div>
+          <h3 className="mt-9">Vegetales/Frutas</h3>
+          <section className="mx-auto mt-5  rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
+            <div>
+              <div className="flex justify-center">
+                <div className="h-[200px] ">
+                  <VerdurasFrutas />
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
-        <h3 className="mt-9">Vegetales/Frutas</h3>
-        <section className="mx-auto mt-5  rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
-          <div>
-            <div className="flex justify-center">
-              <div className="h-[200px] ">
-                <VerdurasFrutas />
+        <div>
+          <h3 className="mt-9">Alacena</h3>
+          <section className="mx-auto mt-5  rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
+            <div>
+              <div className="flex justify-center">
+                <div className="h-[200px] ">
+                  <Alacena />
+                </div>
               </div>
             </div>
-          </div>
-        </section>
-      </div>
-      <div>
-        <h3 className="mt-9">Alacena</h3>
-        <section className="mx-auto mt-5  rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
-          <div>
-            <div className="flex justify-center">
-              <div className="h-[200px] ">
-                <Alacena />
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
+          </section>
+        </div>
 
-      <div>
-        <h3 className="mt-9">Carnes</h3>
-        <section className="mx-auto mt-5  rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
-          <div>
-            <div className="flex justify-center">
-              <div className="h-[200px] ">
-                <Carnes />
+        <div>
+          <h3 className="mt-9">Carnes</h3>
+          <section className="mx-auto mt-5  rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
+            <div>
+              <div className="flex justify-center">
+                <div className="h-[200px] ">
+                  <Carnes />
+                </div>
               </div>
             </div>
-          </div>
-        </section>
-      </div>
-      <div>
-        <h3 className="mt-9">Frescos/Lacteos</h3>
-        <section className="mx-auto mt-5  rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
-          <div>
-            <div className="flex justify-center">
-              <div className="h-[200px] ">
-                <Lacteos />
+          </section>
+        </div>
+        <div>
+          <h3 className="mt-9">Frescos/Lacteos</h3>
+          <section className="mx-auto mt-5  rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
+            <div>
+              <div className="flex justify-center">
+                <div className="h-[200px] ">
+                  <Lacteos />
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

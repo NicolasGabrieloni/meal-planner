@@ -6,15 +6,15 @@ const saveWeekMeals = async (
   dayName: keyof WeekMeals,
   mealType: keyof DayMeals,
   mealName: string,
-  id: number,
+  user_id: number,
 ) => {
-  const res = await fetch(`/api/weekMeal/user/${id}`, {
-    method: "PUT",
+  const res = await fetch(`/api/weekMeal`, {
+    method: "POST",
     body: JSON.stringify({
       dayName,
       mealType,
       mealName,
-      id,
+      user_id,
     }),
   });
   if (res.ok) {

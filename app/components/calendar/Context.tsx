@@ -14,9 +14,10 @@ export interface WeekMeals {
   Jueves: DayMeals;
   Viernes: DayMeals;
 }
-
+type selectedRecipes = string[];
 interface MyContextType {
   // removeData: () => void;
+  selectedRecipes: selectedRecipes;
   loadWeekMeals: LoadWeekMeals;
   weekMeals: WeekMeals;
   addMeal: (
@@ -33,6 +34,7 @@ interface WeeklyFoodProviderProps {
 }
 
 export function WeeklyFoodProvider({ children }: WeeklyFoodProviderProps) {
+  const [selectedRecipes, setSelectedRecipes] = useState<string[]>([]);
   const [weekMeals, setWeekMeals] = useState<WeekMeals>({
     Lunes: { Almuerzo: "", Cena: "" },
     Martes: { Almuerzo: "", Cena: "" },
@@ -59,9 +61,9 @@ export function WeeklyFoodProvider({ children }: WeeklyFoodProviderProps) {
     try {
       const res = await WeekMealsById(userId);
       const results = res;
-      console.log(res);
 
       const updatedWeekMeals = { ...weekMeals };
+      const recipesArray: string[] = [];
 
       results?.forEach(
         (item: {
@@ -75,14 +77,18 @@ export function WeeklyFoodProvider({ children }: WeeklyFoodProviderProps) {
             mealType in updatedWeekMeals[dayName]
           ) {
             updatedWeekMeals[dayName][mealType] = mealName;
+            recipesArray.push(mealName);
           }
         },
       );
       setWeekMeals(updatedWeekMeals);
+      setSelectedRecipes(recipesArray);
     } catch (error) {
       console.error("hay algo mal que no esta bien:", error);
     }
   };
+
+  console.log(selectedRecipes);
 
   // const removeData = () => {
   //   setData(null);
@@ -92,6 +98,7 @@ export function WeeklyFoodProvider({ children }: WeeklyFoodProviderProps) {
     <MyContext.Provider
       value={{
         // removeData,
+        selectedRecipes,
         weekMeals,
         addMeal,
         loadWeekMeals,

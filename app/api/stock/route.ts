@@ -21,16 +21,16 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const { user_id, name_food, quantity, unit, type_food } =
+    const { name_food, quantity, unit, type_food, user_id } =
       await request.json();
 
     const newFood = await prisma.stock.create({
       data: {
-        user_id,
         name_food,
         quantity,
         unit,
         type_food,
+        user_id,
       },
     });
 

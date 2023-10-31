@@ -10,7 +10,8 @@ export const metadata: Metadata = {
 
 export default function Depot() {
   return (
-    <div className="m-8 grid-cols-2 gap-4 pt-5 md:grid">
+    
+    <div className="m-8 pt-5 md:grid grid-cols-2 gap-4 lg:gap-10">
       <div>
         <div className="mt-6 text-center md:hidden">
           <h1 className="text-xl">Mi Despensa</h1>

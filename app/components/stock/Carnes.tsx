@@ -1,18 +1,28 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Stock } from "../Types";
+import { stock } from "../Types";
 import { typeCarnes } from "../ApiCalls";
+import { useSession } from "next-auth/react";
 
 export default function Carnes() {
   const [carnes, setCarnes] = useState([]);
+  const { data: session } = useSession();
+  const idUser = session?.user.id;
+  const userId = parseInt(idUser as string);
 
   useEffect(() => {
-    typeCarnes().then((res) => {
-      const result = res;
-      setCarnes(result);
-    });
-  }, []);
+    if (userId) {
+      typeCarnes(userId).then((res) => {
+        const result = res;
+        setCarnes(result);
+      });
+    }
+  }, [userId]);
+
+  if (!userId) {
+    return <></>;
+  }
 
   return (
     <>
@@ -26,7 +36,7 @@ export default function Carnes() {
             </tr>
           </thead>
           <tbody>
-            {carnes.map((carne: Stock) => (
+            {carnes.map((carne: stock) => (
               <tr key={carne.id}>
                 <td>{carne.name_food}</td>
                 <td>{carne.quantity}</td>

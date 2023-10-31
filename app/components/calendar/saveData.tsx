@@ -14,16 +14,14 @@ function SaveData() {
   useEffect(() => {
     if (userId) {
       loadWeekMeals(userId);
-      console.log(userId);
     }
   }, [userId]);
 
   const handlerSaveData: MouseEventHandler<HTMLButtonElement> = () => {
     for (const day in weekMeals) {
       for (const mealType in weekMeals[day]) {
-        const id = weekMeals.id;
         const mealName = weekMeals[day][mealType];
-        saveWeekMeals(day, mealType, mealName, id);
+        saveWeekMeals(day, mealType, mealName, userId);
       }
     }
   };

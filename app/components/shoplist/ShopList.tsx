@@ -18,24 +18,14 @@ function Shop() {
   const [ingredientesFaltantes, setIngredientesFaltantes] = useState<string[]>(
     [],
   );
+  const { selectedRecipes } = useMyContext();
 
-  const selectedRecipes: string[] = [
-    "Milanesa a la Napolitana",
-    "Asado",
-    "Matambre a la Pizza",
-    "Choripán",
-  ];
-  const { weekMeals } = useMyContext();
-
-  // const recipeNames = Object.values(weekMeals).flatMap((meals) =>
-  //   Object.values(meals),
-  // );
-  // console.log(recipeNames);
 
   useEffect(() => {
     Promise.all([Recetas(), Stock()]).then(([recipes, stockData]) => {
       setRecetas(recipes);
       setStock(stockData);
+      console.log(selectedRecipes);
     });
   }, []);
   const stockNormalized = stock.map((food) => normalizeText(food.name_food));
@@ -72,10 +62,11 @@ function Shop() {
     }
 
     setIngredientesFaltantes(ingredientesFaltantes);
+    console.log(selectedRecipes);
   }
 
   return (
-    <div className="ml-52 w-full text-center">
+    <div className="ml-8 w-full text-center">
       <h2 className="font-bold">ShopList</h2>
       <button
         onClick={() =>

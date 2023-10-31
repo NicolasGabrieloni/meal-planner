@@ -5,28 +5,19 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { PopoverProps } from "@radix-ui/react-popover";
-import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
-import { useState, useEffect, useRef } from "react";
+import { CaretSortIcon } from "@radix-ui/react-icons";
+import { useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import {
-  Command,
-  CommandInput,
-  CommandEmpty,
-  CommandGroup,
-  CommandItem,
-} from "cmdk";
+import { Command, CommandInput, CommandEmpty, CommandGroup } from "cmdk";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 //@ts-ignore
 import { RecipesAvailable } from "./RecipesAvailable";
 import { useMyContext, WeekMeals, DayMeals } from "./Context";
 import AllRecipes from "./AllRecipes";
-import { useSession } from "next-auth/react";
 
 export default function FoodInput({
   dayName,
@@ -38,8 +29,6 @@ export default function FoodInput({
   const [openRecipePopover, setOpenRecipePopover] = useState(false);
   const [openInstantPopover, setOpenInstantPopover] = useState(false);
   const { weekMeals } = useMyContext();
-
-
 
   return (
     <>

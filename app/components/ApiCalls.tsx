@@ -21,23 +21,25 @@ export async function Stock() {
   return data;
 }
 
-export async function typeCarnes() {
-  const res = await fetch("http://localhost:3000/api/stock/carnes");
+export async function typeCarnes(user_id: number) {
+  const res = await fetch(`http://localhost:3000/api/stock/carnes/${user_id}`);
   const data = await res.json();
   return data;
 }
-export async function frutasVerduras() {
-  const res = await fetch("http://localhost:3000/api/stock/verduras");
+export async function frutasVerduras(user_id: number) {
+  const res = await fetch(
+    `http://localhost:3000/api/stock/verduras/${user_id}`,
+  );
   const data = await res.json();
   return data;
 }
-export async function AlacenaCall() {
-  const res = await fetch("http://localhost:3000/api/stock/alacena");
+export async function AlacenaCall(user_id: number) {
+  const res = await fetch(`http://localhost:3000/api/stock/alacena/${user_id}`);
   const data = await res.json();
   return data;
 }
-export async function LacteosCall() {
-  const res = await fetch("http://localhost:3000/api/stock/lacteos");
+export async function LacteosCall(user_id: number) {
+  const res = await fetch(`http://localhost:3000/api/stock/lacteos/${user_id}`);
   const data = await res.json();
   return data;
 }
@@ -64,12 +66,6 @@ export async function WeekMeals() {
 }
 export async function WeekMealsById(user_id: number) {
   const res = await fetch(`http://localhost:3000/api/weekMeal/user/${user_id}`);
-  const data = await res.json();
-  return data;
-}
-
-export async function Featured() {
-  const res = await fetch("http://localhost:3000/api/recipesIngredients");
   const data = await res.json();
   return data;
 }

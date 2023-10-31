@@ -11,19 +11,30 @@ import {
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
-export function AddRecipes() {
+export function AddFood() {
+  const [error, setError] = useState("");
   const { data: session } = useSession();
   const idUser = session?.user.id;
   const userId = idUser ? parseInt(idUser as string) : null;
 
   const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    ingredients: "",
-    instructions: "",
-    img: "",
+    name_food: "",
+    quantity: 1,
+    unit: "",
+    type_food: "verduras",
     user_id: userId,
   });
+
+  const resetForm = () => {
+    setFormData({
+      name_food: "",
+      quantity: 1,
+      unit: "",
+      type_food: "verduras",
+      user_id: userId,
+    });
+    setError("");
+  };
   useEffect(() => {
     if (idUser) {
       const userId = parseInt(idUser as string);
@@ -34,34 +45,37 @@ export function AddRecipes() {
     }
   }, [idUser]);
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: { target: { id: any; value: any } }) => {
     const { id, value } = e.target;
-    setFormData({ ...formData, [id]: value });
+    if (id === "quantity") {
+      setFormData({ ...formData, [id]: parseFloat(value) });
+    } else {
+      setFormData({ ...formData, [id]: value });
+    }
   };
 
   const handleSubmit = async () => {
     if (
-      formData.name &&
-      formData.description &&
-      formData.ingredients &&
-      formData.instructions
+      formData.name_food &&
+      formData.quantity &&
+      formData.unit &&
+      formData.type_food
     ) {
       try {
-        const response = await fetch(`/api/recipes`, {
+        const response = await fetch(`/api/stock`, {
           method: "POST",
           body: JSON.stringify(formData),
         });
 
         if (response.ok) {
-          console.log("Receta enviada exitosamente");
-        } else {
-          console.error("Error al enviar la receta");
+          console.log("Alimento enviado exitosamente");
+          resetForm();
         }
       } catch (error) {
         console.error("Error de red al enviar la receta", error);
       }
     } else {
-      console.log("Completa todos los campos");
+      setError("Completa todos los campos");
     }
   };
 
@@ -70,70 +84,69 @@ export function AddRecipes() {
       <Popover>
         <PopoverTrigger asChild>
           <Button className="min-w-[220px]" variant="blue_outlined">
-            Añadir nueva receta
+            Añadir nuevo alimento
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[310px] border border-[#343434]">
           <div className="grid gap-4">
             <div className="space-y-2 ">
               <h4 className="text-lg font-medium leading-none text-[#00785C]">
-                Nueva receta
+                Nuevo alimento
               </h4>
               <p className="text-muted-foreground text-sm">
-                Agregá todo lo necesario para hacer la receta:
+                Agregá todos los alimentos que tengas en tu cocina:
               </p>
             </div>
             <div className="grid gap-2">
               <div className="grid grid-cols-3 items-center gap-4">
-                <Label htmlFor="name">Nombre</Label>
+                <Label htmlFor="name_food">Nombre de alimento</Label>
                 <Input
-                  id="name"
-                  value={formData.name}
+                  id="name_food"
+                  value={formData.name_food}
                   onChange={handleChange}
-                  placeholder="Fideos con crema"
+                  placeholder="bife, queso"
                   className="col-span-2 h-8 w-[180px] "
                 />
               </div>
               <div className="grid grid-cols-3 items-center gap-4">
-                <Label htmlFor="description">Descripción</Label>
+                <Label htmlFor="quantity">Cantidad</Label>
                 <Input
-                  id="description"
-                  value={formData.description}
+                  type="number"
+                  id="quantity"
+                  value={formData.quantity}
                   onChange={handleChange}
-                  placeholder="Altos fideos bestia"
+                  placeholder="1"
                   className="col-span-2 h-8 w-[180px]"
                 />
               </div>
               <div className="grid grid-cols-3 items-center gap-4">
-                <Label htmlFor="ingredients">Ingredientes</Label>
+                <Label htmlFor="unit">Unidad de medida</Label>
                 <Input
-                  id="ingredients"
-                  value={formData.ingredients}
+                  id="unit"
+                  value={formData.unit}
                   onChange={handleChange}
-                  placeholder="Fideos, crema"
+                  placeholder="kg, gr, lt"
                   className="col-span-2 h-8 w-[180px]"
                 />
               </div>
               <div className="grid grid-cols-3 items-center gap-4">
-                <Label htmlFor="instructions">Instrucciones</Label>
-                <Input
-                  id="instructions"
-                  value={formData.instructions}
+                <Label htmlFor="type_food">Tipo de Alimento</Label>
+                <select
+                  id="type_food"
+                  value={formData.type_food}
                   onChange={handleChange}
-                  placeholder="..."
                   className="col-span-2 h-8 w-[180px]"
-                />
-              </div>
-              <div className="grid grid-cols-3 items-center gap-4">
-                <Label htmlFor="img">Imágen</Label>
-                {/* CHEQUEAR LO QUE MANDÓ GIULS AL MD */}
-                <Input
-                  id="img"
-                  placeholder="URL de la imagen"
-                  className="col-span-2 h-8 w-[180px]"
-                />
+                >
+                  <option value="verduras">verduras</option>
+                  <option value="frutas">frutas</option>
+                  <option value="carnes">carnes</option>
+                  <option value="lacteos">lacteos</option>
+                  <option value="secos">secos</option>
+                  <option value="frescos">frescos</option>
+                </select>
               </div>
             </div>
+            {error && <div className="mt-2 text-sm text-red-500">{error}</div>}
             <div className="flex justify-end">
               <Button
                 className="w-[100px] "

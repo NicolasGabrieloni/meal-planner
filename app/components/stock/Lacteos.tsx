@@ -11,11 +11,14 @@ export default function Lacteos() {
   const idUser = session?.user.id;
   const userId = parseInt(idUser as string);
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     if (userId) {
       LacteosCall(userId).then((res) => {
         const result = res;
         setLacteos(result);
+        setLoading(false);
       });
     }
   }, [userId]);
@@ -36,13 +39,23 @@ export default function Lacteos() {
             </tr>
           </thead>
           <tbody>
-            {lacteos.map((lacteo: stock) => (
-              <tr key={lacteo.id}>
-                <td>{lacteo.name_food}</td>
-                <td>{lacteo.quantity}</td>
-                <td>{lacteo.unit}</td>
+            {loading ? (
+              <tr>
+                <td>Cargando...</td>
               </tr>
-            ))}
+            ) : lacteos.length === 0 ? (
+              <tr>
+                <td>No hay alimentos</td>
+              </tr>
+            ) : (
+              lacteos.map((lacteo: stock) => (
+                <tr key={lacteo.id}>
+                  <td>{lacteo.name_food}</td>
+                  <td>{lacteo.quantity}</td>
+                  <td>{lacteo.unit}</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

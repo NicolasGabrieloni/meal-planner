@@ -8,6 +8,9 @@ export const metadata: Metadata = {
 };
 
 async function Recipes() {
+  // PARA QUE FUNCIONEN LOS FAVS EN TIEMPO REAL HAY QUE PONER TODAS LAS FUNCIONES Y
+  // LOS ESTADOS EN EL COMPONENTE PADRE Y PASARLAS POR PROPS A LOS HIJOS.
+
   return (
     <>
       <div>

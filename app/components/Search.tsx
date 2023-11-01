@@ -123,132 +123,138 @@ export function SearchRecipes() {
     }
   };
 
-  if (!dataLoaded) {
-    return <p>Cargando datos...</p>;
-  }
-
   return (
     <div id="all-recipes" className="p-4">
       <h1 className=" border-b border-[#00785C] pb-2 text-xl font-medium text-[#00785C] lg:font-semibold">
         Todas las recetas
       </h1>
-      <AddRecipes />
-      <div className="flex flex-col items-center gap-4 py-4">
-        <input
-          type="search"
-          value={inputValue}
-          onChange={handleInputChange}
-          placeholder={`Buscar por ${changeSearch ? "Nombre" : "Ingrediente"}`}
-          className="w-full max-w-[600px] rounded-md border border-[#343434] pl-4"
-        ></input>
-        <div className="flex flex-row items-center space-x-2">
-          <h4 className="text-sm">Buscar por:</h4>
-          <Button
-            onClick={handleChangeSearch}
-            className={
-              changeSearch
-                ? "h-[20px] cursor-pointer rounded-lg border border-[#343434] bg-[#72E5FF] pb-2 text-xs"
-                : "h-[20px] cursor-pointer rounded-lg border border-[#343434] pb-2 text-xs"
-            }
-          >
-            Nombre
-          </Button>
-          <Button
-            onClick={handleChangeSearch}
-            className={
-              changeSearch
-                ? "h-[20px] cursor-pointer rounded-md border border-[#343434] pb-2 text-xs"
-                : "h-[20px] cursor-pointer rounded-md border border-[#343434] bg-[#72E5FF] pb-2 text-xs"
-            }
-          >
-            Ingrediente
-          </Button>
-        </div>
-      </div>
+      {!dataLoaded ? (
+        <p>Cargando datos...</p>
+      ) : (
+        <div>
+          <AddRecipes />
+          <div className="flex flex-col items-center gap-4 py-4">
+            <input
+              type="search"
+              value={inputValue}
+              onChange={handleInputChange}
+              placeholder={`Buscar por ${
+                changeSearch ? "Nombre" : "Ingrediente"
+              }`}
+              className="w-full max-w-[600px] rounded-md border border-[#343434] pl-4"
+            ></input>
+            <div className="flex flex-row items-center space-x-2">
+              <h4 className="text-sm">Buscar por:</h4>
+              <Button
+                onClick={handleChangeSearch}
+                className={
+                  changeSearch
+                    ? "h-[20px] cursor-pointer rounded-lg border border-[#343434] bg-[#72E5FF] pb-2 text-xs"
+                    : "h-[20px] cursor-pointer rounded-lg border border-[#343434] pb-2 text-xs"
+                }
+              >
+                Nombre
+              </Button>
+              <Button
+                onClick={handleChangeSearch}
+                className={
+                  changeSearch
+                    ? "h-[20px] cursor-pointer rounded-md border border-[#343434] pb-2 text-xs"
+                    : "h-[20px] cursor-pointer rounded-md border border-[#343434] bg-[#72E5FF] pb-2 text-xs"
+                }
+              >
+                Ingrediente
+              </Button>
+            </div>
+          </div>
 
-      <div className="BUSCADOr">
-        {inputValue.length === 0 ? (
-          recetas.map((receta: recipe) => (
-            <div
-              key={receta.id}
-              className="h-fit w-full rounded-xl border border-[#343434] bg-[#E9FFEB] p-4 drop-shadow-md sm:w-1/2 lg:w-1/3"
-            >
-              <Image
-                src={receta.image}
-                alt={receta.name}
-                width={1200}
-                height={600}
-                className="w-fill h-[200px] rounded-xl object-cover"
-              />
-              <div className="space-y-2 py-2">
-                <h2 className="m-5 flex items-center">
-                  <span className="text-xl font-bold">{receta.name}</span>
-                  <span
-                    className="ml-auto cursor-pointer text-2xl"
-                    onClick={() => toggleFavorito(receta)}
-                  >
-                    {recetasFavoritas.some(
-                      (favorito) => favorito.recipes_id === receta.id,
-                    ) ? (
-                      <AiFillHeart style={{ color: "red" }} />
-                    ) : (
-                      <AiOutlineHeart />
-                    )}
-                  </span>
-                </h2>
-                <p>
-                  Ingredientes:
-                  {receta.ingredients}
-                </p>
-                <p>
-                  Instrucciones:
-                  {receta.instructions}
-                </p>
-              </div>
-            </div>
-          ))
-        ) : searchResults.length > 0 ? (
-          searchResults.map((receta: recipe) => (
-            <div key={receta.id} className="mt-10 w-96 text-center">
-              <h2 className="m-5 flex items-center">
-                <span className="text-xl font-bold">{receta.name}</span>
-                <span
-                  className="ml-auto cursor-pointer text-2xl"
-                  onClick={() => toggleFavorito(receta)}
+          <div className="BUSCADOr">
+            {inputValue.length === 0 ? (
+              recetas.map((receta: recipe) => (
+                <div
+                  key={receta.id}
+                  className="h-fit w-full rounded-xl border border-[#343434] bg-[#E9FFEB] p-4 drop-shadow-md sm:w-1/2 lg:w-1/3"
                 >
-                  {recetasFavoritas.some(
-                    (favorito) => favorito.recipes_id === receta.id,
-                  ) ? (
-                    <AiFillHeart style={{ color: "red" }} />
-                  ) : (
-                    <AiOutlineHeart />
-                  )}
-                </span>
+                  <Image
+                    src={receta.image}
+                    alt={receta.name}
+                    width={1200}
+                    height={600}
+                    className="w-fill h-[200px] rounded-xl object-cover"
+                  />
+                  <div className="space-y-2 py-2">
+                    <h2 className="m-5 flex items-center">
+                      <span className="text-xl font-bold">{receta.name}</span>
+                      <span
+                        className="ml-auto cursor-pointer text-2xl"
+                        onClick={() => toggleFavorito(receta)}
+                      >
+                        {recetasFavoritas.some(
+                          (favorito) => favorito.recipes_id === receta.id,
+                        ) ? (
+                          <AiFillHeart />
+                        ) : (
+                          <AiOutlineHeart />
+                        )}
+                      </span>
+                    </h2>
+                    <p>
+                      Ingredientes:
+                      {receta.ingredients}
+                    </p>
+                    <p>
+                      Instrucciones:
+                      {receta.instructions}
+                    </p>
+                  </div>
+                </div>
+              ))
+            ) : searchResults.length > 0 ? (
+              searchResults.map((receta: recipe) => (
+                <div key={receta.id} className="mt-10 w-96 text-center">
+                  <h2 className="m-5 flex items-center">
+                    <span className="text-xl font-bold">{receta.name}</span>
+                    <span
+                      className="ml-auto cursor-pointer text-2xl"
+                      onClick={() => toggleFavorito(receta)}
+                    >
+                      {recetasFavoritas.some(
+                        (favorito) => favorito.recipes_id === receta.id,
+                      ) ? (
+                        <AiFillHeart />
+                      ) : (
+                        <AiOutlineHeart />
+                      )}
+                    </span>
+                  </h2>
+                  <p>
+                    <b>Descripcion: </b>
+                    {receta.description}
+                  </p>
+                  <p>
+                    <b>ingredientes: </b>
+                    {receta.ingredients}
+                  </p>
+                  <p>
+                    <b>instrucciones: </b>
+                    {receta.instructions}
+                  </p>
+                  <button className="m-5 w-32 rounded-md border border-black">
+                    EDIT
+                  </button>
+                  <button className="m-5 w-32 rounded-md border border-black">
+                    DELETE
+                  </button>
+                </div>
+              ))
+            ) : (
+              <h2 className="mt-10 text-center">
+                No se encontró ningun resultado
               </h2>
-              <p>
-                <b>Descripcion: </b>
-                {receta.description}
-              </p>
-              <p>
-                <b>ingredientes: </b>
-                {receta.ingredients}
-              </p>
-              <p>
-                <b>instrucciones: </b>
-                {receta.instructions}
-              </p>
-              <button className="m-5 w-32 rounded-md border border-black">
-                EDIT
-              </button>
-              <button className="m-5 w-32 rounded-md border border-black">
-                DELETE
-              </button>
-            </div>
-          ))
-        ) : (
-          <h2 className="mt-10 text-center">No se encontró ningun resultado</h2>
-        )}
-      </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

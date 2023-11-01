@@ -1,6 +1,7 @@
 import { Metadata } from "next";
-import RecipesComponents from "@/components/recipes/RecipesComponents";
 import { CarouselRecipes } from "@/components/ui/carouselRecipes";
+import CarouselFavourites from "@/components/recipes/CarouselFavourites";
+import { SearchRecipes } from "@/components/Search";
 
 export const metadata: Metadata = {
   title: "Recetas",
@@ -9,8 +10,11 @@ export const metadata: Metadata = {
 async function Recipes() {
   return (
     <>
-      <RecipesComponents />
-      <CarouselRecipes label="Destacados de la semana" />
+      <div>
+        <CarouselFavourites label="Recetas favoritas" />
+        <CarouselRecipes label="Destacados de la semana" />
+      </div>
+      <SearchRecipes />
     </>
   );
 }

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Recetas, Stock } from "../ApiCalls";
 import { stock, recipe } from "@/components/Types";
-import { useMyContext, WeekMeals, DayMeals } from "./Context";
+import { useMyContext, WeekMeals, DayMeals } from "../../Context";
 
 function normalizeText(text: string) {
   return text

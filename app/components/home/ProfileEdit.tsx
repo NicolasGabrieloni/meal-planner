@@ -62,7 +62,7 @@ export function ProfileEdit() {
       </DialogTrigger>
       <DialogContent className="w-screen rounded-xl border border-[#343434] md:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-xl font-medium text-[#00785C]">
+          <DialogTitle className="text-center text-xl font-medium text-[#00785C]">
             Editar perfil
           </DialogTitle>
         </DialogHeader>
@@ -71,9 +71,9 @@ export function ProfileEdit() {
             <Image
               src={session?.user?.image as string}
               alt="User profile image"
-              width={70}
-              height={70}
-              className="max-h-[70px] max-w-[70px] rounded-full "
+              width={200}
+              height={200}
+              className="max-h-[70px] max-w-[70px] rounded-full"
             />
             <Input
               type="file"
@@ -83,7 +83,11 @@ export function ProfileEdit() {
             />
           </div>
           <div>
-            <Label htmlFor="description" className="text-right">
+            <h4>Edad:</h4>
+            <input type="number" />
+          </div>
+          <div className="flex flex-row space-y-2 md:flex-col">
+            <Label htmlFor="description" className="items-center">
               Descripción
             </Label>
             <textarea
@@ -91,7 +95,7 @@ export function ProfileEdit() {
               value={description}
               onChange={handleDescriptionChange}
               rows={3}
-              className=" w-[270px] rounded-md border border-[#343434] p-1 text-sm shadow-md"
+              className=" w-[270px] rounded-md border border-[#343434] p-1 text-sm shadow-md sm:w-full"
             />
           </div>
         </div>

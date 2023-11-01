@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Recetas } from "../ApiCalls";
 import { recipe } from "@/components/Types";
-import { DayMeals, WeekMeals, useMyContext } from "./Context";
+import { DayMeals, WeekMeals, useMyContext } from "../../Context";
 
 import React from "react";
 

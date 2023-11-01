@@ -1,5 +1,5 @@
 import FoodSearchRemove from "../FoodSearchRemove";
-import { WeekMeals } from "../Context";
+import { WeekMeals } from "../../../Context";
 
 export interface DayTypes {
   dayName: keyof WeekMeals;

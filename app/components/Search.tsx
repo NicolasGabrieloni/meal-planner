@@ -8,6 +8,17 @@ import { AddRecipes } from "./recipes/AddRecipes";
 import Image from "next/image";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useSession } from "next-auth/react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
 
 type favRecipes = {
   id: number;
@@ -60,7 +71,6 @@ export function SearchRecipes() {
   const handleChangeSearch = () => {
     setChangeSearch(!changeSearch);
   };
-  //////// FIN BUSCADOR //////////////
 
   const guardarRecetaFavorita = async (user_id: number, recipes_id: number) => {
     try {
@@ -168,12 +178,12 @@ export function SearchRecipes() {
             </div>
           </div>
 
-          <div className="BUSCADOr">
+          <div className="grid gap-x-6 gap-y-6 md:grid-cols-2 lg:grid-cols-3">
             {inputValue.length === 0 ? (
               recetas.map((receta: recipe) => (
                 <div
                   key={receta.id}
-                  className="h-fit w-full rounded-xl border border-[#343434] bg-[#E9FFEB] p-4 drop-shadow-md sm:w-1/2 lg:w-1/3"
+                  className="h-[400px] w-full rounded-xl border border-[#343434] bg-[#E9FFEB] p-4 drop-shadow-md"
                 >
                   <Image
                     src={receta.image}
@@ -183,8 +193,8 @@ export function SearchRecipes() {
                     className="w-fill h-[200px] rounded-xl object-cover"
                   />
                   <div className="space-y-2 py-2">
-                    <h2 className="m-5 flex items-center">
-                      <span className="text-xl font-bold">{receta.name}</span>
+                    <h2 className="flex items-center">
+                      <span className="text-lg font-bold">{receta.name}</span>
                       <span
                         className="ml-auto cursor-pointer text-2xl"
                         onClick={() => toggleFavorito(receta)}
@@ -198,53 +208,119 @@ export function SearchRecipes() {
                         )}
                       </span>
                     </h2>
-                    <p>
-                      Ingredientes:
-                      {receta.ingredients}
-                    </p>
-                    <p>
-                      Instrucciones:
-                      {receta.instructions}
-                    </p>
+                    <div className="flex flex-row justify-between pr-4">
+                      <p className="text-md w-2/3">{receta.description}</p>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button
+                            variant="green_outlined"
+                            className="mt-10 w-fit text-sm font-bold"
+                          >
+                            Ver
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="space-y-2 rounded-xl border border-[#343434] sm:max-w-[500px] md:max-w-[425px]">
+                          <DialogHeader className="space-y-4">
+                            <Image
+                              src={receta.image}
+                              alt={receta.name}
+                              width={1200}
+                              height={600}
+                              className="w-fill mt-4 h-[300px] rounded-xl object-cover"
+                            />
+                            <DialogTitle className="text-2xl text-[#00785C]">
+                              {" "}
+                              {receta.name}{" "}
+                            </DialogTitle>
+
+                            <DialogDescription className="text-lg font-semibold">
+                              {receta.description}
+                            </DialogDescription>
+                          </DialogHeader>
+                          <h4 className="text-lg font-medium">
+                            <span className="font-bold">Ingredientes: </span>
+                            {receta.ingredients}{" "}
+                          </h4>
+                          <h3 className="items-center text-lg font-medium">
+                            <span className="font-bold">Instrucciones: </span>
+                            {receta.instructions}{" "}
+                          </h3>
+                        </DialogContent>
+                      </Dialog>
+                    </div>
                   </div>
                 </div>
               ))
             ) : searchResults.length > 0 ? (
               searchResults.map((receta: recipe) => (
-                <div key={receta.id} className="mt-10 w-96 text-center">
-                  <h2 className="m-5 flex items-center">
-                    <span className="text-xl font-bold">{receta.name}</span>
-                    <span
-                      className="ml-auto cursor-pointer text-2xl"
-                      onClick={() => toggleFavorito(receta)}
-                    >
-                      {recetasFavoritas.some(
-                        (favorito) => favorito.recipes_id === receta.id,
-                      ) ? (
-                        <AiFillHeart />
-                      ) : (
-                        <AiOutlineHeart />
-                      )}
-                    </span>
-                  </h2>
-                  <p>
-                    <b>Descripcion: </b>
-                    {receta.description}
-                  </p>
-                  <p>
-                    <b>ingredientes: </b>
-                    {receta.ingredients}
-                  </p>
-                  <p>
-                    <b>instrucciones: </b>
-                    {receta.instructions}
-                  </p>
-                  <button className="m-5 w-32 rounded-md border border-black">
-                    EDIT
-                  </button>
-                  <button className="m-5 w-32 rounded-md border border-black">
-                    DELETE
-                  </button>
+                <div
+                  key={receta.id}
+                  className="h-[400px] w-full rounded-xl border border-[#343434] bg-[#E9FFEB] p-4 drop-shadow-md"
+                >
+                  <Image
+                    src={receta.image}
+                    alt={receta.name}
+                    width={1200}
+                    height={600}
+                    className="w-fill h-[200px] rounded-xl object-cover"
+                  />
+                  <div className="space-y-2 py-2">
+                    <h2 className="flex items-center">
+                      <span className="text-lg font-bold">{receta.name}</span>
+                      <span
+                        className="ml-auto cursor-pointer text-2xl"
+                        onClick={() => toggleFavorito(receta)}
+                      >
+                        {recetasFavoritas.some(
+                          (favorito) => favorito.recipes_id === receta.id,
+                        ) ? (
+                          <AiFillHeart />
+                        ) : (
+                          <AiOutlineHeart />
+                        )}
+                      </span>
+                    </h2>
+                    <div className="flex flex-row justify-between pr-4">
+                      <p className="text-md w-2/3">{receta.description}</p>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button
+                            variant="green_outlined"
+                            className="mt-10 w-fit text-sm font-bold"
+                          >
+                            Ver
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="space-y-2 rounded-xl border border-[#343434] sm:max-w-[500px] md:max-w-[425px]">
+                          <DialogHeader className="space-y-4">
+                            <Image
+                              src={receta.image}
+                              alt={receta.name}
+                              width={1200}
+                              height={600}
+                              className="w-fill mt-4 h-[300px] rounded-xl object-cover"
+                            />
+                            <DialogTitle className="text-2xl text-[#00785C]">
+                              {" "}
+                              {receta.name}{" "}
+                            </DialogTitle>
+
+                            <DialogDescription className="text-lg font-semibold">
+                              {receta.description}
+                            </DialogDescription>
+                          </DialogHeader>
+                          <h4 className="text-lg font-medium">
+                            <span className="font-bold">Ingredientes: </span>
+                            {receta.ingredients}{" "}
+                          </h4>
+                          <h3 className="items-center text-lg font-medium">
+                            <span className="font-bold">Instrucciones: </span>
+                            {receta.instructions}{" "}
+                          </h3>
+                        </DialogContent>
+                      </Dialog>
+                    </div>
+                  </div>
                 </div>
               ))
             ) : (

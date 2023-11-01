@@ -1,8 +1,8 @@
 import Day from "@/components/calendar/days/Day";
 import ListButton from "@/components/ui/ListButton";
 import { Metadata } from "next";
-import { WeeklyFoodProvider } from "@/components/calendar/Context";
-import { WeekMeals } from "@/components/calendar/Context";
+import { WeeklyFoodProvider } from "@/Context";
+import { WeekMeals } from "@/Context";
 import SaveData from "@/components/calendar/saveData";
 
 export const metadata: Metadata = {
@@ -20,8 +20,10 @@ export default function Calendar() {
         Calendario semanal
       </h1>
       <WeeklyFoodProvider>
-        <div className="flex flex-col items-center space-y-6">
-          <SaveData />
+        <div className="relative flex flex-col items-center space-y-6">
+          <div className="absolute right-0 top-0 pt-2">
+            <SaveData />
+          </div>
           <Day dayName="Lunes" />
           <Day dayName="Martes" />
           <Day dayName="Miercoles" />

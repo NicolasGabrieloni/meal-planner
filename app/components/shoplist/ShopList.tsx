@@ -20,7 +20,6 @@ function Shop() {
   );
   const { selectedRecipes } = useMyContext();
 
-
   useEffect(() => {
     Promise.all([Recetas(), Stock()]).then(([recipes, stockData]) => {
       setRecetas(recipes);
@@ -72,15 +71,18 @@ function Shop() {
         onClick={() =>
           obtenerIngredientesFaltantes(recetasSeleccionadas, stockNormalized)
         }
-        className="mt-12 font-bold"
+        className=" text-md w-full border-b border-[#00785C] p-4 text-[#00785C] lg:border-b-2 lg:text-xl"
       >
-        generar lista de compras
+        Generar lista de compras
       </button>
-      <div>
-        <h3>Ingredientes Faltantes:</h3>
-        <ul>
+      <div className="mx-auto mt-3 w-3/5 flex-row items-center space-x-4 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 pt-8 text-center shadow-xl lg:min-h-[150px]">
+        <h3 className="text-lg font-bold">Ingredientes Faltantes:</h3>
+        <ul className="flex flex-col justify-start">
           {ingredientesFaltantes.map((ingrediente, index) => (
-            <li key={index}>{ingrediente}</li>
+            <li key={index} className="flex items-center">
+              <input type="checkbox" className="mr-2" />
+              {ingrediente}
+            </li>
           ))}
         </ul>
       </div>

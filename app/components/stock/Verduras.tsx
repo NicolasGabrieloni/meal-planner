@@ -11,11 +11,14 @@ export default function VerdurasFrutas() {
   const idUser = session?.user.id;
   const userId = parseInt(idUser as string);
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     if (userId) {
       frutasVerduras(userId).then((res) => {
         const result = res;
         setVerduras(result);
+        setLoading(false);
       });
     }
   }, [userId]);
@@ -36,13 +39,23 @@ export default function VerdurasFrutas() {
             </tr>
           </thead>
           <tbody>
-            {verduras.map((verdura: stock) => (
-              <tr key={verdura.id}>
-                <td>{verdura.name_food}</td>
-                <td>{verdura.quantity}</td>
-                <td>{verdura.unit}</td>
+            {loading ? (
+              <tr>
+                <td>Cargando...</td>
               </tr>
-            ))}
+            ) : verduras.length === 0 ? (
+              <tr>
+                <td>No hay alimentos</td>
+              </tr>
+            ) : (
+              verduras.map((verdura: stock) => (
+                <tr key={verdura.id}>
+                  <td>{verdura.name_food}</td>
+                  <td>{verdura.quantity}</td>
+                  <td>{verdura.unit}</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

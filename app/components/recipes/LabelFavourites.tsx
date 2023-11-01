@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Favourites, Recetas } from "../ApiCalls";
 import { favourites, recipe } from "../Types";
 import { useSession } from "next-auth/react";
+import { Carousel } from "@material-tailwind/react";
 
 interface LabelTypes {
   label: string;
@@ -54,7 +55,7 @@ export default function LabelFavourites({ label }: LabelTypes) {
             recetasAMostrar.map((recetasFavs: recipe) => (
               <div
                 key={recetasFavs.id}
-                className="relative z-30 mr-[-5px] h-[200px] w-[90px] transform-gpu rounded-md bg-slate-300 ring-4 ring-[#FAFAFA] transition-transform hover:z-40 hover:scale-110"
+                className="bg-slate-300 relative z-30 mr-[-5px] h-[200px] w-[90px] transform-gpu rounded-md ring-4 ring-[#FAFAFA] transition-transform hover:z-40 hover:scale-110"
               >
                 {recetasFavs.name}
               </div>

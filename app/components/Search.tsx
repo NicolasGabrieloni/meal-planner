@@ -1,32 +1,50 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Recetas } from "./ApiCalls";
+import { Favourites, Recetas } from "./ApiCalls";
 import { recipe } from "@/components/Types";
 import { Button } from "./ui/button";
 import { AddRecipes } from "./recipes/AddRecipes";
 import Image from "next/image";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { useSession } from "next-auth/react";
+
+type favRecipes = {
+  id: number;
+  recipes_id: number;
+  user_id: number;
+};
 
 export function SearchRecipes() {
   const [inputValue, setInputValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [recetas, setRecetas] = useState([]);
   const [changeSearch, setChangeSearch] = useState(true);
+  const [recetasFavoritas, setRecetasFavoritas] = useState<favRecipes[]>([]);
+  const { data: session } = useSession();
+  const idUser = session?.user.id;
+  const userId = parseInt(idUser as string);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
-    Recetas().then((resultados) => {
-      const resultadosSinMapear = resultados;
-      setRecetas(resultadosSinMapear);
-    });
-  }, []);
+    if (userId) {
+      Promise.all([Recetas(), Favourites(userId)]).then(
+        ([recipes, favData]) => {
+          setRecetas(recipes);
+          setRecetasFavoritas(favData);
+          setDataLoaded(true);
+        },
+      );
+    }
+  }, [userId]);
 
+  //////// BUSCADOR //////////////
   function removeAccents(text: string) {
     return text
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase();
   }
-
   const handleInputChange = (e: { target: { value: string } }) => {
     const query = removeAccents(e.target.value).toLowerCase();
     setInputValue(query);
@@ -39,10 +57,75 @@ export function SearchRecipes() {
     });
     setSearchResults(filterRecipes);
   };
-
   const handleChangeSearch = () => {
     setChangeSearch(!changeSearch);
   };
+  //////// FIN BUSCADOR //////////////
+
+  const guardarRecetaFavorita = async (user_id: number, recipes_id: number) => {
+    try {
+      const response = await fetch(`/api/favourites`, {
+        method: "POST",
+        body: JSON.stringify({
+          user_id,
+          recipes_id,
+        }),
+      });
+      if (response.ok) {
+        console.log("enviado con exito");
+      } else {
+        console.error("Error al guardar la receta como favorita.");
+      }
+    } catch (error) {
+      console.error("Error de red:", error);
+    }
+  };
+
+  const eliminarRecetaFavorita = async (
+    user_id: number,
+    recipes_id: number,
+  ) => {
+    try {
+      const response = await fetch(
+        `/api/favourites/user/${user_id}/${recipes_id}`,
+        {
+          method: "DELETE",
+        },
+      );
+
+      if (response.ok) {
+        console.log("La receta se elimino de favoritos");
+      } else {
+        console.error("Error al eliminar la receta de favoritos.");
+      }
+    } catch (error) {
+      console.error("Error de red:", error);
+    }
+  };
+
+  const toggleFavorito = (receta: recipe) => {
+    const recipesId = receta.id;
+    if (
+      recetasFavoritas.some((favorito) => favorito.recipes_id === recipesId)
+    ) {
+      eliminarRecetaFavorita(userId, recipesId).then(() => {
+        setRecetasFavoritas((prevFavoritos) =>
+          prevFavoritos.filter((favorito) => favorito.recipes_id !== receta.id),
+        );
+      });
+    } else {
+      guardarRecetaFavorita(userId, recipesId).then(() => {
+        setRecetasFavoritas((prevFavoritos) => [
+          ...prevFavoritos,
+          { id: 0, recipes_id: receta.id, user_id: userId },
+        ]);
+      });
+    }
+  };
+
+  if (!dataLoaded) {
+    return <p>Cargando datos...</p>;
+  }
 
   return (
     <div id="all-recipes" className="p-4">
@@ -70,7 +153,6 @@ export function SearchRecipes() {
           >
             Nombre
           </Button>
-
           <Button
             onClick={handleChangeSearch}
             className={
@@ -99,7 +181,21 @@ export function SearchRecipes() {
                 className="w-fill h-[200px] rounded-xl object-cover"
               />
               <div className="space-y-2 py-2">
-                <h1 className="text-xl font-medium">{receta.name}</h1>
+                <h2 className="m-5 flex items-center">
+                  <span className="text-xl font-bold">{receta.name}</span>
+                  <span
+                    className="ml-auto cursor-pointer text-2xl"
+                    onClick={() => toggleFavorito(receta)}
+                  >
+                    {recetasFavoritas.some(
+                      (favorito) => favorito.recipes_id === receta.id,
+                    ) ? (
+                      <AiFillHeart style={{ color: "red" }} />
+                    ) : (
+                      <AiOutlineHeart />
+                    )}
+                  </span>
+                </h2>
                 <p>
                   Ingredientes:
                   {receta.ingredients}
@@ -114,7 +210,21 @@ export function SearchRecipes() {
         ) : searchResults.length > 0 ? (
           searchResults.map((receta: recipe) => (
             <div key={receta.id} className="mt-10 w-96 text-center">
-              <h2 className="m-5 font-bold">{receta.name}</h2>
+              <h2 className="m-5 flex items-center">
+                <span className="text-xl font-bold">{receta.name}</span>
+                <span
+                  className="ml-auto cursor-pointer text-2xl"
+                  onClick={() => toggleFavorito(receta)}
+                >
+                  {recetasFavoritas.some(
+                    (favorito) => favorito.recipes_id === receta.id,
+                  ) ? (
+                    <AiFillHeart style={{ color: "red" }} />
+                  ) : (
+                    <AiOutlineHeart />
+                  )}
+                </span>
+              </h2>
               <p>
                 <b>Descripcion: </b>
                 {receta.description}

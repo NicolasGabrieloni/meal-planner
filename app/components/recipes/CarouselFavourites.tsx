@@ -13,25 +13,23 @@ interface LabelTypes {
 }
 
 export default function LabelFavourites({ label }: LabelTypes) {
-  const { data } = useSession();
   const [favs, setFavs] = useState<favourites[]>([]);
   const [recetas, setRecetas] = useState<recipe[]>([]);
   const [verFavs, setVerFavs] = useState(false);
+  const { data: session } = useSession();
+  const idUser = session?.user.id;
+  const userId = parseInt(idUser as string);
 
   useEffect(() => {
-    Promise.all([Recetas(), Favourites()]).then(([recipes, favs]) => {
-      setRecetas(recipes);
-      setFavs(favs);
-    });
-  }, []);
+    if (userId) {
+      Promise.all([Recetas(), Favourites(userId)]).then(([recipes, favs]) => {
+        setRecetas(recipes);
+        setFavs(favs);
+      });
+    }
+  }, [userId]);
 
-  const filterFavs = favs.filter(
-    (fav: favourites) => fav.user_id === Number(data?.user?.id),
-  );
-
-  const recipesFavsId = filterFavs.map(
-    (userFavs: favourites) => userFavs.recipes_id,
-  );
+  const recipesFavsId = favs.map((userFavs: favourites) => userFavs.recipes_id);
 
   const recetasFavoritas = recetas.filter((receta) =>
     recipesFavsId.includes(receta.id),

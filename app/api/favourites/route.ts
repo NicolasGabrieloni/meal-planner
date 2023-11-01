@@ -22,7 +22,6 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const { recipes_id, user_id } = await request.json();
-
     const newReceta = await prisma.favourites.create({
       data: {
         recipes_id,

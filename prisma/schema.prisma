@@ -21,6 +21,7 @@ model users {
   ingredients ingredients[]
   recipes     recipes[]
   WeekMeal    WeekMeal[]
+  favourites  favourites[]
 }
 
 enum TypeFood {
@@ -46,8 +47,8 @@ model ingredients {
   id                  Int                   @id @default(autoincrement())
   name                String                @db.Text
   unit                String                @db.Text
-  users               users?                @relation(fields: [usersId], references: [id])
   usersId             Int?
+  users               users?                @relation(fields: [usersId], references: [id])
   recipes_ingredients recipes_ingredients[]
 }
 
@@ -57,7 +58,7 @@ model recipes {
   description          String                @db.Text
   ingredients          String                @db.Text
   instructions         String                @db.Text
-  image                String?                @default("https://prnt.sc/FIsEvguBhGbI") @db.VarChar(255)
+  image                String?               @default("https://prnt.sc/FIsEvguBhGbI") @db.VarChar(255)
   user_id              Int?
   user                 users?                @relation(fields: [user_id], references: [id])
   recipes_favourites   favourites[]
@@ -77,6 +78,7 @@ model favourites {
   recipes_id Int
   user_id    Int
   recipes    recipes @relation(fields: [recipes_id], references: [id])
+  users      users?  @relation(fields: [user_id], references: [id])
 }
 
 enum Days {

@@ -81,6 +81,9 @@ export function WeeklyFoodProvider({ children }: WeeklyFoodProviderProps) {
           }
         },
       );
+      if (recipesArray.length > 10) {
+        recipesArray.splice(0, recipesArray.length - 10);
+      }
       setWeekMeals(updatedWeekMeals);
       setSelectedRecipes(recipesArray);
     } catch (error) {
@@ -89,7 +92,6 @@ export function WeeklyFoodProvider({ children }: WeeklyFoodProviderProps) {
   };
 
   console.log(selectedRecipes);
-
   // const removeData = () => {
   //   setData(null);
   // };
@@ -113,7 +115,7 @@ export function useMyContext() {
   const context = useContext(MyContext);
   if (!context) {
     throw new Error(
-      "useMyContext debe utilizarse dentro de un MyContextProvider",
+      "useMyContext no va a andar si no esta dentro de WeeklyFoodProvider",
     );
   }
   return context;

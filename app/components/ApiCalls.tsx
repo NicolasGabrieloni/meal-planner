@@ -52,8 +52,15 @@ export async function Ingredients() {
 }
 
 /// FAVOURITES ///
-export async function Favourites() {
-  const res = await fetch("http://localhost:3000/api/favourites");
+export async function Favourites(user_id: number) {
+  const res = await fetch(
+    `http://localhost:3000/api/favourites/user/${user_id}`,
+  );
+  const data = await res.json();
+  return data;
+}
+export async function FavouritesById(id: number) {
+  const res = await fetch(`http://localhost:3000/api/favourites${id}`);
   const data = await res.json();
   return data;
 }

@@ -19,12 +19,12 @@ function Shop() {
     [],
   );
   const { selectedRecipes } = useMyContext();
+  console.log(selectedRecipes);
 
   useEffect(() => {
     Promise.all([Recetas(), Stock()]).then(([recipes, stockData]) => {
       setRecetas(recipes);
       setStock(stockData);
-      console.log(selectedRecipes);
     });
   }, []);
   const stockNormalized = stock.map((food) => normalizeText(food.name_food));
@@ -61,7 +61,6 @@ function Shop() {
     }
 
     setIngredientesFaltantes(ingredientesFaltantes);
-    console.log(selectedRecipes);
   }
 
   return (

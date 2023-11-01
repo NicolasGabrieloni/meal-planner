@@ -1,15 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Favourites, Recetas } from "../ApiCalls";
-import { favourites, recipe } from "../Types";
-import { useSession } from "next-auth/react";
+import { Recetas } from "../ApiCalls";
+import { recipe } from "../Types";
 
 interface LabelTypes {
   label: string;
 }
 
 export default function LabelDestacated({ label }: LabelTypes) {
-  const { data } = useSession();
   const [recetas, setRecetas] = useState<recipe[]>([]);
 
   useEffect(() => {
@@ -33,7 +31,7 @@ export default function LabelDestacated({ label }: LabelTypes) {
         {randomRecipes.map((recetasFavs: recipe) => (
           <div
             key={recetasFavs.id}
-            className="relative z-30 mr-[-5px] h-[200px] w-[90px] transform-gpu rounded-md bg-slate-300 ring-4 ring-[#FAFAFA] transition-transform hover:z-40 hover:scale-110"
+            className="bg-slate-300 relative z-30 mr-[-5px] h-[200px] w-[90px] transform-gpu rounded-md ring-4 ring-[#FAFAFA] transition-transform hover:z-40 hover:scale-110"
           >
             {recetasFavs.name}
           </div>

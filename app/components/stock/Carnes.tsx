@@ -11,11 +11,14 @@ export default function Carnes() {
   const idUser = session?.user.id;
   const userId = parseInt(idUser as string);
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     if (userId) {
       typeCarnes(userId).then((res) => {
         const result = res;
         setCarnes(result);
+        setLoading(false);
       });
     }
   }, [userId]);
@@ -36,13 +39,22 @@ export default function Carnes() {
             </tr>
           </thead>
           <tbody>
-            {carnes.map((carne: stock) => (
-              <tr key={carne.id}>
-                <td>{carne.name_food}</td>
-                <td>{carne.quantity}</td>
-                <td>{carne.unit}</td>
+            {loading ? 
+             (<tr>
+                <td>Cargando...</td>
+              </tr> ) : carnes.length === 0 ? (
+                <tr>
+                <td>No hay alimentos</td>
               </tr>
-            ))}
+              ) : (
+                carnes.map((carne: stock) => (
+                  <tr key={carne.id}>
+                    <td>{carne.name_food}</td>
+                    <td>{carne.quantity}</td>
+                    <td>{carne.unit}</td>
+                  </tr>
+                )))}
+              
           </tbody>
         </table>
       </div>

@@ -14,7 +14,7 @@ export interface WeekMeals {
   Viernes: DayMeals;
 }
 interface MyContextType {
-  // removeData: () => void;
+  removeMeal: (dayName: keyof WeekMeals, mealType: keyof DayMeals) => void;
   loadWeekMeals: LoadWeekMeals;
   weekMeals: WeekMeals;
   addMeal: (
@@ -35,6 +35,7 @@ export function WeeklyFoodProvider({ children }: WeeklyFoodProviderProps) {
     Jueves: { Almuerzo: "", Cena: "" },
     Viernes: { Almuerzo: "", Cena: "" },
   });
+
   const addMeal = (
     dayName: keyof WeekMeals,
     mealType: keyof DayMeals,
@@ -48,6 +49,7 @@ export function WeeklyFoodProvider({ children }: WeeklyFoodProviderProps) {
       },
     }));
   };
+
   const loadWeekMeals: LoadWeekMeals = async (userId: number) => {
     try {
       const res = await WeekMealsById(userId);
@@ -74,18 +76,24 @@ export function WeeklyFoodProvider({ children }: WeeklyFoodProviderProps) {
         recipesArray.splice(0, recipesArray.length - 10);
       }
       setWeekMeals(updatedWeekMeals);
-      console.log(updatedWeekMeals);
     } catch (error) {
       console.error("hay algo mal que no esta bien:", error);
     }
   };
-  // const removeData = () => {
-  //   setData(null);
-  // };
+
+  const removeMeal = (dayName: keyof WeekMeals, mealType: keyof DayMeals) => {
+    setWeekMeals((prevWeekMeals) => ({
+      ...prevWeekMeals,
+      [dayName]: {
+        ...prevWeekMeals[dayName],
+        [mealType]: "",
+      },
+    }));
+  };
   return (
     <MyContext.Provider
       value={{
-        // removeData,
+        removeMeal,
         weekMeals,
         addMeal,
         loadWeekMeals,

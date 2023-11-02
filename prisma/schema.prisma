@@ -15,13 +15,19 @@ model users {
   description String?       @default("cambiame loko") @db.VarChar(255)
   image       String?       @default("https://static.thenounproject.com/png/5034901-200.png") @db.VarChar(255)
   age         Int?
-  sex         String?
+  sex         gender?
   location    String?
   stock       stock[]
   ingredients ingredients[]
   recipes     recipes[]
   WeekMeal    WeekMeal[]
   favourites  favourites[]
+}
+
+enum gender {
+  Hombre
+  Mujer
+  Otro
 }
 
 enum TypeFood {

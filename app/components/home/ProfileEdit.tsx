@@ -14,35 +14,45 @@ import { Label } from "@/components/ui/label";
 import { IconDots } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { ChangeEventHandler, SetStateAction, useState } from "react";
+import { useEffect, useState } from "react";
+import { UsersById } from "../ApiCalls";
 
 export function ProfileEdit() {
   const { data: session } = useSession();
-  const [description, setDescription] = useState(session?.user?.description);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const idUser = session?.user.id;
+  const userId = idUser ? parseInt(idUser as string) : null;
+  const [file, setFile] = useState();
+  const [formData, setFormData] = useState({
+    email: "",
+    description: "",
+    image: "",
+    age: 0,
+    sex: "Hombre",
+    location: "",
+  });
 
-  const handleDescriptionChange = (event: { target: { value: string } }) => {
-    setDescription(event.target.value);
-  };
-
-  // const handleImageChange = (event: {
-  //   target: { files: ChangeEventHandler<HTMLInputElement> };
-  // }) => {
-  //   setSelectedImage(event.target.files[0]);
-  // };
+  useEffect(() => {
+    if (userId) {
+      UsersById(userId).then((res) => {
+        const userData = res;
+        setFormData({
+          email: userData.email,
+          description: userData.description,
+          image: userData.image,
+          age: userData.age,
+          sex: userData.sex || "Hombre",
+          location: userData.location,
+        });
+      });
+    }
+  }, [userId]);
 
   const handleSaveChanges = async () => {
-    const formData = new FormData();
-    formData.append("description", description);
-    // if (selectedImage) {
-    //   formData.append("image", selectedImage);
-    // }
     try {
-      const response = await fetch(`/api/users/${session?.user?.id}`, {
+      const response = await fetch(`/api/users/${userId}`, {
         method: "PUT",
-        body: formData,
+        body: JSON.stringify(formData),
       });
-
       if (response.ok) {
         console.log("bien rey");
       } else {
@@ -50,6 +60,38 @@ export function ProfileEdit() {
       }
     } catch (error) {
       console.error("Error al actualizar el perfil", error);
+    }
+    window.location.reload();
+  };
+
+  const handleUpload = async () => {
+    console.log(file);
+    try {
+      const response = await fetch("/api/updateFiles", {
+        method: "POST",
+        body: JSON.stringify({
+          type: file?.type,
+          name: file?.name,
+        }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("URL de la imagen cargada:", result.url);
+      } else {
+        console.error("Error al cargar la imagen");
+      }
+    } catch (error) {
+      console.error("Error al cargar la imagen:", error);
+    }
+  };
+
+  const handleChange = (e: any) => {
+    const { id, value } = e.target;
+    if (id === "age") {
+      setFormData({ ...formData, [id]: parseFloat(value) });
+    } else {
+      setFormData({ ...formData, [id]: value });
     }
   };
 
@@ -77,24 +119,72 @@ export function ProfileEdit() {
             />
             <Input
               type="file"
+              name="file"
               id="image"
-              //onChange={handleImageChange}
+              onChange={(e) => {
+                setFile(e.target.files[0]);
+              }}
               className="flex w-[160px] bg-[#E9FFEB]"
             />
           </div>
-          <div>
-            <h4>Edad:</h4>
-            <input type="number" />
+          <div className="flex flex-row space-y-2 md:flex-col">
+            <Label htmlFor="email" className="items-center">
+              Email
+            </Label>
+            <input
+              id="email"
+              value={formData.email}
+              onChange={handleChange}
+              className=" w-[270px] rounded-md border border-[#343434] p-1 text-sm shadow-md sm:w-full"
+            />
           </div>
+
           <div className="flex flex-row space-y-2 md:flex-col">
             <Label htmlFor="description" className="items-center">
               Descripción
             </Label>
             <textarea
               id="description"
-              value={description}
-              onChange={handleDescriptionChange}
-              rows={3}
+              value={formData.description}
+              onChange={handleChange}
+              className=" w-[270px] rounded-md border border-[#343434] p-1 text-sm shadow-md sm:w-full"
+            />
+          </div>
+          <div className="flex flex-row space-y-2 md:flex-col">
+            <Label htmlFor="age" className="items-center">
+              Edad
+            </Label>
+            <input
+              id="age"
+              value={formData.age}
+              type="number"
+              onChange={handleChange}
+              className=" w-[270px] rounded-md border border-[#343434] p-1 text-sm shadow-md sm:w-full"
+            />
+          </div>
+          <div className="flex flex-row space-y-2 md:flex-col">
+            <Label htmlFor="sex" className="items-center">
+              Sexo
+            </Label>
+            <select
+              id="sex"
+              value={formData.sex}
+              onChange={handleChange}
+              className=" w-[270px] rounded-md border border-[#343434] p-1 text-sm shadow-md sm:w-full"
+            >
+              <option value="Hombre">Hombre</option>
+              <option value="Mujer">Mujer</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </div>
+          <div className="flex flex-row space-y-2 md:flex-col">
+            <Label htmlFor="location" className="items-center">
+              Ubicacion
+            </Label>
+            <input
+              id="location"
+              value={formData.location}
+              onChange={handleChange}
               className=" w-[270px] rounded-md border border-[#343434] p-1 text-sm shadow-md sm:w-full"
             />
           </div>
@@ -103,7 +193,11 @@ export function ProfileEdit() {
           <Button
             variant={"green_outlined"}
             className="w-fit"
-            onClick={handleSaveChanges}
+            type="submit"
+            onClick={() => {
+              handleUpload();
+              handleSaveChanges();
+            }}
           >
             Guardar cambios
           </Button>

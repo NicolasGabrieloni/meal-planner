@@ -4,12 +4,14 @@ import { Recetas, Stock, WeekMealsById } from "../ApiCalls";
 import { recipe, stock } from "../Types";
 import { DayMeals, WeekMeals } from "@/Context";
 import { useSession } from "next-auth/react";
+
 function normalizeText(text: string) {
   return text
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
 }
+
 function Shop() {
   const [stock, setStock] = useState<stock[]>([]);
   const [recetas, setRecetas] = useState<recipe[]>([]);
@@ -17,10 +19,20 @@ function Shop() {
   const [ingredientesFaltantes, setIngredientesFaltantes] = useState<string[]>(
     [],
   );
+  const [dataLoaded, setDataLoaded] = useState(false);
   const { data: session } = useSession();
   const idUser = session?.user.id;
   const userId = parseInt(idUser as string);
-  const loadWeekMeals = async (userId: number) => {
+
+  useEffect(() => {
+    Promise.all([Recetas(), Stock()]).then(([recipes, stockData]) => {
+      setRecetas(recipes);
+      setStock(stockData);
+      setDataLoaded(true);
+    });
+  }, []);
+
+  const WeekMealsNames = async (userId: number) => {
     try {
       const res = await WeekMealsById(userId);
       const results = res;
@@ -39,21 +51,16 @@ function Shop() {
         recipesArray.splice(0, recipesArray.length - 10);
       }
       setSelectedRecipes(recipesArray);
-      console.log(selectedRecipes);
     } catch (error) {
       console.error("hay algo mal que no esta bien:", error);
     }
   };
-  useEffect(() => {
-    Promise.all([Recetas(), Stock()]).then(([recipes, stockData]) => {
-      setRecetas(recipes);
-      setStock(stockData);
-    });
-  }, []);
+
   const stockNormalized = stock.map((food) => normalizeText(food.name_food));
   const recetasSeleccionadas = recetas.filter((receta: recipe) =>
     selectedRecipes.includes(receta.name),
   );
+
   function obtenerIngredientesFaltantes(
     recetasSeleccionadas: recipe[],
     stockNormalized: string[],
@@ -78,10 +85,12 @@ function Shop() {
     }
     setIngredientesFaltantes(ingredientesFaltantes);
   }
+
   const handleGenerarLista = () => {
     obtenerIngredientesFaltantes(recetasSeleccionadas, stockNormalized);
-    loadWeekMeals(userId);
+    WeekMealsNames(userId);
   };
+
   return (
     <div className="ml-8 w-full text-center">
       <h2 className="font-bold">ShopList</h2>
@@ -89,19 +98,25 @@ function Shop() {
         onClick={handleGenerarLista}
         className=" text-md w-full border-b border-[#00785C] p-4 text-[#00785C] lg:border-b-2 lg:text-xl"
       >
-        Generar lista de compras
+        Calcular ingredientes faltantes
       </button>
-      <div className="mx-auto mt-3 w-3/5 flex-row items-center space-x-4 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 pt-8 text-center shadow-xl lg:min-h-[150px]">
-        <h3 className="text-lg font-bold">Ingredientes Faltantes:</h3>
-        <ul className="flex flex-col justify-start">
-          {ingredientesFaltantes.map((ingrediente, index) => (
-            <li key={index} className="flex items-center">
-              <input type="checkbox" className="mr-2" />
-              {ingrediente}
-            </li>
-          ))}
-        </ul>
-      </div>
+      {!dataLoaded ? (
+        <p>Cargando..</p>
+      ) : (
+        <div className="mx-auto mt-3 w-3/5 flex-row items-center space-x-4 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 pt-8 text-center shadow-xl lg:min-h-[150px]">
+          <h3 className="text-lg font-bold">Ingredientes Faltantes:</h3>
+          <ul className="flex flex-col justify-start">
+            <ul className="flex flex-col justify-start">
+              {ingredientesFaltantes.map((ingrediente, index) => (
+                <li key={index} className="flex items-center">
+                  <input type="checkbox" className="mr-2" />
+                  {ingrediente}
+                </li>
+              ))}
+            </ul>
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

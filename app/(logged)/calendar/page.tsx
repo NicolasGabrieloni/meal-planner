@@ -29,7 +29,7 @@ export default function Calendar() {
           <Day dayName="Miercoles" />
           <Day dayName="Jueves" />
           <Day dayName="Viernes" />
-          <ListButton label="Generar lista de compras" />
+          <ListButton label="Lista de compras" />
         </div>
       </WeeklyFoodProvider>
     </div>

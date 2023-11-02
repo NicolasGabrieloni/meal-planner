@@ -4,6 +4,11 @@ export async function Users() {
   const data = await res.json();
   return data;
 }
+export async function UsersById(id: number) {
+  const res = await fetch(`http://localhost:3000/api/users/${id}`);
+  const data = await res.json();
+  return data;
+}
 
 /// RECIPES ///
 

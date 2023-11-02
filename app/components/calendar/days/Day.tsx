@@ -1,3 +1,4 @@
+"use client"
 import FoodSearchRemove from "../FoodSearchRemove";
 import { WeekMeals } from "../../../Context";
 

@@ -1,3 +1,4 @@
+"use client";
 import { Label } from "@/components/ui/label";
 import { DayMeals } from "../Context";
 

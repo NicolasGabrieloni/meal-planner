@@ -1,14 +1,20 @@
+"use client";
 import React from "react";
 import { IconTrash } from "@tabler/icons-react";
-import { useMyContext } from "../../Context";
+import { DayMeals, WeekMeals, useMyContext } from "../../Context";
 
-const RemoveButton: React.FC = () => {
-  const { removeData } = useMyContext();
+const RemoveButton = ({
+  dayName,
+  mealType,
+}: {
+  dayName: keyof WeekMeals;
+  mealType: keyof DayMeals;
+}) => {
+  const { removeMeal } = useMyContext();
 
   const handleRemoveClick = () => {
-    removeData();
+    removeMeal(dayName, mealType);
   };
-
   return (
     <div>
       <button

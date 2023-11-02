@@ -3,7 +3,7 @@
 import { LabelForInput } from "../LabelForInput";
 import FoodInput from "./FoodInput";
 import RemoveButton from "./RemoveButton";
-import { WeekMeals, DayMeals } from "./Context";
+import { WeekMeals, DayMeals } from "../../Context";
 
 interface InputWithLabelProps {
   mealType: keyof DayMeals;

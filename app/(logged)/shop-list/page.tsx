@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Shop from "@/components/shoplist/ShopList";
-import { WeeklyFoodProvider } from "@/components/calendar/Context";
+import { WeeklyFoodProvider } from "@/Context";
 
 export const metadata: Metadata = {
   title: "Lista de compras",

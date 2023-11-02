@@ -12,7 +12,6 @@ export default function Home() {
   return (
     <div className="flex-col items-center p-4">
       <Profile />
-      <Buttton />
       <div className="grid-cols-2 gap-4 md:grid ">
         <div className="pt-8">
           <MiniCalendario />

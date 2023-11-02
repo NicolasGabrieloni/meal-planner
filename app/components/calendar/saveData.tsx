@@ -2,8 +2,9 @@
 
 import React, { MouseEventHandler, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { useMyContext } from "./Context";
+import { useMyContext } from "../../Context";
 import { saveWeekMeals } from "./SaveWeekMeals";
+import { Button } from "../ui/button";
 
 function SaveData() {
   const { weekMeals, loadWeekMeals } = useMyContext();
@@ -32,7 +33,13 @@ function SaveData() {
 
   return (
     <div>
-      <button onClick={handlerSaveData}>guardar datos</button>
+      <Button
+        variant="blue_outlined"
+        className="text-sm font-semibold"
+        onClick={handlerSaveData}
+      >
+        Guardar
+      </Button>
     </div>
   );
 }

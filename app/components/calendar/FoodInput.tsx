@@ -16,7 +16,7 @@ import { Command, CommandInput, CommandEmpty, CommandGroup } from "cmdk";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 //@ts-ignore
 import { RecipesAvailable } from "./RecipesAvailable";
-import { useMyContext, WeekMeals, DayMeals } from "./Context";
+import { useMyContext, WeekMeals, DayMeals } from "../../Context";
 import AllRecipes from "./AllRecipes";
 
 export default function FoodInput({

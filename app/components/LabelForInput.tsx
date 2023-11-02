@@ -1,5 +1,5 @@
 import { Label } from "@/components/ui/label";
-import { DayMeals } from "./calendar/Context";
+import { DayMeals } from "../Context";
 
 interface InputWithLabelProps {
   mealType: keyof DayMeals;

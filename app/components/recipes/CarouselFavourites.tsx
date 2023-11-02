@@ -45,13 +45,13 @@ export default function LabelFavourites({ label }: LabelTypes) {
         <p>Cargando datos...</p>
       ) : (
         <Carousel
-          className="z-20 my-4 h-[400px] overflow-hidden rounded-xl border border-[#343434] bg-[#E9FFEB] drop-shadow-md md:mx-auto md:w-[740px]"
+          className="z-20 my-4 h-[400px] overflow-hidden rounded-xl border border-[#343434] bg-[#E9FFEB] drop-shadow-md md:mx-auto md:h-[450px] md:w-[600px] "
           navigation={({ setActiveIndex, activeIndex, length }) => (
             <div className="absolute bottom-4 left-2/4 z-40 flex -translate-x-2/4 gap-2">
               {new Array(length).fill("").map((_, i) => (
                 <span
                   key={i}
-                  className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
+                  className={`block h-2 cursor-pointer rounded-2xl transition-all content-[''] ${
                     activeIndex === i
                       ? "w-8 bg-[#343434]"
                       : "w-4 bg-gray-700/50"
@@ -71,7 +71,7 @@ export default function LabelFavourites({ label }: LabelTypes) {
                     alt={recetasFavs.name}
                     width={1200}
                     height={600}
-                    className="h-[220px] w-screen object-cover sm:h-[400px] sm:w-full"
+                    className="h-[220px] w-screen object-cover sm:h-[400px] sm:w-full md:h-[450px]"
                   />
                 </div>
                 <div className="space-y-2 px-4 pt-4 sm:w-2/5 sm:space-y-4">

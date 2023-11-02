@@ -1,6 +1,6 @@
 import React from "react";
 import { IconTrash } from "@tabler/icons-react";
-import { useMyContext } from "./Context";
+import { useMyContext } from "../../Context";
 
 const RemoveButton: React.FC = () => {
   const { removeData } = useMyContext();

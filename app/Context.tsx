@@ -1,12 +1,11 @@
 "use client";
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import { WeekMealsById } from "../ApiCalls";
+import { WeekMealsById } from "./components/ApiCalls";
 type LoadWeekMeals = (userId: number) => Promise<void>;
 export interface DayMeals {
   Almuerzo: string;
   Cena: string;
 }
-
 export interface WeekMeals {
   Lunes: DayMeals;
   Martes: DayMeals;
@@ -14,10 +13,8 @@ export interface WeekMeals {
   Jueves: DayMeals;
   Viernes: DayMeals;
 }
-type selectedRecipes = string[];
 interface MyContextType {
   // removeData: () => void;
-  selectedRecipes: selectedRecipes;
   loadWeekMeals: LoadWeekMeals;
   weekMeals: WeekMeals;
   addMeal: (
@@ -26,15 +23,11 @@ interface MyContextType {
     mealName: string,
   ) => void;
 }
-
 export const MyContext = createContext<MyContextType | undefined>(undefined);
-
 interface WeeklyFoodProviderProps {
   children: ReactNode;
 }
-
 export function WeeklyFoodProvider({ children }: WeeklyFoodProviderProps) {
-  const [selectedRecipes, setSelectedRecipes] = useState<string[]>([]);
   const [weekMeals, setWeekMeals] = useState<WeekMeals>({
     Lunes: { Almuerzo: "", Cena: "" },
     Martes: { Almuerzo: "", Cena: "" },
@@ -42,7 +35,6 @@ export function WeeklyFoodProvider({ children }: WeeklyFoodProviderProps) {
     Jueves: { Almuerzo: "", Cena: "" },
     Viernes: { Almuerzo: "", Cena: "" },
   });
-
   const addMeal = (
     dayName: keyof WeekMeals,
     mealType: keyof DayMeals,
@@ -56,15 +48,12 @@ export function WeeklyFoodProvider({ children }: WeeklyFoodProviderProps) {
       },
     }));
   };
-
   const loadWeekMeals: LoadWeekMeals = async (userId: number) => {
     try {
       const res = await WeekMealsById(userId);
       const results = res;
-
       const updatedWeekMeals = { ...weekMeals };
       const recipesArray: string[] = [];
-
       results?.forEach(
         (item: {
           dayName: keyof WeekMeals;
@@ -85,22 +74,18 @@ export function WeeklyFoodProvider({ children }: WeeklyFoodProviderProps) {
         recipesArray.splice(0, recipesArray.length - 10);
       }
       setWeekMeals(updatedWeekMeals);
-      setSelectedRecipes(recipesArray);
+      console.log(updatedWeekMeals);
     } catch (error) {
       console.error("hay algo mal que no esta bien:", error);
     }
   };
-
-  console.log(selectedRecipes);
   // const removeData = () => {
   //   setData(null);
   // };
-
   return (
     <MyContext.Provider
       value={{
         // removeData,
-        selectedRecipes,
         weekMeals,
         addMeal,
         loadWeekMeals,
@@ -110,7 +95,6 @@ export function WeeklyFoodProvider({ children }: WeeklyFoodProviderProps) {
     </MyContext.Provider>
   );
 }
-
 export function useMyContext() {
   const context = useContext(MyContext);
   if (!context) {

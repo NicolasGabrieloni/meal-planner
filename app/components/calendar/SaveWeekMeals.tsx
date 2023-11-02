@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { WeekMeals, DayMeals } from "./Context";
+import { WeekMeals, DayMeals } from "../../Context";
 import prisma from "@/lib/prisma";
 
 const saveWeekMeals = async (

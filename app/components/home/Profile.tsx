@@ -3,9 +3,37 @@
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { ProfileEdit } from "./ProfileEdit";
+import { useEffect, useState } from "react";
+import { UsersById } from "../ApiCalls";
 
 export default function Profile() {
   const { data: session } = useSession();
+  const idUser = session?.user.id;
+  const userId = idUser ? parseInt(idUser as string) : null;
+  const [infoUser, setInfoUser] = useState({
+    email: "",
+    description: "",
+    image: "",
+    age: 0,
+    sex: "",
+    location: "",
+  });
+
+  useEffect(() => {
+    if (userId) {
+      UsersById(userId).then((res) => {
+        const userData = res;
+        setInfoUser({
+          email: userData.email,
+          description: userData.description,
+          image: userData.image,
+          age: userData.age,
+          sex: userData.sex,
+          location: userData.location,
+        });
+      });
+    }
+  }, [userId]);
 
   return (
     <div className="flex w-full flex-row justify-between space-x-4 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl lg:min-h-[150px] ">
@@ -22,17 +50,15 @@ export default function Profile() {
             {session?.user?.name}
           </h1>
           <h3 className="hidden font-medium text-[#343434] sm:inline ">
-            {session?.user?.location}
+            {infoUser.location as string}
           </h3>
         </div>
-        <h4 className="w-full text-base">
-          {session?.user?.description as string}
-        </h4>
+        <h4 className="w-full text-base">{infoUser.description as string}</h4>
         <div className="hidden text-sm lg:inline-flex">
-          <h4>Edad: {session?.user?.age} años </h4>
+          <h4>Edad: {infoUser.age as number} años </h4>
         </div>
         <div>
-          <h4> {session?.user?.sex} </h4>
+          <h4> {infoUser.sex as string} </h4>
         </div>
       </div>
       <div className="">

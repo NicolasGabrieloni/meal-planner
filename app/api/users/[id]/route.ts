@@ -9,13 +9,11 @@ interface Params {
 // OBTENER USUARIOS MEDIANTE ID
 export async function GET(request: Request, { params }: Params) {
   try {
-    // busca el primer usuario con el id que le pasemos
     const user = await prisma.users.findFirst({
       where: {
         id: Number(params.id),
       },
     });
-    // si no existe, devuelve not found 404
     if (!user) {
       return NextResponse.json(
         {
@@ -26,10 +24,8 @@ export async function GET(request: Request, { params }: Params) {
         },
       );
     }
-    //si existe, retorna el usuario encontrado
     return NextResponse.json(user);
   } catch (error) {
-    // si el error es del servidor retorna el error y status 500
     if (error instanceof Error) {
       return NextResponse.json(
         {
@@ -46,16 +42,13 @@ export async function GET(request: Request, { params }: Params) {
 // ELIMINAR USUARIOS MEDIANTE ID
 export async function DELETE(request: Request, { params }: Params) {
   try {
-    // busca el usuario con el id que le pasemos, si existe lo elimina
     const deletedUser = await prisma.users.delete({
       where: {
         id: Number(params.id),
       },
     });
-    // retorna el usuario eliminado
     return NextResponse.json(deletedUser);
   } catch (error) {
-    // si el usuario no existe retorna not found 404
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2025") {
         return NextResponse.json(
@@ -65,7 +58,6 @@ export async function DELETE(request: Request, { params }: Params) {
           { status: 404 },
         );
       }
-      // si el error es del servidor retorna el error y status 500
       return NextResponse.json(
         {
           message: error.message,
@@ -81,10 +73,17 @@ export async function DELETE(request: Request, { params }: Params) {
 // ACTUALIZAR USUARIOS MEDIANTE ID
 export async function PUT(request: Request, { params }: Params) {
   try {
-    const { username, email, password, description, image } =
-      await request.json();
+    const {
+      username,
+      email,
+      password,
+      description,
+      image,
+      age,
+      sex,
+      location
+    } = await request.json();
 
-    // busca el usuario con el id que le pasemos para actualizar los datos
     const userUpdate = await prisma.users.update({
       where: {
         id: Number(params.id),
@@ -95,12 +94,13 @@ export async function PUT(request: Request, { params }: Params) {
         password,
         description,
         image,
+        age,
+        sex,
+        location,
       },
     });
-    // devuelve el usuario actualizado
     return NextResponse.json(userUpdate);
   } catch (error) {
-    // si el usuario no existe retorna not found 404
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2025") {
         return NextResponse.json(
@@ -110,7 +110,6 @@ export async function PUT(request: Request, { params }: Params) {
           { status: 404 },
         );
       }
-      // si el error es del servidor retorna el error y status 500
       return NextResponse.json(
         {
           message: error.message,

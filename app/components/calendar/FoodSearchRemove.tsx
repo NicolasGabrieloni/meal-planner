@@ -21,7 +21,7 @@ export default function FoodSearchRemove({
         <FoodInput dayName={dayName} mealType={mealType} />
       </div>
       <div className="flex place-items-end space-x-2 sm:mb-1">
-        <RemoveButton />
+        <RemoveButton dayName={dayName} mealType={mealType} />
       </div>
     </div>
   );

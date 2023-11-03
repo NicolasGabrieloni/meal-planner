@@ -21,7 +21,7 @@ export function ProfileEdit() {
   const { data: session } = useSession();
   const idUser = session?.user.id;
   const userId = idUser ? parseInt(idUser as string) : null;
-  const [file, setFile] = useState();
+  const [file, setFile] = useState<File | undefined>();
   const [formData, setFormData] = useState({
     email: "",
     description: "",
@@ -36,12 +36,12 @@ export function ProfileEdit() {
       UsersById(userId).then((res) => {
         const userData = res;
         setFormData({
-          email: userData.email,
-          description: userData.description,
-          image: userData.image,
-          age: userData.age,
+          email: userData.email || "",
+          description: userData.description || "",
+          image: userData.image || "",
+          age: userData.age || 0,
           sex: userData.sex || "Hombre",
-          location: userData.location,
+          location: userData.location || "",
         });
       });
     }
@@ -122,7 +122,10 @@ export function ProfileEdit() {
               name="file"
               id="image"
               onChange={(e) => {
-                setFile(e.target.files[0]);
+                const selectedFile = e.target.files && e.target.files[0];
+                if (selectedFile) {
+                  setFile(selectedFile);
+                }
               }}
               className="flex w-[160px] bg-[#E9FFEB]"
             />

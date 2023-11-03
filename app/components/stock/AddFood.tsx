@@ -20,7 +20,7 @@ export function AddFood() {
   const [formData, setFormData] = useState({
     name_food: "",
     quantity: 1,
-    unit: "",
+    unit: "gramos",
     type_food: "verduras",
     user_id: userId,
   });
@@ -29,7 +29,7 @@ export function AddFood() {
     setFormData({
       name_food: "",
       quantity: 1,
-      unit: "",
+      unit: "gr",
       type_food: "verduras",
       user_id: userId,
     });
@@ -77,6 +77,7 @@ export function AddFood() {
     } else {
       setError("Completa todos los campos");
     }
+    window.location.reload();
   };
 
   return (
@@ -121,13 +122,18 @@ export function AddFood() {
               </div>
               <div className="grid grid-cols-3 items-center gap-4">
                 <Label htmlFor="unit">Unidad de medida</Label>
-                <Input
+                <select
                   id="unit"
                   value={formData.unit}
                   onChange={handleChange}
                   placeholder="kg, gr, lt"
                   className="col-span-2 h-8 w-[180px]"
-                />
+                >
+                  <option value="gramos">gramos</option>
+                  <option value="kilogramos">kilogramos</option>
+                  <option value="litros">litros</option>
+                  <option value="unidades">unidades</option>
+                </select>
               </div>
               <div className="grid grid-cols-3 items-center gap-4">
                 <Label htmlFor="type_food">Tipo de Alimento</Label>

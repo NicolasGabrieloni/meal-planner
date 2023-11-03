@@ -19,10 +19,6 @@ function SaveData() {
     }
   }, [userId]);
 
-  useEffect(() => {
-    setHasChanges(true);
-  }, [weekMeals]);
-
   const handlerSaveData = () => {
     for (const day in weekMeals) {
       for (const mealType in weekMeals[day]) {
@@ -32,6 +28,9 @@ function SaveData() {
     }
     setHasChanges(false);
   };
+  useEffect(() => {
+    setHasChanges(true);
+  }, [weekMeals]);
 
   if (!userId) {
     return <></>;

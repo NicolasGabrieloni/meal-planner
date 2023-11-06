@@ -13,7 +13,7 @@ async function Recipes() {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row md:justify-around">
+      <div className="flex flex-col lg:justify-around xl:flex-row">
         <CarouselFavourites label="Recetas favoritas" />
         <CarouselRecipes label="Destacados de la semana" />
       </div>

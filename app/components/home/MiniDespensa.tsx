@@ -7,23 +7,19 @@ import MiniVerduras from "./MiniVerduras";
 export const MiniDespensa = () => {
   return (
     <div className="">
-      <div className="flex justify-center p-4">
+      <div className="flex justify-center">
         <div className="w-full " style={{ minWidth: "320px" }}>
-          <div className="pt-8 text-center">
-            <h2>Despensa</h2>
+          <div className="p-4 text-center text-xl font-medium text-[#00785C] lg:font-semibold">
+            <h2>Despensa:</h2>
           </div>
           <section className="mx-auto rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 pt-5 shadow-xl">
-            <div>
+            <div className="h-[250px]">
               <div className="flex justify-center">
-                <div className="h-[250px]">
-                  <div className="flex justify-between">
-                    <MiniAlacena />
-                    <MiniCarnes />
-                  </div>
-                  <div className="mt-10 flex justify-between">
-                    <MiniLacteos />
-                    <MiniVerduras />
-                  </div>
+                <div className="grid grid-cols-2 gap-x-4 gap-y-20 p-4 lg:grid-cols-4">
+                  <MiniAlacena />
+                  <MiniCarnes />
+                  <MiniLacteos />
+                  <MiniVerduras />
                 </div>
               </div>
             </div>

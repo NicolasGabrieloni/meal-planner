@@ -4,6 +4,7 @@ import { Recetas, Stock, WeekMealsById } from "../ApiCalls";
 import { recipe, stock } from "../Types";
 import { DayMeals, WeekMeals } from "@/Context";
 import { useSession } from "next-auth/react";
+import { Button } from "../ui/button";
 
 function normalizeText(text: string) {
   return text
@@ -92,25 +93,33 @@ function Shop() {
   };
 
   return (
-    <div className="ml-8 w-full text-center">
-      <h2 className="font-bold">ShopList</h2>
-      <button
-        onClick={handleGenerarLista}
-        className=" text-md w-full border-b border-[#00785C] p-4 text-[#00785C] lg:border-b-2 lg:text-xl"
-      >
-        Calcular ingredientes faltantes
-      </button>
+    <div className="w-full space-y-4 p-4">
+      <h1 className="border-b border-[#00785C] pb-1 text-xl font-medium text-[#00785C] lg:font-semibold">
+        Lista de compras
+      </h1>
+      <div className="flex justify-center">
+        <Button
+          variant={"blue_outlined"}
+          onClick={handleGenerarLista}
+          className="w-fit border-b border-[#343434] p-4 text-sm lg:border-b-2 lg:text-base"
+        >
+          Generar lista de compras
+        </Button>
+      </div>
       {!dataLoaded ? (
         <p>Cargando..</p>
       ) : (
-        <div className="mx-auto mt-3 w-3/5 flex-row items-center space-x-4 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 pt-8 text-center shadow-xl lg:min-h-[150px]">
-          <h3 className="text-lg font-bold">Ingredientes Faltantes:</h3>
+        <div className="mx-auto w-full flex-row items-center space-x-4 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 text-center shadow-xl lg:min-h-[150px]">
+          <h3 className="text-lg font-bold">Ingredientes faltantes:</h3>
           <ul className="flex flex-col justify-start">
-            <ul className="flex flex-col justify-start">
+            <ul className="flex flex-col justify-start space-y-4">
               {ingredientesFaltantes.map((ingrediente, index) => (
-                <li key={index} className="flex items-center">
-                  <input type="checkbox" className="mr-2" />
-                  {ingrediente}
+                <li key={index} className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    className="before:content[''] peer relative mr-2 h-5 w-5 cursor-pointer appearance-none rounded-md border border-[#343434] transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-12 before:w-12 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-[#00785C] checked:bg-[#00785C] checked:before:bg-[#00785C] hover:before:opacity-10"
+                  />
+                  <h4 className="text-lg normal-case">{ingrediente}</h4>
                 </li>
               ))}
             </ul>

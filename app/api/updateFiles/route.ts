@@ -7,16 +7,17 @@ const client = new S3Client();
 export const POST = async (req: NextRequest) => {
   try {
     const body = (await req.json()) as { type: string; name?: string };
-    console.log(body);
+
     const ext =
       body?.name?.split?.(".")?.pop() ?? body?.type.split?.("/")?.pop();
-    const fileName = `${randomUUID()}.${ext}`;
+      const fileName = `${randomUUID()}.${ext}`;
     const command = new PutObjectCommand({
       Bucket: process.env.S3_BUCKET as string,
       Key: fileName,
       ContentType: body.type,
       ACL: "public-read",
     });
+    console.log(command)
     const url = await getSignedUrl(client, command);
 
     return NextResponse.json(

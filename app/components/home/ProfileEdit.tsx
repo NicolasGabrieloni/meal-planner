@@ -199,7 +199,7 @@ export function ProfileEdit() {
             type="submit"
             onClick={() => {
               handleUpload();
-              handleSaveChanges();
+              // handleSaveChanges();
             }}
           >
             Guardar cambios

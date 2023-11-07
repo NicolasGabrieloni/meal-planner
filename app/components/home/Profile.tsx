@@ -38,7 +38,7 @@ export default function Profile() {
   return (
     <div className="flex w-full flex-row justify-between space-x-4 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl lg:min-h-[150px]">
       <Image
-        src={session?.user?.image as string}
+        src={infoUser?.image}
         alt="User profile image"
         width={200}
         height={200}

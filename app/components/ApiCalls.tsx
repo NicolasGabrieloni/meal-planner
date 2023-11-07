@@ -49,12 +49,6 @@ export async function LacteosCall(user_id: number) {
   return data;
 }
 
-/////////// INGREDIENTS
-export async function Ingredients() {
-  const res = await fetch("http://localhost:3000/api/ingredients");
-  const data = await res.json();
-  return data;
-}
 
 /// FAVOURITES ///
 export async function Favourites(user_id: number) {

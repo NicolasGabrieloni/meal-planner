@@ -20,6 +20,7 @@ export function AddRecipes() {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
+    image: "",
     ingredients: "",
     instructions: "",
     user_id: userId,
@@ -51,9 +52,8 @@ export function AddRecipes() {
 
       if (response.ok) {
         const result = await response.json();
-        console.log("URL de la imagen cargada:", result.url);
-      } else {
-        console.error("Error al cargar la imagen");
+        setFormData({ ...formData, image: result.url });
+        handleSubmit();
       }
     } catch (error) {
       console.error("Error al cargar la imagen:", error);
@@ -72,17 +72,15 @@ export function AddRecipes() {
           method: "POST",
           body: JSON.stringify(formData),
         });
-
         if (response.ok) {
           console.log("Receta enviada exitosamente");
-        } else {
-          console.error("Error al enviar la receta");
+          window.location.reload();
         }
       } catch (error) {
         console.error("Error de red al enviar la receta", error);
       }
     } else {
-      console.log("Completa todos los campos");
+      console.error("Completa todos los campos");
     }
   };
 
@@ -169,8 +167,7 @@ export function AddRecipes() {
                 className="w-[100px] "
                 variant="green_outlined"
                 onClick={() => {
-                  handleUpload();
-                  // handleSubmit;
+                  file === undefined ? handleSubmit() : handleUpload();
                 }}
               >
                 Enviar

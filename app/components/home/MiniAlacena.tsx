@@ -17,8 +17,8 @@ export default function MiniAlacena() {
     if (userId) {
       AlacenaCall(userId).then((res) => {
         const result = res;
-        if (result.length > 4) {
-          const shortresults = result.slice(0, 4);
+        if (result.length > 3) {
+          const shortresults = result.slice(0, 3);
           setAlacena(shortresults);
         }
         setLoading(false);
@@ -33,10 +33,10 @@ export default function MiniAlacena() {
   return (
     <>
       <div>
-        <table className="text-xs">
+        <table>
           <thead>
             <tr>
-              <th>ALACENA</th>
+              <th className="pb-2 text-lg text-[#00785C]">ALACENA</th>
             </tr>
           </thead>
           <tbody>
@@ -51,7 +51,10 @@ export default function MiniAlacena() {
             ) : (
               alacena.map((food: stock) => (
                 <tr key={food.id}>
-                  <td>{food.name_food}</td>
+                  <td>
+                    {" "}
+                    <li className="text-sm ">{food.name_food}</li>
+                  </td>
                 </tr>
               ))
             )}

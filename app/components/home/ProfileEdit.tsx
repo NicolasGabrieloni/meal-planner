@@ -77,15 +77,17 @@ export function ProfileEdit() {
 
       if (response.ok) {
         const result = await response.json();
-        setFormData({ ...formData, image: result.url });
-        console.log(result.url)
-        handleSaveChanges();
+        setFormData({ ...formData, image: result.url }); // Actualiza formData.image aquí
+        console.log(result.url);
       } else {
         console.error("Error al cargar la imagen");
       }
     } catch (error) {
       console.error("Error al cargar la imagen:", error);
     }
+
+    // Llama a handleSaveChanges después de actualizar la imagen en el estado
+    handleSaveChanges();
   };
 
   const handleChange = (e: any) => {

@@ -16,8 +16,8 @@ export default function MiniVerdurasFrutas() {
     if (userId) {
       frutasVerduras(userId).then((res) => {
         const result = res;
-        if (result.length > 4) {
-          const shortresults = result.slice(0, 4);
+        if (result.length > 3) {
+          const shortresults = result.slice(0, 3);
           setVerduras(shortresults);
         }
         setLoading(false);
@@ -32,10 +32,10 @@ export default function MiniVerdurasFrutas() {
   return (
     <>
       <div>
-        <table className="text-xs">
+        <table>
           <thead>
             <tr>
-              <th>VERDURAS/FRUTAS</th>
+              <th className="pb-2 text-lg text-[#00785C]">VERDURAS</th>
             </tr>
           </thead>
           <tbody>
@@ -50,7 +50,7 @@ export default function MiniVerdurasFrutas() {
             ) : (
               verduras.map((verdura: stock) => (
                 <tr key={verdura.id}>
-                  <td>{verdura.name_food}</td>
+                  <li className="text-sm ">{verdura.name_food}</li>
                 </tr>
               ))
             )}

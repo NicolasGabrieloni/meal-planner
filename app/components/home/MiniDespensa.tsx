@@ -3,6 +3,8 @@ import MiniAlacena from "./MiniAlacena";
 import MiniCarnes from "./MiniCarnes";
 import MiniLacteos from "./MiniLacteos";
 import MiniVerduras from "./MiniVerduras";
+import { Button } from "../ui/button";
+import Link from "next/link";
 
 export const MiniDespensa = () => {
   return (
@@ -14,13 +16,19 @@ export const MiniDespensa = () => {
           </div>
           <section className="mx-auto rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 pt-5 shadow-xl">
             <div className="h-[250px]">
-              <div className="flex justify-center">
-                <div className="grid grid-cols-2 gap-x-4 gap-y-20 p-4 lg:grid-cols-4">
+              <div className="flex flex-col items-center">
+                <div className="grid grid-cols-2 justify-center justify-items-center gap-x-4 gap-y-6 p-4 lg:grid-cols-4">
                   <MiniAlacena />
                   <MiniCarnes />
                   <MiniLacteos />
                   <MiniVerduras />
                 </div>
+                <Button
+                  variant={"blue_outlined"}
+                  className="my-4 hidden w-fit lg:inline-flex xl:my-9"
+                >
+                  <Link href="/depot">Ver todo</Link>
+                </Button>
               </div>
             </div>
           </section>

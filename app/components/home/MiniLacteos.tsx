@@ -17,8 +17,8 @@ export default function MiniLacteos() {
     if (userId) {
       LacteosCall(userId).then((res) => {
         const result = res;
-        if (result.length > 4) {
-          const shortresults = result.slice(0, 4);
+        if (result.length > 3) {
+          const shortresults = result.slice(0, 3);
           setLacteos(shortresults);
         }
         setLoading(false);
@@ -33,10 +33,10 @@ export default function MiniLacteos() {
   return (
     <>
       <div>
-        <table className="text-xs">
+        <table>
           <thead>
             <tr>
-              <th>LACTEOS</th>
+              <th className="pb-2 text-lg text-[#00785C]">LACTEOS</th>
             </tr>
           </thead>
           <tbody>
@@ -51,7 +51,7 @@ export default function MiniLacteos() {
             ) : (
               lacteos.map((lacteo: stock) => (
                 <tr key={lacteo.id}>
-                  <td>{lacteo.name_food}</td>
+                  <li className="text-sm ">{lacteo.name_food}</li>
                 </tr>
               ))
             )}

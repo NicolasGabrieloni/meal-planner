@@ -8,6 +8,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import uploadFile from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
@@ -15,7 +16,6 @@ export function AddRecipes() {
   const { data: session } = useSession();
   const idUser = session?.user.id;
   const userId = idUser ? parseInt(idUser as string) : null;
-  const [file, setFile] = useState<File | undefined>();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -39,26 +39,8 @@ export function AddRecipes() {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
-  const handleUpload = async () => {
-    console.log(file);
-    try {
-      const response = await fetch("/api/updateFiles", {
-        method: "POST",
-        body: JSON.stringify({
-          type: file?.type,
-          name: file?.name,
-        }),
-      });
 
-      if (response.ok) {
-        const result = await response.json();
-        setFormData({ ...formData, image: result.url });
-        handleSubmit();
-      }
-    } catch (error) {
-      console.error("Error al cargar la imagen:", error);
-    }
-  };
+  console.log(formData.image)
 
   const handleSubmit = async () => {
     if (
@@ -152,10 +134,15 @@ export function AddRecipes() {
                   type="file"
                   name="file"
                   id="image"
-                  onChange={(e) => {
-                    const selectedFile = e.target.files && e.target.files[0];
-                    if (selectedFile) {
-                      setFile(selectedFile);
+                  onChange={async (e) => {
+                    if (e.target.files) {
+                      const result = await uploadFile(e.target.files[0]);
+                      setFormData({
+                        ...formData,
+                        image:
+                          "https://guls-escuelita-api-mainst-escuelitabucketc7b4e42a-1e9sgj383k6ak.s3.amazonaws.com/" +
+                          result,
+                      });
                     }
                   }}
                   className="flex w-[160px] bg-[#E9FFEB]"
@@ -167,7 +154,7 @@ export function AddRecipes() {
                 className="w-[100px] "
                 variant="green_outlined"
                 onClick={() => {
-                  file === undefined ? handleSubmit() : handleUpload();
+                  handleSubmit();
                 }}
               >
                 Enviar

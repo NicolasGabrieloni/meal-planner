@@ -52,7 +52,7 @@ export default function MiniCarnes() {
               carnes.map((carne: stock) => (
                 <tr key={carne.id}>
                   <td>
-                    <li className="text-sm ">{carne.name_food}</li>
+                    <td className="text-sm ">{carne.name_food}</td>
                   </td>
                 </tr>
               ))

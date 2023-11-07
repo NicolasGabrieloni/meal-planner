@@ -16,11 +16,11 @@ export default function LabelDestacated({ label }: LabelTypes) {
     });
   }, []);
 
-  const randomRecipes = [];
-  while (randomRecipes.length < 3 && recetas.length > 0) {
-    const randomIndex = Math.floor(Math.random() * recetas.length);
-    randomRecipes.push(recetas.splice(randomIndex, 1)[0]);
-  }
+  const getRandomRecipes = () => {
+    const randomRecipes = recetas.sort(() => Math.random() - 0.5).slice(0, 3);
+    return randomRecipes;
+  };
+  const randomRecipes = getRandomRecipes();
 
   return (
     <div className="p-4">

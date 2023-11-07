@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Recetas, Stock, WeekMealsById } from "../ApiCalls";
+import { Recetas, Stock, WeekMealsById, stockById } from "../ApiCalls";
 import { recipe, stock } from "../Types";
 import { DayMeals, WeekMeals } from "@/Context";
 import { useSession } from "next-auth/react";
@@ -26,12 +26,18 @@ function Shop() {
   const userId = parseInt(idUser as string);
 
   useEffect(() => {
-    Promise.all([Recetas(), Stock()]).then(([recipes, stockData]) => {
-      setRecetas(recipes);
-      setStock(stockData);
-      setDataLoaded(true);
-    });
-  }, []);
+    if (userId) {
+      Promise.all([Recetas(), stockById(userId)]).then(
+        ([recipes, stockData]) => {
+          setRecetas(recipes);
+          setStock(stockData);
+          setDataLoaded(true);
+        },
+      );
+    }
+  }, [userId]);
+
+  console.log(stock)
 
   const stockNormalized = stock.map((food) => normalizeText(food.name_food));
   const recetasSeleccionadas = recetas.filter((receta: recipe) =>

@@ -80,7 +80,6 @@ export default function FoodInput({
                   </PopoverTrigger>
                   <PopoverContent className="w-[270px]">
                     <Command>
-                      <CommandInput placeholder="Buscar:" />
                       <CommandEmpty></CommandEmpty>
                       <CommandGroup>
                         <RecipesAvailable
@@ -113,8 +112,6 @@ export default function FoodInput({
                   </PopoverTrigger>
                   <PopoverContent className="w-[270px]">
                     <Command>
-                      <CommandInput placeholder="Buscar:" />
-                      <CommandEmpty></CommandEmpty>
                       <CommandGroup>
                         <AllRecipes dayName={dayName} mealType={mealType} />
                       </CommandGroup>

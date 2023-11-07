@@ -5,6 +5,8 @@ import { useSession } from "next-auth/react";
 import { useMyContext } from "../../Context";
 import { saveWeekMeals } from "./SaveWeekMeals";
 import { Button } from "../ui/button";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function SaveData() {
   const { weekMeals, loadWeekMeals } = useMyContext();
@@ -12,6 +14,18 @@ function SaveData() {
   const idUser = session?.user.id;
   const userId = parseInt(idUser as string);
   const [hasChanges, setHasChanges] = useState(false);
+
+  const notify = () =>
+    toast.success("Guardado correctamente", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: true,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
 
   useEffect(() => {
     if (userId) {
@@ -27,6 +41,7 @@ function SaveData() {
       }
     }
     setHasChanges(false);
+    notify();
   };
 
   useEffect(() => {
@@ -39,6 +54,18 @@ function SaveData() {
 
   return (
     <div>
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <Button
         variant="blue_outlined"
         className="text-sm font-semibold"

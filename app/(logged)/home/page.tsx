@@ -1,6 +1,4 @@
 import { Metadata } from "next";
-import ListButton from "@/components/ui/ListButton";
-import { Buttton } from "@/components/ui/buttton";
 import Profile from "@/components/home/Profile";
 import { MiniCalendario } from "@/components/home/MiniCalendario";
 import { MiniDespensa } from "@/components/home/MiniDespensa";

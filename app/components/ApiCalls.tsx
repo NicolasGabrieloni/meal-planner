@@ -25,6 +25,11 @@ export async function Stock() {
   const data = await res.json();
   return data;
 }
+export async function stockById(user_id: number) {
+  const res = await fetch(`http://localhost:3000/api/stock/user/${user_id}`);
+  const data = await res.json();
+  return data;
+}
 
 export async function typeCarnes(user_id: number) {
   const res = await fetch(`http://localhost:3000/api/stock/carnes/${user_id}`);

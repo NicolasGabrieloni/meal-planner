@@ -4,7 +4,7 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { randomUUID } from "crypto";
 const client = new S3Client({ region: "us-east-1" });
 
-export const PUT = async (req: NextRequest) => {
+export const POST = async (req: NextRequest) => {
   try {
     const body = (await req.json()) as { type: string; name?: string };
 
@@ -19,6 +19,7 @@ export const PUT = async (req: NextRequest) => {
     });
 
     const url = await getSignedUrl(client, command);
+    console.log(url)
 
     return NextResponse.json(
       {

@@ -16,12 +16,12 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { UsersById } from "../ApiCalls";
+import uploadFile from "@/lib/utils";
 
 export function ProfileEdit() {
   const { data: session } = useSession();
   const idUser = session?.user.id;
   const userId = idUser ? parseInt(idUser as string) : null;
-  const [file, setFile] = useState<File | undefined>();
   const [formData, setFormData] = useState({
     email: "",
     description: "",
@@ -55,36 +55,10 @@ export function ProfileEdit() {
       });
       if (response.ok) {
         console.log("bien rey");
-      } else {
-        console.log("mmm no");
+        // window.location.reload();
       }
     } catch (error) {
       console.error("Error al actualizar el perfil", error);
-    }
-    window.location.reload();
-  };
-
-  const handleUpload = async () => {
-    console.log(file);
-    try {
-      const response = await fetch("/api/updateFiles", {
-        method: "PUT",
-        body: JSON.stringify({
-          type: file?.type,
-          name: file?.name,
-        }),
-      });
-
-      if (response.ok) {
-        const result = await response.json();
-        setFormData({ ...formData, image: result.url });
-        console.log(result.url);
-        handleSaveChanges();
-      } else {
-        console.error("Error al cargar la imagen");
-      }
-    } catch (error) {
-      console.error("Error al cargar la imagen:", error);
     }
   };
 
@@ -123,10 +97,15 @@ export function ProfileEdit() {
               type="file"
               name="file"
               id="image"
-              onChange={(e) => {
-                const selectedFile = e.target.files && e.target.files[0];
-                if (selectedFile) {
-                  setFile(selectedFile);
+              onChange={async (e) => {
+                if (e.target.files) {
+                  const result = await uploadFile(e.target.files[0]);
+                  setFormData({
+                    ...formData,
+                    image:
+                      "https://guls-escuelita-api-mainst-escuelitabucketc7b4e42a-1e9sgj383k6ak.s3.amazonaws.com/" +
+                      result,
+                  });
                 }
               }}
               className="flex w-[160px] bg-[#E9FFEB]"
@@ -200,7 +179,7 @@ export function ProfileEdit() {
             className="w-fit"
             type="submit"
             onClick={() => {
-              file === undefined ? handleSaveChanges() : handleUpload();
+              handleSaveChanges();
             }}
           >
             Guardar cambios

@@ -36,7 +36,7 @@ export function CarouselRecipes({ label }: LabelTypes) {
         <p>Cargando datos...</p>
       ) : (
         <Carousel
-          className="z-20 my-4 h-[400px] overflow-hidden rounded-xl border border-[#343434] bg-[#E9FFEB] drop-shadow-md md:mx-auto md:h-[450px] md:w-[600px]"
+          className="z-20 my-4 h-[400px] w-full max-w-[600px] overflow-hidden rounded-xl border border-[#343434] bg-[#E9FFEB] drop-shadow-md md:mx-auto md:h-[450px] "
           navigation={({ setActiveIndex, activeIndex, length }) => (
             <div className="absolute bottom-4 left-2/4 z-40 flex -translate-x-2/4 gap-2">
               {new Array(length).fill("").map((_, i) => (

@@ -90,6 +90,7 @@ function Shop() {
   const handleGenerarLista = () => {
     obtenerIngredientesFaltantes(recetasSeleccionadas, stockNormalized);
     WeekMealsNames(userId);
+    console.log(ingredientesFaltantes);
   };
 
   return (

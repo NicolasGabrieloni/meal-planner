@@ -17,8 +17,8 @@ export default function MiniCarnes() {
     if (userId) {
       typeCarnes(userId).then((res) => {
         const result = res;
-        if (result.length > 4) {
-          const shortresults = result.slice(0, 4);
+        if (result.length > 3) {
+          const shortresults = result.slice(0, 3);
           setCarnes(shortresults);
         }
         setLoading(false);
@@ -33,10 +33,10 @@ export default function MiniCarnes() {
   return (
     <>
       <div>
-        <table className="text-xs">
+        <table>
           <thead>
             <tr>
-              <th>CARNES</th>
+              <th className="pb-2 text-lg text-[#00785C]">CARNES</th>
             </tr>
           </thead>
           <tbody>
@@ -51,7 +51,9 @@ export default function MiniCarnes() {
             ) : (
               carnes.map((carne: stock) => (
                 <tr key={carne.id}>
-                  <td>{carne.name_food}</td>
+                  <td>
+                    <li className="text-sm ">{carne.name_food}</li>
+                  </td>
                 </tr>
               ))
             )}

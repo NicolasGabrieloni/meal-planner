@@ -15,13 +15,13 @@ export function AddRecipes() {
   const { data: session } = useSession();
   const idUser = session?.user.id;
   const userId = idUser ? parseInt(idUser as string) : null;
+  const [file, setFile] = useState<File | undefined>();
 
   const [formData, setFormData] = useState({
     name: "",
     description: "",
     ingredients: "",
     instructions: "",
-    img: "",
     user_id: userId,
   });
   useEffect(() => {
@@ -37,6 +37,27 @@ export function AddRecipes() {
   const handleChange = (e: any) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
+  };
+  const handleUpload = async () => {
+    console.log(file);
+    try {
+      const response = await fetch("/api/updateFiles", {
+        method: "POST",
+        body: JSON.stringify({
+          type: file?.type,
+          name: file?.name,
+        }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("URL de la imagen cargada:", result.url);
+      } else {
+        console.error("Error al cargar la imagen");
+      }
+    } catch (error) {
+      console.error("Error al cargar la imagen:", error);
+    }
   };
 
   const handleSubmit = async () => {
@@ -129,11 +150,17 @@ export function AddRecipes() {
               </div>
               <div className="grid grid-cols-3 items-center gap-4">
                 <Label htmlFor="img">Imágen</Label>
-                {/* CHEQUEAR LO QUE MANDÓ GIULS AL MD */}
                 <Input
-                  id="img"
-                  placeholder="URL de la imagen"
-                  className="col-span-2 h-8 w-[180px]"
+                  type="file"
+                  name="file"
+                  id="image"
+                  onChange={(e) => {
+                    const selectedFile = e.target.files && e.target.files[0];
+                    if (selectedFile) {
+                      setFile(selectedFile);
+                    }
+                  }}
+                  className="flex w-[160px] bg-[#E9FFEB]"
                 />
               </div>
             </div>
@@ -141,7 +168,10 @@ export function AddRecipes() {
               <Button
                 className="w-[100px] "
                 variant="green_outlined"
-                onClick={handleSubmit}
+                onClick={() => {
+                  handleUpload();
+                  // handleSubmit;
+                }}
               >
                 Enviar
               </Button>

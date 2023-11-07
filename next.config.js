@@ -10,7 +10,7 @@ module.exports = {
       },
       {
         protocol: "https",
-        hostname: "meal-bucket-s3.s3.amazonaws.com",
+        hostname: "meal-bucket-s3.s3.us-east-1.amazonaws.com",
       },
     ],
   },

@@ -61,7 +61,7 @@ export function ProfileEdit() {
     } catch (error) {
       console.error("Error al actualizar el perfil", error);
     }
-    window.location.reload();
+    // window.location.reload();
   };
 
   const handleUpload = async () => {
@@ -77,7 +77,9 @@ export function ProfileEdit() {
 
       if (response.ok) {
         const result = await response.json();
-        console.log("URL de la imagen cargada:", result.url);
+        setFormData({ ...formData, image: result.url });
+        console.log(result.url)
+        handleSaveChanges();
       } else {
         console.error("Error al cargar la imagen");
       }
@@ -111,7 +113,7 @@ export function ProfileEdit() {
         <div className="flex flex-col justify-between space-y-5">
           <div className="flex flex-row items-center space-x-5">
             <Image
-              src={session?.user?.image as string}
+              src={formData.image}
               alt="User profile image"
               width={200}
               height={200}
@@ -198,8 +200,7 @@ export function ProfileEdit() {
             className="w-fit"
             type="submit"
             onClick={() => {
-              handleUpload();
-              // handleSaveChanges();
+              file === undefined ? handleSaveChanges() : handleUpload();
             }}
           >
             Guardar cambios

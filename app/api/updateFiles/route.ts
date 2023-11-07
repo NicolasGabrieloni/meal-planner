@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { randomUUID } from "crypto";
-const client = new S3Client();
+const client = new S3Client({ region: "us-east-1" });
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -10,14 +10,14 @@ export const POST = async (req: NextRequest) => {
 
     const ext =
       body?.name?.split?.(".")?.pop() ?? body?.type.split?.("/")?.pop();
-      const fileName = `${randomUUID()}.${ext}`;
+    const fileName = `${randomUUID()}.${ext}`;
     const command = new PutObjectCommand({
       Bucket: process.env.S3_BUCKET as string,
       Key: fileName,
       ContentType: body.type,
       ACL: "public-read",
     });
-    console.log(command)
+
     const url = await getSignedUrl(client, command);
 
     return NextResponse.json(

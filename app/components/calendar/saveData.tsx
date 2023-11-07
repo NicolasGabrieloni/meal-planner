@@ -28,6 +28,7 @@ function SaveData() {
     }
     setHasChanges(false);
   };
+
   useEffect(() => {
     setHasChanges(true);
   }, [weekMeals]);

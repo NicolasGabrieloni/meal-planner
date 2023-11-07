@@ -12,7 +12,7 @@ const uploadFile = async (file: File) => {
   } = await axios.put(
     "https://g7os8mg446.execute-api.us-east-1.amazonaws.com/api/update-file-signature",
     {
-      ext: "png",
+      ext: "jpg",
     },
   );
   axios.put(url, file, {

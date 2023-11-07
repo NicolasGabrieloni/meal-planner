@@ -8,17 +8,16 @@ datasource db {
 }
 
 model users {
-  id          Int           @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   username    String
-  email       String        @db.Text
-  password    String        @db.Text
-  description String?       @default("Agregue su descripcion") @db.VarChar(255)
-  image       String?       @default("https://static.thenounproject.com/png/5034901-200.png") @db.VarChar(255)
+  email       String       @db.Text
+  password    String       @db.Text
+  description String?      @default("Agregue su descripcion") @db.VarChar(255)
+  image       String?      @default("https://static.thenounproject.com/png/5034901-200.png") @db.VarChar(255)
   age         Int?
   sex         gender?
   location    String?
   stock       stock[]
-  ingredients ingredients[]
   recipes     recipes[]
   WeekMeal    WeekMeal[]
   favourites  favourites[]
@@ -49,34 +48,16 @@ model stock {
   user      users    @relation(fields: [user_id], references: [id])
 }
 
-model ingredients {
-  id                  Int                   @id @default(autoincrement())
-  name                String                @db.Text
-  unit                String                @db.Text
-  usersId             Int?
-  users               users?                @relation(fields: [usersId], references: [id])
-  recipes_ingredients recipes_ingredients[]
-}
-
 model recipes {
-  id                   Int                   @id @default(autoincrement())
-  name                 String                @db.Text
-  description          String                @db.Text
-  ingredients          String                @db.Text
-  instructions         String                @db.Text
-  image                String?               @default("https://prnt.sc/FIsEvguBhGbI") @db.VarChar(255)
-  user_id              Int?
-  user                 users?                @relation(fields: [user_id], references: [id])
-  recipes_favourites   favourites[]
-  recetas_ingredientes recipes_ingredients[]
-}
-
-model recipes_ingredients {
-  id             Int         @id @default(autoincrement())
-  recipes_id     Int
-  ingredients_id Int
-  recipe         recipes     @relation(fields: [recipes_id], references: [id])
-  ingredient     ingredients @relation(fields: [ingredients_id], references: [id])
+  id                 Int          @id @default(autoincrement())
+  name               String       @db.Text
+  description        String       @db.Text
+  ingredients        String       @db.Text
+  instructions       String       @db.Text
+  image              String?      @default("https://prnt.sc/FIsEvguBhGbI") @db.VarChar(255)
+  user_id            Int?
+  user               users?       @relation(fields: [user_id], references: [id])
+  recipes_favourites favourites[]
 }
 
 model favourites {

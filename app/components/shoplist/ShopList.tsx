@@ -16,7 +16,7 @@ function normalizeText(text: string) {
 function Shop() {
   const [stock, setStock] = useState<stock[]>([]);
   const [recetas, setRecetas] = useState<recipe[]>([]);
-  const [selectedRecipes, setSelectedRecipes] = useState<recipe[]>([]);
+  const [selectedRecipes, setSelectedRecipes] = useState<string[]>([]);
   const [ingredientesFaltantes, setIngredientesFaltantes] = useState<string[]>(
     [],
   );
@@ -33,10 +33,17 @@ function Shop() {
     });
   }, []);
 
+  const stockNormalized = stock.map((food) => normalizeText(food.name_food));
+  const recetasSeleccionadas = recetas.filter((receta: recipe) =>
+    selectedRecipes.includes(receta.name),
+  );
+
   const WeekMealsNames = async (userId: number) => {
     try {
       const res = await WeekMealsById(userId);
       const results = res;
+      results.splice(0, results.length - 10);
+
       const recipesArray: string[] = [];
       results?.forEach(
         (item: {
@@ -48,19 +55,11 @@ function Shop() {
           recipesArray.push(mealNames);
         },
       );
-      if (recipesArray.length > 10) {
-        recipesArray.splice(0, recipesArray.length - 10);
-      }
       setSelectedRecipes(recipesArray);
     } catch (error) {
       console.error("hay algo mal que no esta bien:", error);
     }
   };
-
-  const stockNormalized = stock.map((food) => normalizeText(food.name_food));
-  const recetasSeleccionadas = recetas.filter((receta: recipe) =>
-    selectedRecipes.includes(receta.name),
-  );
 
   function obtenerIngredientesFaltantes(
     recetasSeleccionadas: recipe[],
@@ -90,7 +89,6 @@ function Shop() {
   const handleGenerarLista = () => {
     obtenerIngredientesFaltantes(recetasSeleccionadas, stockNormalized);
     WeekMealsNames(userId);
-    console.log(ingredientesFaltantes);
   };
 
   return (
@@ -114,15 +112,17 @@ function Shop() {
           <h3 className="text-lg font-bold">Ingredientes faltantes:</h3>
           <ul className="flex flex-col justify-start">
             <ul className="flex flex-col justify-start space-y-4">
-              {ingredientesFaltantes.map((ingrediente, index) => (
-                <li key={index} className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    className="before:content[''] peer relative mr-2 h-5 w-5 cursor-pointer appearance-none rounded-md border border-[#343434] transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-12 before:w-12 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-[#00785C] checked:bg-[#00785C] checked:before:bg-[#00785C] hover:before:opacity-10"
-                  />
-                  <h4 className="text-lg normal-case">{ingrediente}</h4>
-                </li>
-              ))}
+              {ingredientesFaltantes.length === 1
+                ? null
+                : ingredientesFaltantes.map((ingrediente, index) => (
+                    <li key={index} className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        className="before:content[''] peer relative mr-2 h-5 w-5 cursor-pointer appearance-none rounded-md border border-[#343434] transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-12 before:w-12 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-[#00785C] checked:bg-[#00785C] checked:before:bg-[#00785C] hover:before:opacity-10"
+                      />
+                      <h4 className="text-lg normal-case">{ingrediente}</h4>
+                    </li>
+                  ))}
             </ul>
           </ul>
         </div>

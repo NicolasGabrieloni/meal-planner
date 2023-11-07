@@ -61,14 +61,14 @@ export function ProfileEdit() {
     } catch (error) {
       console.error("Error al actualizar el perfil", error);
     }
-    // window.location.reload();
+    window.location.reload();
   };
 
   const handleUpload = async () => {
     console.log(file);
     try {
       const response = await fetch("/api/updateFiles", {
-        method: "POST",
+        method: "PUT",
         body: JSON.stringify({
           type: file?.type,
           name: file?.name,
@@ -77,17 +77,15 @@ export function ProfileEdit() {
 
       if (response.ok) {
         const result = await response.json();
-        setFormData({ ...formData, image: result.url }); // Actualiza formData.image aquí
+        setFormData({ ...formData, image: result.url });
         console.log(result.url);
+        handleSaveChanges();
       } else {
         console.error("Error al cargar la imagen");
       }
     } catch (error) {
       console.error("Error al cargar la imagen:", error);
     }
-
-    // Llama a handleSaveChanges después de actualizar la imagen en el estado
-    handleSaveChanges();
   };
 
   const handleChange = (e: any) => {

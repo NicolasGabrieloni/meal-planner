@@ -15,7 +15,7 @@
     "@aws-sdk/s3-request-presigner": "^3.441.0",
     "@hookform/resolvers": "^3.3.1",
     "@material-tailwind/react": "^2.1.4",
-    "@prisma/client": "^5.3.1",
+    "@prisma/client": "^5.5.2",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.5",
@@ -55,7 +55,7 @@
     "postcss": "latest",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.4",
-    "prisma": "^5.4.2",
+    "prisma": "^5.5.2",
     "tailwindcss": "latest",
     "typescript": "latest"
   }

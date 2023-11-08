@@ -83,17 +83,20 @@ export function AddFood() {
     <div className="flex justify-center p-4">
       <Popover>
         <PopoverTrigger asChild>
-          <Button className="min-w-[220px]" variant="blue_outlined">
-            Añadir nuevo alimento
+          <Button
+            className="w-full max-w-[400px] text-base font-semibold sm:h-12 sm:text-lg"
+            variant="blue_outlined"
+          >
+            Añadir alimento
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[310px] border border-[#343434]">
+        <PopoverContent className="w-[310px] border border-[#343434] sm:w-[400px]">
           <div className="grid gap-4">
-            <div className="space-y-2 ">
-              <h4 className="text-lg font-medium leading-none text-[#00785C]">
+            <div className="space-y-2">
+              <h4 className="text-xl font-medium leading-none text-[#00785C]">
                 Nuevo alimento
               </h4>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-muted-foreground text-base">
                 Agregá todos los alimentos que tengas en tu cocina:
               </p>
             </div>

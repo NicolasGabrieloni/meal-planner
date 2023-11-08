@@ -14,7 +14,16 @@ export default function Home() {
       {session?.user ? (
         router.push("/home")
       ) : (
-        <div>
+        <div className="flex flex-row space-x-20">
+          <div className="hidden lg:inline-flex">
+            <Image
+              src={"/Logo.svg"}
+              alt={"Logo of Meal Planner"}
+              width={500}
+              height={500}
+              className="animate-pulse"
+            />
+          </div>
           <div className="flex h-[400px] w-[250px] flex-col items-center rounded-[5px] border border-[#343434] bg-[#FAFAFA] p-6 drop-shadow-md">
             <Image
               src={"/Logo.svg"}

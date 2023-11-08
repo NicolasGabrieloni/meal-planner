@@ -14,13 +14,13 @@ export default function Depot() {
     <>
       <div className="">
         <div>
-          <div className="text-center">
-            <h1 className="pb-2 text-xl font-medium text-[#00785C] lg:font-semibold">
+          <div className="">
+            <h1 className="p-4 text-xl font-medium text-[#00785C] lg:font-semibold">
               Mi Despensa
             </h1>
           </div>
           <AddFood />
-          <div className="grid w-full gap-10 p-4 sm:grid-cols-2">
+          <div className="grid w-full gap-10 p-4 md:grid-cols-2">
             <div>
               <h3 className="border-b border-[#00785C] pb-2 text-xl font-medium text-[#00785C] lg:font-semibold">
                 Vegetales/Frutas
@@ -28,7 +28,7 @@ export default function Depot() {
               <section className="mx-auto mt-5  rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
                 <div>
                   <div className="flex justify-center">
-                    <div className="h-[200px] ">
+                    <div className="h-[300px] ">
                       <VerdurasFrutas />
                     </div>
                   </div>
@@ -42,7 +42,7 @@ export default function Depot() {
               <section className="mx-auto mt-5  rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
                 <div>
                   <div className="flex justify-center">
-                    <div className="h-[200px] ">
+                    <div className="h-[300px] ">
                       <Alacena />
                     </div>
                   </div>
@@ -57,7 +57,7 @@ export default function Depot() {
               <section className="mx-auto mt-5  rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
                 <div>
                   <div className="flex justify-center">
-                    <div className="h-[200px] ">
+                    <div className="h-[300px] ">
                       <Carnes />
                     </div>
                   </div>
@@ -71,7 +71,7 @@ export default function Depot() {
               <section className="mx-auto mt-5  rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl">
                 <div>
                   <div className="flex justify-center">
-                    <div className="h-[200px] ">
+                    <div className="h-[300px] ">
                       <Lacteos />
                     </div>
                   </div>

@@ -1,36 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+#**Meal Planner**
 
-## Getting Started
+![Recetas - Meal Planner](./public/meal-planner.png)
 
-First, run the development server:
+## Descripción
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Proyecto pensado para realizar seguimiento de los ingredientes que tiene a mano el usuario y/o completar un calendario de comidas para solucionar la pregunta repetitiva _¿qué comemos hoy?_.
+Además, dependiendo los ingredientes que posea el usuario se sugerirán comidas y se podrán ver sus respectivas recetas. También podrá generar una _Lista de Super_, la cuál compara los ingredientes en posesión del usuario con los necesarios para realizar todas las comidas que el mismo completó en el calendario semanal.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Meal Planner cuenta con 5 secciones:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Inicio:** aquí el usuario podrá ver su perfil y editar su descripción y foto de perfil, así como podrá también añadir edad, sexo y lugar de residencia. Además cuenta con 3 mini-paneles que mostrarán las comidas del día, un extracto de su despensa y las recetas destacadas de la semana.
+- **Despensa:** en esta sección el usuario debe, apretando el botón "Añadir alimento" y completando el formulario, agregar todos los ingredientes que posea en su hogar. Esto facilitará la sugerencia de comidas según ingredientes disponibles. También podrá ver todo lo que tenga separado por secciones: _Vegetales/Frutas, Alacena, Carnes y Frescos/Lácteos_.
+- **Calendario:** el usuario podrá añadir Almuerzo y Cena a cada día, pudiendo elegir entre comidas disponibles y todas las recetas. Al finalizar, deberá presionar el botón **Guardar**
+- **Recetas:** aquí podrá ver todas las recetas disponibles, así como podrá agregar nuevas. Además, podrá poner en Favoritos recetas, y así se mostrarán en el carrusel que está en esta misma sección. También hay otro carrusel que muestra las comidas destacadas de la semana.
+- **Lista de compras:** al apretar el botón _Generar lista de compras_, la aplicación calculará los ingredientes que el usuario le faltan para poder realizar todas las recetas que anteriormente seleccionó y guardó en el Calendario semanal. Esta lista tiene la finalidad de ser usada en el Supermercado, podrás ir chequeando todo aquello que vayas consiguiendo.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Levantar el proyecto localmente:
 
-## Learn More
+Para poder levantar el proyecto, deberás seguir estos pasos:
 
-To learn more about Next.js, take a look at the following resources:
+- Git Clone al repositorio.
+- Cuando ya lo tengas en tu directorio, deberás hacer npm install, para instalar todas las dependencias correspondientes.
+- Necesitarás conseguir un proveedor de bases de datos MySQL y hacer también las credenciales de NextAuth, las cuáles irán dentro de un archivo .env y .env.local, respectivamente.
+- Al tener estos datos, por último, tienes que hacer npx prisma generate.
+- npm run dev, unos segundos, y el proyecto estará levantado y corriendo en tu localhost:3000!
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+_Proyecto realizado por: **Nicolas Gabrieloni, Alejo Paulón y Julián Corbo** para Escuelita 2.0, de Crombie.dev_

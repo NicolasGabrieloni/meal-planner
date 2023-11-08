@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export const MiniDespensa = () => {
   return (
-    <div className="">
+    <div>
       <div className="flex justify-center">
         <div className="w-full " style={{ minWidth: "320px" }}>
           <div className="p-4 text-center text-xl font-medium text-[#00785C] lg:font-semibold">
@@ -17,7 +17,7 @@ export const MiniDespensa = () => {
           <section className="mx-auto rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 pt-5 shadow-xl">
             <div className="h-[250px]">
               <div className="flex flex-col items-center">
-                <div className="grid grid-cols-2 justify-center justify-items-center gap-x-4 gap-y-6 p-4 lg:grid-cols-4">
+                <div className="grid grid-cols-2 justify-center justify-items-center gap-x-4 gap-y-6 lg:grid-cols-4 lg:p-4">
                   <MiniAlacena />
                   <MiniCarnes />
                   <MiniLacteos />

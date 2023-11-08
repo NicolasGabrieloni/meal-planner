@@ -19,7 +19,7 @@ export const POST = async (req: NextRequest) => {
     });
 
     const url = await getSignedUrl(client, command);
-    console.log(url)
+
 
     return NextResponse.json(
       {

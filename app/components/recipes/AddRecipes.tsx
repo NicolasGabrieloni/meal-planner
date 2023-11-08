@@ -40,14 +40,14 @@ export function AddRecipes() {
     setFormData({ ...formData, [id]: value });
   };
 
-  console.log(formData.image)
-
   const handleSubmit = async () => {
     if (
       formData.name &&
       formData.description &&
+      formData.image &&
       formData.ingredients &&
-      formData.instructions
+      formData.instructions &&
+      formData.user_id
     ) {
       try {
         const response = await fetch(`/api/recipes`, {
@@ -55,11 +55,10 @@ export function AddRecipes() {
           body: JSON.stringify(formData),
         });
         if (response.ok) {
-          console.log("Receta enviada exitosamente");
           window.location.reload();
         }
       } catch (error) {
-        console.error("Error de red al enviar la receta", error);
+        console.error(error);
       }
     } else {
       console.error("Completa todos los campos");

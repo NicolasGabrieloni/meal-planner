@@ -54,11 +54,10 @@ export function ProfileEdit() {
         body: JSON.stringify(formData),
       });
       if (response.ok) {
-        console.log("bien rey");
-        // window.location.reload();
+        window.location.reload();
       }
     } catch (error) {
-      console.error("Error al actualizar el perfil", error);
+      console.error(error);
     }
   };
 

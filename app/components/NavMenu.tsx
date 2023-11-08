@@ -11,12 +11,29 @@ import {
 } from "@tabler/icons-react";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
+import { UsersById } from "./ApiCalls";
 
 export function NavMenu() {
   const { data: session } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const idUser = session?.user.id;
+  const userId = idUser ? parseInt(idUser as string) : null;
+  const [imageUrl, setImageUrl] = useState({
+    image: "",
+  });
+
+  useEffect(() => {
+    if (userId) {
+      UsersById(userId).then((res) => {
+        const userData = res;
+        setImageUrl({
+          image: userData.image,
+        });
+      });
+    }
+  }, [userId]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -38,9 +55,9 @@ export function NavMenu() {
         <button className="fixed left-4 lg:hidden" onClick={toggleMenu}>
           <IconMenu2 />
         </button>
-        {session?.user?.image && (
+        {imageUrl.image && (
           <Image
-            src={session.user.image}
+            src={imageUrl.image}
             alt="User avatar"
             width={35}
             height={35}

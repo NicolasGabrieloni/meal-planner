@@ -37,13 +37,17 @@ export default function Profile() {
 
   return (
     <div className="flex w-full flex-row justify-between space-x-4 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl lg:min-h-[150px]">
-      <Image
-        src={infoUser?.image}
-        alt="User profile image"
-        width={200}
-        height={200}
-        className="max-h-[70px] w-full max-w-[70px] rounded-full align-middle sm:max-h-[150px] sm:max-w-[150px]"
-      />
+      {infoUser.image && (
+        <Image
+          src={infoUser.image}
+          alt="User profile image"
+          width={200}
+          height={200}
+          priority={true}
+          style={{ width: "auto", height: "auto" }}
+          className="max-h-[70px] w-full max-w-[70px] rounded-full align-middle sm:max-h-[150px] sm:max-w-[150px]"
+        />
+      )}
       <div className="flex w-full flex-col space-y-2">
         <div className="flex items-center justify-between pb-2">
           <div className="space-y-4 sm:pt-4 md:pt-0">

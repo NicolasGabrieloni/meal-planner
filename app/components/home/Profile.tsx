@@ -58,17 +58,21 @@ export default function Profile() {
               {infoUser.description as string}
             </h4>
           </div>
-          <div className="hidden items-end space-y-4 pt-6 md:inline-flex md:flex-col">
-            <h3 className="font-medium text-[#343434]">
-              {infoUser.location as string}
-            </h3>
-            <div className="font-medium text-[#343434]">
-              <h4>Edad: {infoUser.age as number} años </h4>
+          {!infoUser.location && !infoUser.age && !infoUser.sex ? (
+            <h3 className="font-medium text-[#343434]">Actualiza tu perfil</h3>
+          ) : (
+            <div className="hidden items-end space-y-4 pt-6 md:inline-flex md:flex-col">
+              <h3 className="font-medium text-[#343434]">
+                {infoUser.location as string}
+              </h3>
+              <div className="font-medium text-[#343434]">
+                <h4>Edad: {infoUser.age as number} años </h4>
+              </div>
+              <div className="ont-medium text-[#343434]">
+                <h4> {infoUser.sex as string} </h4>
+              </div>
             </div>
-            <div className="ont-medium text-[#343434]">
-              <h4> {infoUser.sex as string} </h4>
-            </div>
-          </div>
+          )}
         </div>
       </div>
       <div className="">

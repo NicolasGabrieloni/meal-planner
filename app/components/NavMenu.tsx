@@ -13,16 +13,30 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
-
+import { UsersById } from "./ApiCalls";
 import { usePathname } from "next/navigation";
-
 
 export function NavMenu() {
   const { data: session } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const idUser = session?.user.id;
+  const userId = idUser ? parseInt(idUser as string) : null;
+  const [imageUrl, setImageUrl] = useState({
+    image: "",
+  });
 
   const currentPath = usePathname();
 
+  useEffect(() => {
+    if (userId) {
+      UsersById(userId).then((res) => {
+        const userData = res;
+        setImageUrl({
+          image: userData.image,
+        });
+      });
+    }
+  }, [userId]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -40,22 +54,23 @@ export function NavMenu() {
           alt={"Logo of Meal Planner"}
           width={60}
           height={60}
+          style={{ width: "auto", height: "auto" }}
         />
         <button className="fixed left-4 lg:hidden" onClick={toggleMenu}>
           <IconMenu2 />
         </button>
 
-        {session?.user?.image && (
+        {imageUrl.image && (
           <Link href="/home" className="fixed right-4">
             <Image
-              src={session.user.image}
+              src={imageUrl.image}
               alt="User avatar"
               width={35}
               height={35}
+              style={{ width: "auto", height: "auto" }}
               className="cursor-pointer rounded-full"
             />
           </Link>
-
         )}
       </div>
       <div

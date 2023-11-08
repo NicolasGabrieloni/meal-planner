@@ -78,9 +78,6 @@ export function SearchRecipes() {
           recipes_id,
         }),
       });
-      if (response.ok) {
-        console.log("enviado con exito");
-      }
     } catch (error) {
       console.error("Error de red:", error);
     }
@@ -97,10 +94,6 @@ export function SearchRecipes() {
           method: "DELETE",
         },
       );
-
-      if (response.ok) {
-        console.log("La receta se elimino de favoritos");
-      }
     } catch (error) {
       console.error("Error de red:", error);
     }

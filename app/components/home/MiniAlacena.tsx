@@ -53,11 +53,8 @@ export default function MiniAlacena() {
             ) : (
               alacena.map((food: stock) => (
                 <tr key={food.id}>
-                  <td>
-                    {" "}
-                    <td className="w-screen border-b border-[#343434] text-center text-sm">
-                      {food.name_food}
-                    </td>
+                  <td className="w-screen border-b border-[#343434] text-center text-sm">
+                    {food.name_food}
                   </td>
                 </tr>
               ))

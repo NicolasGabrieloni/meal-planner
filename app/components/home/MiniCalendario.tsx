@@ -23,7 +23,6 @@ export const MiniCalendario = () => {
       WeekMealsById(userId).then((res) => {
         const results = res;
         const updatedWeekMeals = { ...miniWeekMeals };
-        const recipesArray: string[] = [];
         results?.forEach(
           (item: {
             dayName: keyof WeekMeals;
@@ -36,20 +35,19 @@ export const MiniCalendario = () => {
               mealType in updatedWeekMeals[dayName]
             ) {
               updatedWeekMeals[dayName][mealType] = mealName;
-              recipesArray.push(mealName);
             }
           },
         );
         setMiniWeekMeals(updatedWeekMeals);
       });
     }
-  }, [userId, miniWeekMeals]);
+  }, [userId]);
 
   const daysOfWeek = [
     "Domingo",
     "Lunes",
     "Martes",
-    "Miércoles",
+    "Miercoles",
     "Jueves",
     "Viernes",
     "Sábado",
@@ -74,7 +72,9 @@ export const MiniCalendario = () => {
             <div>
               <div className="flex justify-center">
                 <div className="h-[250px]">
-                  {dayName === "Sábado" || dayName === "Domingo" ? (
+                  {!mealsOfDay ? (
+                    <p>Cargando...</p>
+                  ) : dayName === "Sábado" || dayName === "Domingo" ? (
                     <p>Hoy es día de permitidos. ¡Buen fin de semana!</p>
                   ) : (
                     mealsOfDay && (

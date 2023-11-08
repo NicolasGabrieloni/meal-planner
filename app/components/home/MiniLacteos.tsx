@@ -52,11 +52,8 @@ export default function MiniLacteos() {
           ) : (
             lacteos.map((lacteo: stock) => (
               <tr key={lacteo.id}>
-                <td>
-                  {" "}
-                  <td className="w-screen border-b border-[#343434] text-center text-sm">
-                    {lacteo.name_food}
-                  </td>
+                <td className="w-screen border-b border-[#343434] text-center text-sm">
+                  {lacteo.name_food}
                 </td>
               </tr>
             ))

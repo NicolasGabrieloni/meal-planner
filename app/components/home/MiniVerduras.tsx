@@ -51,11 +51,8 @@ export default function MiniVerdurasFrutas() {
           ) : (
             verduras.map((verdura: stock) => (
               <tr key={verdura.id}>
-                <td>
-                  {" "}
-                  <td className="w-screen border-b border-[#343434] text-center text-sm">
-                    {verdura.name_food}
-                  </td>
+                <td className="w-screen border-b border-[#343434] text-center text-sm">
+                  {verdura.name_food}
                 </td>
               </tr>
             ))

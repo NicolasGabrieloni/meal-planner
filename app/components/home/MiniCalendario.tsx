@@ -43,7 +43,7 @@ export const MiniCalendario = () => {
         setMiniWeekMeals(updatedWeekMeals);
       });
     }
-  }, [userId]);
+  }, [userId, miniWeekMeals]);
 
   const daysOfWeek = [
     "Domingo",
@@ -93,7 +93,7 @@ export const MiniCalendario = () => {
                               <p>{mealsOfDay.Almuerzo}</p>
                             )}
                           </div>
-                          <div className="rounded-xl border border-[#343434] bg-[#80FF95]/30 p-2 ">
+                          <div className="rounded-xl border border-[#343434] bg-[#80FF95]/30 p-2">
                             <h3 className="text-xl font-medium text-[#00785C]">
                               Cena
                             </h3>

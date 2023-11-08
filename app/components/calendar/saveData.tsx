@@ -35,8 +35,11 @@ function SaveData() {
 
   const handlerSaveData = () => {
     for (const day in weekMeals) {
+      //@ts-ignore
       for (const mealType in weekMeals[day]) {
+        //@ts-ignore
         const mealName = weekMeals[day][mealType];
+        //@ts-ignore
         saveWeekMeals(day, mealType, mealName, userId);
       }
     }

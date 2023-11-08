@@ -81,7 +81,7 @@ export async function DELETE(request: Request, { params }: Params) {
 // ACTUALIZAR RECETAS MEDIANTE ID
 export async function PUT(request: Request, { params }: Params) {
   try {
-    const { name, description, ingredients, instructions, userId } =
+    const { name, description, ingredients, instructions, user_id } =
       await request.json();
 
     // busca la receta con el id que le pasemos para actualizar los datos
@@ -94,7 +94,7 @@ export async function PUT(request: Request, { params }: Params) {
         description,
         ingredients,
         instructions,
-        userId,
+        user_id,
       },
     });
     // devuelve la receta actualizado

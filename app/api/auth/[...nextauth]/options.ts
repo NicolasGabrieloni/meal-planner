@@ -28,9 +28,13 @@ export const options: NextAuthOptions = {
     jwt: ({ token, user }) => {
       if (user) {
         token.id = user.id;
+        //@ts-ignore
         token.description = user.description;
+        //@ts-ignore
         token.age = user.age;
+        //@ts-ignore
         token.location = user.location;
+        //@ts-ignore
         token.sex = user.sex;
       }
       return token;

@@ -21,13 +21,14 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const { name, description, ingredients, instructions, user_id } =
+    const { name, description, image, ingredients, instructions, user_id } =
       await request.json();
 
     const newRecipes = await prisma.recipes.create({
       data: {
         name,
         description,
+        image,
         ingredients,
         instructions,
         user_id,

@@ -11,14 +11,18 @@ import {
 } from "@tabler/icons-react";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
+
 import { usePathname } from "next/navigation";
+
 
 export function NavMenu() {
   const { data: session } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const currentPath = usePathname();
+
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -40,6 +44,7 @@ export function NavMenu() {
         <button className="fixed left-4 lg:hidden" onClick={toggleMenu}>
           <IconMenu2 />
         </button>
+
         {session?.user?.image && (
           <Link href="/home" className="fixed right-4">
             <Image
@@ -50,6 +55,7 @@ export function NavMenu() {
               className="cursor-pointer rounded-full"
             />
           </Link>
+
         )}
       </div>
       <div

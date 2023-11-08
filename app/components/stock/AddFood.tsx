@@ -68,7 +68,6 @@ export function AddFood() {
         });
 
         if (response.ok) {
-          console.log("Alimento enviado exitosamente");
           resetForm();
         }
       } catch (error) {

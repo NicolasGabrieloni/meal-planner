@@ -13,7 +13,7 @@ model users {
   email       String       @db.Text
   password    String       @db.Text
   description String?      @default("Agregue su descripcion") @db.VarChar(255)
-  image       String?      @default("https://static.thenounproject.com/png/5034901-200.png") @db.VarChar(255)
+  image       String?      @default("https://static.thenounproject.com/png/5034901-200.png")
   age         Int?
   sex         gender?
   location    String?

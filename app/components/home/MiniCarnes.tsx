@@ -52,11 +52,8 @@ export default function MiniCarnes() {
           ) : (
             carnes.map((carne: stock) => (
               <tr key={carne.id}>
-                <td>
-                  {" "}
-                  <td className="w-screen border-b border-[#343434] text-center text-sm">
-                    {carne.name_food}
-                  </td>
+                <td className="w-screen border-b border-[#343434] text-center text-sm">
+                  {carne.name_food}
                 </td>
               </tr>
             ))

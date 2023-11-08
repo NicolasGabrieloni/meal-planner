@@ -17,11 +17,6 @@ const saveWeekMeals = async (
       user_id,
     }),
   });
-  if (res.ok) {
-    console.log("todo ok");
-  } else {
-    console.error("todo mal");
-  }
 };
 
 const getWeekMeals = async (userId: number) => {
@@ -33,7 +28,7 @@ const getWeekMeals = async (userId: number) => {
     });
     return NextResponse.json(weekMeals);
   } catch (error) {
-    console.error('Error al obtener elementos de tipo "weekmeal"', error);
+    console.error(error);
   }
 };
 

@@ -31,33 +31,38 @@ export default function MiniLacteos() {
   }
 
   return (
-    <>
-      <div>
-        <table>
-          <thead>
+    <div>
+      <table className="border-collapse border-l border-r border-t border-[#343434]">
+        <thead>
+          <tr>
+            <th className="border-b border-[#343434] bg-[#80FF95]/70 pb-2 text-lg text-[#00785C] ">
+              LACTEOS
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {loading ? (
             <tr>
-              <th className="pb-2 text-lg text-[#00785C]">LACTEOS</th>
+              <td>Cargando...</td>
             </tr>
-          </thead>
-          <tbody>
-            {loading ? (
-              <tr>
-                <td>Cargando...</td>
+          ) : lacteos.length === 0 ? (
+            <tr>
+              <td>No hay alimentos</td>
+            </tr>
+          ) : (
+            lacteos.map((lacteo: stock) => (
+              <tr key={lacteo.id}>
+                <td>
+                  {" "}
+                  <td className="w-screen border-b border-[#343434] text-center text-sm">
+                    {lacteo.name_food}
+                  </td>
+                </td>
               </tr>
-            ) : lacteos.length === 0 ? (
-              <tr>
-                <td>No hay alimentos</td>
-              </tr>
-            ) : (
-              lacteos.map((lacteo: stock) => (
-                <tr key={lacteo.id}>
-                  <li className="text-sm ">{lacteo.name_food}</li>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
-    </>
+            ))
+          )}
+        </tbody>
+      </table>
+    </div>
   );
 }

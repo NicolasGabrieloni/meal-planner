@@ -21,7 +21,7 @@ export default function Calendar() {
       </h1>
       <WeeklyFoodProvider>
         <div className="relative flex flex-col items-center space-y-6">
-          <div className="absolute right-0 top-0 pt-2">
+          <div className="absolute right-0 top-0 pb-4">
             <SaveData />
           </div>
           <Day dayName="Lunes" />

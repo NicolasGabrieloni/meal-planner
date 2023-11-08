@@ -33,10 +33,12 @@ export default function MiniAlacena() {
   return (
     <>
       <div>
-        <table>
+        <table className="border-collapse border-l border-r border-t border-[#343434]">
           <thead>
             <tr>
-              <th className="pb-2 text-lg text-[#00785C]">ALACENA</th>
+              <th className="border-b border-[#343434] bg-[#80FF95]/70 pb-2 text-lg text-[#00785C] ">
+                ALACENA
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -53,7 +55,9 @@ export default function MiniAlacena() {
                 <tr key={food.id}>
                   <td>
                     {" "}
-                    <li className="text-sm ">{food.name_food}</li>
+                    <td className="w-screen border-b border-[#343434] text-center text-sm">
+                      {food.name_food}
+                    </td>
                   </td>
                 </tr>
               ))

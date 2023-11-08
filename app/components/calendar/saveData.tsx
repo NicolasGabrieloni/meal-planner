@@ -68,7 +68,7 @@ function SaveData() {
       />
       <Button
         variant="blue_outlined"
-        className="text-sm font-semibold"
+        className="w-full max-w-[400px] text-base font-semibold sm:h-12 sm:text-lg"
         onClick={handlerSaveData}
         disabled={!hasChanges}
       >

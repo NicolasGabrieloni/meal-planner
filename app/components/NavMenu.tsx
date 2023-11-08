@@ -13,10 +13,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 export function NavMenu() {
   const { data: session } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const currentPath = usePathname();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -39,13 +41,15 @@ export function NavMenu() {
           <IconMenu2 />
         </button>
         {session?.user?.image && (
-          <Image
-            src={session.user.image}
-            alt="User avatar"
-            width={35}
-            height={35}
-            className="fixed right-4 cursor-pointer rounded-full"
-          />
+          <Link href="/home" className="fixed right-4">
+            <Image
+              src={session.user.image}
+              alt="User avatar"
+              width={35}
+              height={35}
+              className="cursor-pointer rounded-full"
+            />
+          </Link>
         )}
       </div>
       <div
@@ -147,12 +151,24 @@ export function NavMenu() {
       </div>
       <div className="custom-shadow-inner fixed left-0 top-0 mt-[70px] hidden h-screen bg-gradient-to-b from-[#80FF95] to-[#22859B]  lg:inline">
         <ul className=" top-green-shadow flex min-h-[620px] flex-col justify-between px-6 py-8">
-          <li>
+          <li
+            className={
+              currentPath === "/home"
+                ? "h-8 w-8 rounded-full bg-white/70 pl-1 pt-1 "
+                : ""
+            }
+          >
             <Link href="/home">
               <IconHome size={24} stroke={1} className="hover:stroke-[1.5px]" />
             </Link>
           </li>
-          <li>
+          <li
+            className={
+              currentPath === "/depot"
+                ? "h-8 w-8 rounded-full bg-white/70 pl-1 pt-1 "
+                : ""
+            }
+          >
             <Link href="/depot">
               <IconFridge
                 size={24}
@@ -161,7 +177,13 @@ export function NavMenu() {
               />
             </Link>
           </li>
-          <li>
+          <li
+            className={
+              currentPath === "/calendar"
+                ? "h-8 w-8 rounded-full bg-white/70 pl-1 pt-1 "
+                : ""
+            }
+          >
             <Link href="/calendar">
               <IconCalendarEvent
                 size={24}
@@ -170,7 +192,13 @@ export function NavMenu() {
               />
             </Link>
           </li>
-          <li>
+          <li
+            className={
+              currentPath === "/recipes"
+                ? "h-8 w-8 rounded-full bg-white/70 pl-1 pt-1 "
+                : ""
+            }
+          >
             <Link href="/recipes">
               <IconSalad
                 size={24}
@@ -179,7 +207,13 @@ export function NavMenu() {
               />
             </Link>
           </li>
-          <li>
+          <li
+            className={
+              currentPath === "/shop-list"
+                ? "h-8 w-8 rounded-full bg-white/70 pl-1 pt-1 "
+                : ""
+            }
+          >
             <Link href="/shop-list">
               <IconList size={24} stroke={1} className="hover:stroke-[1.5px]" />
             </Link>

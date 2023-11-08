@@ -64,7 +64,7 @@ export const MiniCalendario = () => {
   }
 
   return (
-    <div className="">
+    <div>
       <div className="flex justify-center">
         <div className="w-full " style={{ minWidth: "320px" }}>
           <div className="p-4 text-center text-xl font-medium text-[#00785C] lg:font-semibold">
@@ -78,10 +78,12 @@ export const MiniCalendario = () => {
                     <p>Hoy es día de permitidos. ¡Buen fin de semana!</p>
                   ) : (
                     mealsOfDay && (
-                      <div className="text-center lg:space-y-12">
-                        <h2 className="text-3xl font-semibold">{dayName}</h2>
-                        <div className="flex flex-col space-y-8 pt-6 lg:flex-row lg:gap-20 lg:space-y-0 lg:pt-0">
-                          <div>
+                      <div className=" text-center lg:space-y-12">
+                        <h2 className="border-b-2 border-[#343434] text-3xl font-semibold">
+                          {dayName}
+                        </h2>
+                        <div className="flex flex-col space-y-3 pt-2 sm:pt-6 lg:flex-row lg:gap-20 lg:space-y-0 lg:pt-0">
+                          <div className="rounded-xl border border-[#343434] bg-[#80FF95]/30 p-2">
                             <h3 className="text-xl font-medium text-[#00785C]">
                               Almuerzo
                             </h3>
@@ -91,7 +93,7 @@ export const MiniCalendario = () => {
                               <p>{mealsOfDay.Almuerzo}</p>
                             )}
                           </div>
-                          <div>
+                          <div className="rounded-xl border border-[#343434] bg-[#80FF95]/30 p-2 ">
                             <h3 className="text-xl font-medium text-[#00785C]">
                               Cena
                             </h3>

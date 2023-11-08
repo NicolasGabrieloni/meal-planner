@@ -30,33 +30,38 @@ export default function MiniVerdurasFrutas() {
   }
 
   return (
-    <>
-      <div>
-        <table>
-          <thead>
+    <div>
+      <table className="border-collapse border-l border-r border-t border-[#343434]">
+        <thead>
+          <tr>
+            <th className="border-b border-[#343434] bg-[#80FF95]/70 pb-2 text-lg text-[#00785C] ">
+              VERDURAS
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {loading ? (
             <tr>
-              <th className="pb-2 text-lg text-[#00785C]">VERDURAS</th>
+              <td>Cargando...</td>
             </tr>
-          </thead>
-          <tbody>
-            {loading ? (
-              <tr>
-                <td>Cargando...</td>
+          ) : verduras.length === 0 ? (
+            <tr>
+              <td>No hay alimentos</td>
+            </tr>
+          ) : (
+            verduras.map((verdura: stock) => (
+              <tr key={verdura.id}>
+                <td>
+                  {" "}
+                  <td className="w-screen border-b border-[#343434] text-center text-sm">
+                    {verdura.name_food}
+                  </td>
+                </td>
               </tr>
-            ) : verduras.length === 0 ? (
-              <tr>
-                <td>No hay alimentos</td>
-              </tr>
-            ) : (
-              verduras.map((verdura: stock) => (
-                <tr key={verdura.id}>
-                  <li className="text-sm ">{verdura.name_food}</li>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
-    </>
+            ))
+          )}
+        </tbody>
+      </table>
+    </div>
   );
 }

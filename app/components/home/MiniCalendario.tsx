@@ -22,26 +22,30 @@ export const MiniCalendario = () => {
     if (userId) {
       WeekMealsById(userId).then((res) => {
         const results = res;
-        const updatedWeekMeals = { ...miniWeekMeals };
-        results?.forEach(
-          (item: {
-            dayName: keyof WeekMeals;
-            mealType: keyof DayMeals;
-            mealName: string;
-          }) => {
-            const { dayName, mealType, mealName } = item;
-            if (
-              dayName in updatedWeekMeals &&
-              mealType in updatedWeekMeals[dayName]
-            ) {
-              updatedWeekMeals[dayName][mealType] = mealName;
-            }
-          },
-        );
-        setMiniWeekMeals(updatedWeekMeals);
+        setMiniWeekMeals((prevMiniWeekMeals) => {
+          const updatedWeekMeals = { ...prevMiniWeekMeals };
+          results?.forEach(
+            (item: {
+              dayName: keyof WeekMeals;
+              mealType: keyof DayMeals;
+              mealName: string;
+            }) => {
+              const { dayName, mealType, mealName } = item;
+              if (
+                dayName in updatedWeekMeals &&
+                mealType in updatedWeekMeals[dayName]
+              ) {
+                updatedWeekMeals[dayName][mealType] = mealName;
+              }
+            },
+          );
+          return updatedWeekMeals;
+        });
       });
     }
-  }, [userId, miniWeekMeals]);
+  }, [userId, setMiniWeekMeals]);
+
+
 
   const daysOfWeek = [
     "Domingo",

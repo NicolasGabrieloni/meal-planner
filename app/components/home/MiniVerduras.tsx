@@ -25,6 +25,7 @@ export default function MiniVerdurasFrutas() {
     }
   }, [userId]);
 
+
   if (!userId) {
     return <></>;
   }

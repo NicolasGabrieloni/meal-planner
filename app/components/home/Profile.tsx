@@ -35,6 +35,8 @@ export default function Profile() {
     }
   }, [userId]);
 
+
+
   return (
     <div className="flex w-full flex-row justify-between space-x-4 rounded-lg border border-[#000000] bg-[#E9FFEB] p-5 shadow-xl lg:min-h-[150px]">
       {infoUser.image && (

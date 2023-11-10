@@ -35,7 +35,7 @@ function Shop() {
         },
       );
     }
-  }, [userId]);
+  }, []);
 
   const stockNormalized = stock.map((food) => normalizeText(food.name_food));
   const recetasSeleccionadas = recetas.filter((receta: recipe) =>

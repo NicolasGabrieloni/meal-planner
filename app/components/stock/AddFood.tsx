@@ -43,7 +43,7 @@ export function AddFood() {
         user_id: userId,
       });
     }
-  }, [idUser]);
+  }, [idUser, formData]);
 
   const handleChange = (e: { target: { id: any; value: any } }) => {
     const { id, value } = e.target;

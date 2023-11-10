@@ -41,7 +41,7 @@ export const MiniCalendario = () => {
         setMiniWeekMeals(updatedWeekMeals);
       });
     }
-  }, []);
+  }, [userId, miniWeekMeals]);
 
   const daysOfWeek = [
     "Domingo",

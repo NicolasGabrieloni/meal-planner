@@ -31,7 +31,7 @@ function SaveData() {
     if (userId) {
       loadWeekMeals(userId);
     }
-  }, [userId, loadWeekMeals]);
+  }, [userId]);
 
   const handlerSaveData = () => {
     for (const day in weekMeals) {

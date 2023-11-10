@@ -1,5 +1,5 @@
-const URL = "http://localhost:3000";
-// https://meal-planner-weld-three.vercel.app
+const URL = "https://meal-planner-weld-three.vercel.app";
+
 /// USERS ///
 export async function Users() {
   const res = await fetch(`${URL}/api/users`);

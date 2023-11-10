@@ -33,7 +33,7 @@ export function AddRecipes() {
         user_id: userId,
       });
     }
-  }, [idUser, formData]);
+  }, [idUser]);
 
   const handleChange = (e: any) => {
     const { id, value } = e.target;

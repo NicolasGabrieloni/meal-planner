@@ -1,4 +1,4 @@
-const URL = "https://meal-planner-weld-three.vercel.app";
+const URL = "http://localhost:3000";
 
 /// USERS ///
 export async function Users() {

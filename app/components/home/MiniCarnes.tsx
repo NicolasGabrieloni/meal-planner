@@ -26,7 +26,6 @@ export default function MiniCarnes() {
     }
   }, [userId]);
 
-
   if (!userId) {
     return <></>;
   }

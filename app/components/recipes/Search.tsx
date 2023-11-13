@@ -46,6 +46,7 @@ export function SearchRecipes() {
     }
   }, [userId]);
 
+
   //////// BUSCADOR //////////////
   function removeAccents(text: string) {
     return text

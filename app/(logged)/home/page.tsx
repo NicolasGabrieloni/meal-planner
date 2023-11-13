@@ -10,6 +10,10 @@ export const metadata: Metadata = {
   title: "Inicio",
 };
 export default function Home() {
+
+
+
+
   return (
     <div className="flex-col items-center p-4">
       <Profile />
